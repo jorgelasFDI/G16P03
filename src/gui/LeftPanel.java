@@ -75,10 +75,10 @@ public class LeftPanel extends JPanel {
 	private Map<String, Map<String, Double>> matrizSEP;
 
 	// FUNCIONES
-	private List<Fitness> functions = Arrays.asList(
+	private List<TreeGenerator> functions = Arrays.asList(
 		new Fitness1(),
 		new Fitness2()
-	); private JComboBox<Fitness> functionComboBox = new JComboBox<>(functions.toArray(new Fitness[0]));
+	); private JComboBox<TreeGenerator> functionComboBox = new JComboBox<>(functions.toArray(new TreeGenerator[0]));
 	
 	// TEXT FIELDS AND OTHERS
     private JTextField sizeTextField = new JTextField("100");
@@ -94,7 +94,7 @@ public class LeftPanel extends JPanel {
 	private JPanel rangesPanelWrap = new JPanel();
 	private JPanel rangesPanel = new JPanel();
 
-	private Fitness function;
+	private TreeGenerator function;
 	private int numPistas = 3;
 	private int numVuelos = 12;
 	private int numPistasProv = numPistas;
@@ -221,7 +221,7 @@ public class LeftPanel extends JPanel {
             Operation cruz = (Operation) cruceComboBox.getSelectedItem();
             Operation mut = (Operation) mutacionComboBox.getSelectedItem();
 			Operation select = (Operation) seleccionComboBox.getSelectedItem();
-			function = (Fitness) functionComboBox.getSelectedItem();
+			function = (TreeGenerator) functionComboBox.getSelectedItem();
 
 			int size = Integer.parseInt(sizeTextField.getText());
 			int numGeneraciones = Integer.parseInt(generacionesTextField.getText());

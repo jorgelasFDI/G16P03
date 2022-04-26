@@ -1,23 +1,21 @@
 package algorithm.individuos;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-
-import algorithm.functiones.Fitness;
+import algorithm.functiones.TreeGenerator;
+import algorithm.individuos.tree.GenTree;
 import auxiliar.MyRandom;
 
-public class Individuo implements Comparable<Individuo>, Iterable<Integer> {
+public class Individuo implements Comparable<Individuo> {
 
-	private int size = 0;
+	//public static String terminales[];
 
-	private List<Integer> genes = new ArrayList<>();
-	private Map<Integer, Vuelo> genesToObjects = new HashMap<>();
+	private GenTree cromosoma;
+	private int hMaxima;
+	//private Map<Integer, Vuelo> genesToObjects = new HashMap<>();
 
-	private Fitness function;
+	private TreeGenerator function;
 	private double aptitud;
     private double puntuacion; 
     private double puntuacionAcumulada;
@@ -25,31 +23,41 @@ public class Individuo implements Comparable<Individuo>, Iterable<Integer> {
 
 	public Individuo(Individuo individuo) {
 		function = individuo.getFunction();
-		size = individuo.getSize();
+		//size = individuo.getSize();
 		aptitud = individuo.getAptitud();
 		aptitudRevisada = individuo.getAptitudRevisada();
         puntuacion = individuo.getPuntuacion();
         puntuacionAcumulada = individuo.getPuntuacionAcumulada();
 		
-		for (int i = 0; i < size; i++) genesToObjects.put(i + 1, new Vuelo(individuo.getVuelo(i + 1)));
-		for (int i = 0; i < size; i++) genes.add(individuo.getGen(i));
+		//for (int i = 0; i < size; i++) genesToObjects.put(i + 1, new Vuelo(individuo.getVuelo(i + 1)));
+		//for (int i = 0; i < size; i++) genes.add(individuo.getGen(i));
 	}
 
-	public Individuo(Fitness function, List<Vuelo> objects) {     //params guarda la tolerancia[0] y el n� de vuelos[1]
-		this.size = objects.size();
+	public Individuo(TreeGenerator function) {     //params guarda la tolerancia[0] y el n� de vuelos[1]
+		//this.size = objects.size();
+		//this.hMaxima = hMaxima;
 		this.function = function;
 		
-		for(int i = 0; i < size; i++) genesToObjects.put(i + 1, new Vuelo(objects.get(i)));
-		MyRandom.getRandomNoRepeat(genes, size, 1, size); // genes vacio -> 0 - 11
-
+		cromosoma = new GenTree();
+		cromosoma.generate(function);
+		//for(int i = 0; i < size; i++) genesToObjects.put(i + 1, new Vuelo(objects.get(i)));
+		//MyRandom.getRandomNoRepeat(genes, size, 1, size); // genes vacio -> 0 - 11
 	}
 
-	public Map<Integer, Vuelo> getGenesToObjects() {
+	/*public Map<Integer, Vuelo> getGenesToObjects() {
 		return genesToObjects;
+	}*/
+
+	public GenTree getCromosoma() {
+		return cromosoma;
 	}
 
-	public double fitness() {
-		return function.fitnessInstance(this);
+	public void setCromosoma(GenTree cromosoma) {
+		this.cromosoma = cromosoma;
+	}
+
+	public Boolean fitness() {
+		return cromosoma.getAptitud();
 	}
 
 	public void setAptitud(double aptitud) {
@@ -60,42 +68,40 @@ public class Individuo implements Comparable<Individuo>, Iterable<Integer> {
 		return aptitud;
 	}
 
-	public Fitness getFunction() {
+	public TreeGenerator getFunction() {
 		return function;
 	}
 	
-	public double getFenotipo(int idx) {
+	/*public double getFenotipo(int idx) {
 		return genes.get(idx);
 	}
 
 	public Vuelo getVuelo(int gen) {
 		return genesToObjects.get(gen);
-	}
+	}*/
 
-	public void setGen(int idx, int value) {
+	/*public void setGen(int idx, int value) {
 		genes.set(idx, value);
 	}
 
 	public int getGen(int idx) {
 		return genes.get(idx);
-	}
+	}*/
 	
-	public void swapBit(int idx, Individuo other) {
-		swapBit(idx, other, idx);
+	public void swapTree(int idx, Individuo other) {
+		swapTree(idx, other, idx);
 	}
 
-	public void swapBit(int idx, int j) {
-		swapBit(idx, this, j);
-	}
-
-	private void swapBit(int idx, Individuo other, int j) {
+	private void swapTree(int idx, Individuo other, int j) {
+		/*
 		int aux = other.getGen(j);
 		other.setGen(j, genes.get(idx));
 		setGen(idx, aux);
+		*/
 	}
 	
-	public int getSize(){
-		return genes.size();
+	public int getAltura(){
+		return cromosoma.getAltura();
 	}
 	
     public double getPuntuacion() {
@@ -132,6 +138,7 @@ public class Individuo implements Comparable<Individuo>, Iterable<Integer> {
 
 	public void print() {
 		// TODO Auto-generated method stub
+		/*
 		for(int i = 0; i < genes.size(); i++) {
 			System.out.print(genes.get(i) + " ");
 		}
@@ -150,15 +157,13 @@ public class Individuo implements Comparable<Individuo>, Iterable<Integer> {
 		//System.out.println();*/
 	}
 
-	public List<Integer> getGenes() {
+	/*public List<Integer> getGenes() {
 		return genes;
 	}
 
 	@Override
 	public Iterator<Integer> iterator() {
 		return genes.iterator();
-	}
+	}*/
 
-	
-	
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.javatuples.Pair;
 
-import algorithm.functiones.Fitness;
+import algorithm.functiones.TreeGenerator;
 import algorithm.individuos.Individuo;
 import algorithm.individuos.Vuelo;
 import algorithm.operations.Operation;
@@ -41,7 +41,7 @@ public class Poblacion implements Iterable<Individuo> {
 		mutacion.operationInstance(poblacion);
 	}
 
-	public Poblacion(int size, double eliteSize, Fitness function, Operation cruce, Operation mutacion, Operation seleccion, double presion, List<Vuelo> objects) {
+	public Poblacion(int size, double eliteSize, TreeGenerator function, Operation cruce, Operation mutacion, Operation seleccion, double presion, List<Vuelo> objects) {
 		this.cruce = cruce;
 		this.mutacion = mutacion;
 		this.seleccion = seleccion;
