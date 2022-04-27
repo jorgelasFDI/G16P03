@@ -1,22 +1,25 @@
 package algorithm.individuos.tree;
 
+import auxiliar.MyRandom;
+
 public abstract class GenTree {
 	
 	//TreeGenerator treeGenerator;
 	Node root;              //Raiz del arbol GenTree. Inicialmente a null
 	
-	public static int alturaTree = 0;
+	public int alturaTree = 0;
 	public static final String terminales[] = { "A0", "A1", "D0", "D1", "D2", "D3" };
 	public static final String funciones[] = { "AND", "OR", "NOT", "IF" };
 	
-	public GenTree() {
+	public GenTree(int alturaTree) {
 		super();
 		this.root = null;
-		inicializacion(root, 0);      //Genera el árbol
+		this.alturaTree = alturaTree;
+		root = inicializacion(root, 1);      //Genera el árbol
 	}
 
 	class Node {    
-	    String value; 
+	    	String value; 
 	        Node left, right, center; 
 	    	int num_nodos; // número de nodos 
 	    	int profundidad; // profundidad del árbol
@@ -27,13 +30,13 @@ public abstract class GenTree {
 	            right = null; 
 	            center = null;
 	        }   
-	     /*public void setValue(String value) {
-	    	 this.value = value;
-	     }
-	     
-	     public String getValue() {
-	    	 return value;
-	     }*/
+	        
+	        Node(Node node){ 
+	            this.value = node.value; 
+	            this.left = node.left; 
+	            this.right = node.right; 
+	            this.center = node.center;
+	        } 
 	}
 		
 	public abstract Node inicializacion(Node root, int altura);
@@ -57,13 +60,31 @@ public abstract class GenTree {
 	public void setRoot(Node root) {
 		this.root = root;
 	}
-
-	/*public void generarArbol() {
-		inicializacion(root, 0);
-	}*/
 	
-	public static void setAlturaTree(int altura) {
-		alturaTree = altura;
+	public Node generaArbolFuncion(int altura, Node raiz) {
+		String value = funciones[MyRandom.getInstance().nextInt(funciones.length)];
+		raiz = new Node(value);    //Con sus ramas inicialmente vacias
+		
+		if(value.equals("NOT")) {
+			raiz.center = inicializacion(raiz.center, altura + 1);
+		}
+		else {	
+			//Genera arbol izquierdo
+			raiz.left = inicializacion(raiz.left, altura + 1);
+			//Genera arbol derecho
+			raiz.right = inicializacion(raiz.right, altura + 1);
+			
+			if(value.equals("IF")) {
+				raiz.center = inicializacion(raiz.center, altura + 1);
+			}
+		}
+		
+		return raiz;
+	}
+	
+	public Node generaTerminal(Node raiz) {
+		String value = terminales[MyRandom.getInstance().nextInt(terminales.length)];
+		return new Node(value);
 	}
 
 }

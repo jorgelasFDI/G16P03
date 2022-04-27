@@ -3,7 +3,6 @@ package algorithm.individuos;
 import algorithm.individuos.tree.GenTree;
 import algorithm.individuos.tree.TreeCompleto;
 import algorithm.individuos.tree.TreeCreciente;
-import algorithm.individuos.tree.TreeRampedAndHalf;
 
 public class TreeFactory {
 
@@ -17,12 +16,10 @@ public class TreeFactory {
 		return instance;
 	}
 	
-	public GenTree treeGenerator(String type) {
+	public GenTree treeGenerator(String type, int alturaTree) {
 		if(type == "Completo")
-			return new TreeCompleto();
-		else if(type == "Creciente")
-			return new TreeCreciente();
+			return new TreeCompleto(alturaTree);
 		else
-			return new TreeRampedAndHalf();
+			return new TreeCreciente(alturaTree);
 	}
 }

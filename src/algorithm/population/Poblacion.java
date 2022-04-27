@@ -24,7 +24,7 @@ public class Poblacion implements Iterable<Individuo> {
 
 	private double mediaAptitud;
 	private Individuo mejorIndividuo;
-	private boolean minimizar = true;
+	private boolean minimizar = false;
 	
 
 	public void cruzar() {
@@ -39,7 +39,7 @@ public class Poblacion implements Iterable<Individuo> {
 		mutacion.operationInstance(poblacion);
 	}
 
-	public Poblacion(int size, double eliteSize, Operation cruce, Operation mutacion, Operation seleccion, double presion, String type) {
+	public Poblacion(int size, double eliteSize, Operation cruce, Operation mutacion, Operation seleccion, double presion, String type, int alturaArbol) {
 		this.cruce = cruce;
 		this.mutacion = mutacion;
 		this.seleccion = seleccion;
@@ -50,11 +50,33 @@ public class Poblacion implements Iterable<Individuo> {
 		mejorIndividuo = null;
 		mediaAptitud = 0.0;
 
-		for (int i = 0; i < size; i++) {
-            poblacion.add(new Individuo(mejorIndividuo));
-        } 
+		generaPoblacion(type, alturaArbol); 
 		
 		evalua();
+	}
+	
+	
+	private void generaPoblacion(String type, int alturaArbol) {
+		// TODO Auto-generated method stub
+		if(type.equals("RampedAndHalf")) {       //Generacion de la poblacion sin Ramped&Half
+			int numGrupos = alturaArbol - 1;
+			int tamGrupo = size / (alturaArbol - 1);
+			int profundidad = 2;        //Profundidad para el primer grupo
+			for(int i = 0; i < numGrupos; i++) {
+				for(int j = 0; j < tamGrupo; j++) {
+					if(j < tamGrupo/2)
+						poblacion.add(new Individuo("Completo", profundidad));
+					else
+						poblacion.add(new Individuo("Creciente", profundidad));
+				}
+				profundidad++;
+			}
+		}
+		else {           //Generacion de la poblacion sin Ramped&Half
+			for (int i = 0; i < size; i++) {
+	            poblacion.add(new Individuo(type, alturaArbol));
+	        }
+		}
 	}
 
 	public void evalua() {
@@ -71,10 +93,10 @@ public class Poblacion implements Iterable<Individuo> {
 		int sumAptitud = 0;
 		for (Individuo i: poblacion) {
 			int rawAptitud = i.fitness();
-			/*sumAptitud += rawAptitud;
+			sumAptitud += rawAptitud;
 			i.setAptitud(rawAptitud);
 			if (rawAptitud > fmax) fmax = rawAptitud;
-			if (rawAptitud < fmin) fmin = rawAptitud;*/
+			if (rawAptitud < fmin) fmin = rawAptitud;
 		}  fmax *= 1.05;
 		double mediaAptitud = sumAptitud / poblacion.size(); 
 

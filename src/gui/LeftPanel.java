@@ -76,6 +76,8 @@ public class LeftPanel extends JPanel {
 	private JComboBox<String> typeComboBox = new JComboBox<>(tipos.toArray(new String[0]));
 	//private JComboBox<String> typeComboBox = new JComboBox<>(types.toArray(types[0]));
 	
+	private int altura = 3;
+	private JSpinner alturaSpinner = new JSpinner(new SpinnerNumberModel(altura, 2, 10, 1));
 	// TEXT FIELDS AND OTHERS
     private JTextField sizeTextField = new JTextField("100");
     private JTextField generacionesTextField = new JTextField("100");
@@ -89,8 +91,6 @@ public class LeftPanel extends JPanel {
 
 	private JPanel rangesPanelWrap = new JPanel();
 	private JPanel rangesPanel = new JPanel();
-
-	private String type;
 		
 	public LeftPanel(MainFrame mainFrame) {
     	this.frame = mainFrame;
@@ -144,6 +144,7 @@ public class LeftPanel extends JPanel {
 
 		addComponentPanel(sizeTextField, "Tamaño población", globalMargin, this, null);
 		addComponentPanel(generacionesTextField, "Numero de generaciones", globalMargin, this, null);
+		addComponentPanel(alturaSpinner, "Altura del �rbol", globalMargin, this, null);
 		
         addComponentPanel(Arrays.asList(
 			new Pair<>("Seleccion", seleccionComboBox), 
@@ -169,6 +170,7 @@ public class LeftPanel extends JPanel {
             Operation mut = (Operation) mutacionComboBox.getSelectedItem();
 			Operation select = (Operation) seleccionComboBox.getSelectedItem();
 			String type = (String) typeComboBox.getSelectedItem();
+			int altura = (int) alturaSpinner.getModel().getValue();
 			//function = (TreeGenerator) functionComboBox.getSelectedItem();
 
 			int size = Integer.parseInt(sizeTextField.getText());
@@ -182,7 +184,7 @@ public class LeftPanel extends JPanel {
 			mut.setProb(probMutacion);
 			cruz.setProb(probCruce);
 			
-			Poblacion poblacion = new Poblacion(size, probElite, cruz, mut, select, presion, type);
+			Poblacion poblacion = new Poblacion(size, probElite, cruz, mut, select, presion, type, altura);
 			frame.setPoblacion(poblacion);
 			frame.run(numGeneraciones);
 		

@@ -23,9 +23,7 @@ public class Individuo implements Comparable<Individuo> {
 	}
 
 	public Individuo(String type, int alturaArbol) {     //le pasamos el tipo de arbol que tendrá, que podrá ser completo, creciente o Ramped&Half
-		GenTree.setAlturaTree(alturaArbol);
-		cromosoma = TreeFactory.getInstance().treeGenerator(type);     //Genera el árbol
-
+		cromosoma = TreeFactory.getInstance().treeGenerator(type, alturaArbol);     //Genera el árbol
 	}
 
 	public GenTree getCromosoma() {
