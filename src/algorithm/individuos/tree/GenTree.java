@@ -3,12 +3,18 @@ package algorithm.individuos.tree;
 public abstract class GenTree {
 	
 	//TreeGenerator treeGenerator;
-	Node root = null;              //Raiz del arbol GenTree. Inicialmente a null
+	Node root;              //Raiz del arbol GenTree. Inicialmente a null
 	
-	int alturaTree;
+	public static int alturaTree = 0;
 	public static final String terminales[] = { "A0", "A1", "D0", "D1", "D2", "D3" };
 	public static final String funciones[] = { "AND", "OR", "NOT", "IF" };
 	
+	public GenTree() {
+		super();
+		this.root = null;
+		inicializacion(root, 0);      //Genera el árbol
+	}
+
 	class Node {    
 	    String value; 
 	        Node left, right, center; 
@@ -29,6 +35,8 @@ public abstract class GenTree {
 	    	 return value;
 	     }*/
 	}
+		
+	public abstract Node inicializacion(Node root, int altura);
 
 	public Boolean getAptitud(){    
 		return getAptitud(root);
@@ -50,10 +58,12 @@ public abstract class GenTree {
 		this.root = root;
 	}
 
-	public void generarArbol() {
+	/*public void generarArbol() {
 		inicializacion(root, 0);
-	}
+	}*/
 	
-	public abstract Node inicializacion(Node root, int altura);
+	public static void setAlturaTree(int altura) {
+		alturaTree = altura;
+	}
 
 }

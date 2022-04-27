@@ -8,8 +8,7 @@ import javax.swing.SpinnerNumberModel;
 import org.javatuples.Pair;
 
 import algorithm.operations.cruces.*;
-import algorithm.functiones.*;
-import algorithm.individuos.Vuelo;
+import algorithm.individuos.tree.GenTree;
 import algorithm.operations.mutaciones.*;
 import algorithm.operations.Operation;
 import algorithm.population.Poblacion;
@@ -54,31 +53,28 @@ public class LeftPanel extends JPanel {
 	private JComboBox<Operation> mutacionComboBox = new JComboBox<>();
 
 	private List<Operation> mutacionesGenericas = Arrays.asList(
-		new MutacionIntercambio(),
-		new MutacionHeuristica(),
-		new MutacionInsercion(),
-		new MutacionInversion()
+		new MutacionTerminal(),
+		new MutacionFuncional(),
+		new MutacionSubArbol()
 	);
 
 	// CRUCES
 	private JComboBox<Operation> cruceComboBox = new JComboBox<>();
 
 	private List<Operation> crucesGenericos = Arrays.asList(
-		new CruceCiclosCX(),
-		new CruceCO(),
-		new CruceOrdenOX(),
-		new CruceOrdenPrioritario(),
-		new CrucePMX(),
-		new CrucePosicionPrioritaria()
+		new CruceIntercambioArboles()
 	);
 	
 	private Map<String, Map<String, Double>> matrizSEP;
 
 	// FUNCIONES
-	private List<TreeGenerator> functions = Arrays.asList(
-		new Fitness1(),
+	/*private List<GenTree> functions = Arrays.asList(
+		new Tree(),
 		new Fitness2()
-	); private JComboBox<TreeGenerator> functionComboBox = new JComboBox<>(functions.toArray(new TreeGenerator[0]));
+	);*/ 
+	private List<String> tipos = Arrays.asList("Completo", "Creciente", "RampdedAndHalf");
+	private JComboBox<String> typeComboBox = new JComboBox<>(tipos.toArray(new String[0]));
+	//private JComboBox<String> typeComboBox = new JComboBox<>(types.toArray(types[0]));
 	
 	// TEXT FIELDS AND OTHERS
     private JTextField sizeTextField = new JTextField("100");
@@ -94,17 +90,8 @@ public class LeftPanel extends JPanel {
 	private JPanel rangesPanelWrap = new JPanel();
 	private JPanel rangesPanel = new JPanel();
 
-	private TreeGenerator function;
-	private int numPistas = 3;
-	private int numVuelos = 12;
-	private int numPistasProv = numPistas;
-	private int numVuelosProv = numVuelos;
-	
-	private JSpinner numPistaSpinner = new JSpinner(new SpinnerNumberModel(numPistas, numPistas, 10, 1));
-	private JSpinner numVuelosSpinner = new JSpinner(new SpinnerNumberModel(numVuelos, numVuelos, 50, 1));
-	
-	private List<Vuelo> vuelos = new ArrayList<>();
-	
+	private String type;
+		
 	public LeftPanel(MainFrame mainFrame) {
     	this.frame = mainFrame;
     	
@@ -113,35 +100,6 @@ public class LeftPanel extends JPanel {
 	}
 	
 	private void inicializaDatos() {       //Provisional hasta que podamos modificar los parametros de entrada, primero comprobar que funciona el algoritmo
-    	
-		matrizSEP = new HashMap<>() {{
-			put("", new HashMap<String, Double>() {{
-				put("P", 0.0); put("W", 0.0); put("G", 0.0);
-			}});
-			put("W", new HashMap<String, Double>() {{
-				put("W", 1.0); put("G", 1.5); put("P", 2.0); 
-			}});
-			put("G", new HashMap<String, Double>() {{
-				put("W", 1.0); put("G", 1.5); put("P", 1.5); 
-			}});
-			put("P", new HashMap<String, Double>() {{
-				put("W", 1.0); put("G", 1.0); put("P", 1.0); 
-			}});
-			
-		}};
-
-		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "W", new ArrayList<Double>(Arrays.asList(11.0, 10.0, 9.0)), matrizSEP));
-		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "G", new ArrayList<Double>(Arrays.asList(15.0, 17.0, 19.0)), matrizSEP));
-		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "W", new ArrayList<Double>(Arrays.asList(6.0, 7.0, 8.0)), matrizSEP));
-		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "W", new ArrayList<Double>(Arrays.asList(6.0, 7.0, 8.0)), matrizSEP));
-		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "P", new ArrayList<Double>(Arrays.asList(9.0, 12.0, 15.0)), matrizSEP));
-		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "W", new ArrayList<Double>(Arrays.asList(7.0, 6.0, 5.0)), matrizSEP));
-		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "G", new ArrayList<Double>(Arrays.asList(15.0, 17.0, 19.0)), matrizSEP));
-		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "W", new ArrayList<Double>(Arrays.asList(6.0, 7.0, 8.0)), matrizSEP));
-		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "W", new ArrayList<Double>(Arrays.asList(6.0, 7.0, 8.0)), matrizSEP));
-		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "P", new ArrayList<Double>(Arrays.asList(9.0, 12.0, 15.0)), matrizSEP));
-		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "W", new ArrayList<Double>(Arrays.asList(7.0, 6.0, 5.0)), matrizSEP));
-		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "G", new ArrayList<Double>(Arrays.asList(9.0, 7.0, 5.0)), matrizSEP));
 
 	}
      
@@ -181,14 +139,11 @@ public class LeftPanel extends JPanel {
 
 		// ADD COMPONENTS
 		addComponentPanel(Arrays.asList(
-			new Pair<>("Funcion", functionComboBox)
+			new Pair<>("Tipo de �rbol", typeComboBox)
 		), globalMargin, this, null);
 
 		addComponentPanel(sizeTextField, "Tamaño población", globalMargin, this, null);
 		addComponentPanel(generacionesTextField, "Numero de generaciones", globalMargin, this, null);
-		
-		addComponentPanel(numPistaSpinner, "Numero de pistas", globalMargin, this, null);
-		addComponentPanel(numVuelosSpinner, "Numero de vuelos", globalMargin, this, null);
 		
         addComponentPanel(Arrays.asList(
 			new Pair<>("Seleccion", seleccionComboBox), 
@@ -206,14 +161,6 @@ public class LeftPanel extends JPanel {
 		), globalMargin, null, this);
         
         addComponentPanel(eliteTextField, "% Elite", globalMargin, this, null);
-        
-        numPistaSpinner.addChangeListener(a -> {
-        	numPistasProv = (int) numPistaSpinner.getModel().getValue();
-        });
-        
-        numVuelosSpinner.addChangeListener(a -> {
-        	numVuelosProv = (int) numVuelosSpinner.getModel().getValue();
-        });
     	
 		// ENTER BUTTON TO START EVERYTHING
     	add(enter);
@@ -221,7 +168,8 @@ public class LeftPanel extends JPanel {
             Operation cruz = (Operation) cruceComboBox.getSelectedItem();
             Operation mut = (Operation) mutacionComboBox.getSelectedItem();
 			Operation select = (Operation) seleccionComboBox.getSelectedItem();
-			function = (TreeGenerator) functionComboBox.getSelectedItem();
+			String type = (String) typeComboBox.getSelectedItem();
+			//function = (TreeGenerator) functionComboBox.getSelectedItem();
 
 			int size = Integer.parseInt(sizeTextField.getText());
 			int numGeneraciones = Integer.parseInt(generacionesTextField.getText());
@@ -231,58 +179,14 @@ public class LeftPanel extends JPanel {
 			double probCruce = Double.parseDouble(cruceTextField.getText())/100.0;
 			double presion = Double.parseDouble(presionTextField.getText());
 			
-			if(numVuelosProv != numVuelos)
-				modificaVuelos();
-			
-			if(numPistasProv != numPistas)
-				modificaTEstimados();
-			
 			mut.setProb(probMutacion);
 			cruz.setProb(probCruce);
 			
-			Poblacion poblacion = new Poblacion(size, probElite, function, cruz, mut, select, presion, vuelos);
+			Poblacion poblacion = new Poblacion(size, probElite, cruz, mut, select, presion, type);
 			frame.setPoblacion(poblacion);
 			frame.run(numGeneraciones);
 		
         });
     }
 
-	private void modificaVuelos() {
-		int diff = numVuelosProv - numVuelos;
-		
-		if(diff < 0) {
-			int j = numVuelos;
-			
-			for(int i = 0; i < Math.abs(diff); i++)
-				vuelos.remove(j - (i + 1));
-		}
-		else {
-			for(int i = 0; i < diff; i++) {
-				List<Double> tEstimados = new ArrayList<>();
-				for(int j = 0; j < numPistasProv; j++)
-					tEstimados.add((double) MyRandom.getInstance().nextInt(24));
-				vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), MyRandom.getSizeVuelo(), tEstimados, matrizSEP));
-			}
-		}
-		
-		numVuelos = numVuelosProv;
-	}
-	
-	private void modificaTEstimados() {
-		int diff = numPistasProv - numPistas;
-		
-		for(int i = 0; i < numVuelosProv; i++) {
-			if(diff < 0) {
-				
-				for(int m = 0; m < Math.abs(diff); m++)
-					vuelos.get(i).removeTiempoEstimado();
-			}
-			else {
-				for(int m = 0; m < diff; m++)
-					vuelos.get(i).addTiempoEstimado((double) MyRandom.getInstance().nextInt(24));
-			}
-		}
-		
-		numPistas = numPistasProv;
-	}
 }

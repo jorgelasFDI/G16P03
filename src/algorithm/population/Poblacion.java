@@ -7,9 +7,7 @@ import java.util.List;
 
 import org.javatuples.Pair;
 
-import algorithm.functiones.TreeGenerator;
 import algorithm.individuos.Individuo;
-import algorithm.individuos.Vuelo;
 import algorithm.operations.Operation;
 
 public class Poblacion implements Iterable<Individuo> {
@@ -41,7 +39,7 @@ public class Poblacion implements Iterable<Individuo> {
 		mutacion.operationInstance(poblacion);
 	}
 
-	public Poblacion(int size, double eliteSize, TreeGenerator function, Operation cruce, Operation mutacion, Operation seleccion, double presion, List<Vuelo> objects) {
+	public Poblacion(int size, double eliteSize, Operation cruce, Operation mutacion, Operation seleccion, double presion, String type) {
 		this.cruce = cruce;
 		this.mutacion = mutacion;
 		this.seleccion = seleccion;
@@ -53,7 +51,7 @@ public class Poblacion implements Iterable<Individuo> {
 		mediaAptitud = 0.0;
 
 		for (int i = 0; i < size; i++) {
-            poblacion.add(new Individuo(function, objects));
+            poblacion.add(new Individuo(mejorIndividuo));
         } 
 		
 		evalua();
@@ -70,17 +68,17 @@ public class Poblacion implements Iterable<Individuo> {
 		// REVISION
 		double fmax = Double.NEGATIVE_INFINITY;
 		double fmin = Double.POSITIVE_INFINITY;
-		double sumAptitud = 0.0;
+		int sumAptitud = 0;
 		for (Individuo i: poblacion) {
-			double rawAptitud = i.fitness();
-			sumAptitud += rawAptitud;
+			int rawAptitud = i.fitness();
+			/*sumAptitud += rawAptitud;
 			i.setAptitud(rawAptitud);
 			if (rawAptitud > fmax) fmax = rawAptitud;
-			if (rawAptitud < fmin) fmin = rawAptitud;
+			if (rawAptitud < fmin) fmin = rawAptitud;*/
 		}  fmax *= 1.05;
 		double mediaAptitud = sumAptitud / poblacion.size(); 
 
-		double sumAptitudRevisada = 0.0;
+		int sumAptitudRevisada = 0;
 		for (Individuo i: poblacion) {
 			if (minimizar) i.setAptitudRevisada(fmax - i.getAptitud());
 			else i.setAptitudRevisada(Math.abs(fmin) + i.getAptitud());
@@ -106,7 +104,7 @@ public class Poblacion implements Iterable<Individuo> {
 			double aMin = mediaAptitudRevisada/(mediaAptitudRevisada - peorGeneracion.getAptitudRevisada());
 			double bMin = (1 - aMin)*mediaAptitudRevisada;
 
-			sumAptitudRevisada = 0.0;
+			sumAptitudRevisada = 0;
 			for (Individuo i: poblacion) {
 				double value = aMax*i.getAptitudRevisada() + bMax;
 				if (value < 0) value = aMin*i.getAptitudRevisada() + bMin;

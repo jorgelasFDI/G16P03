@@ -32,7 +32,7 @@ public class AlgoritmoGenetico {
         generaciones.addGeneracion(new Generacion(poblacion.get(0).getAptitud(), poblacion.getMediaAptitud(), poblacion.getMejorAbsoluto()));
         while (generacionActual < numGeneraciones - 1) {
             // Generar Elite
-            poblacion.generarElite();   //Poblacion ya ordenada por aptitud, sacar solo los n primeros
+            /*poblacion.generarElite();   //Poblacion ya ordenada por aptitud, sacar solo los n primeros
             // Seleccion
             poblacion.seleccionar();
             // Cruce
@@ -46,7 +46,7 @@ public class AlgoritmoGenetico {
             
             generaciones.addGeneracion(new Generacion(poblacion.get(0).getAptitud(), poblacion.getMediaAptitud(), poblacion.getMejorAbsoluto()));
             //Siguiente generacion
-            generacionActual++;
+            generacionActual++;*/
             //System.out.println(generacionActual);
         }
                 

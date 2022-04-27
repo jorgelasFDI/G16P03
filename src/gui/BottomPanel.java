@@ -30,12 +30,12 @@ public class BottomPanel extends JPanel implements Observers {
 		setBorder(border);
 		// TODO complete
 		alg.addObserver(this);
-		BestIndTableModel bm = new BestIndTableModel(alg);
-		JTable bt =new JTable(bm);
+		//BestIndTableModel bm = new BestIndTableModel(alg);
+		//JTable bt =new JTable(bm);
 		//bt.setMinimumSize(new Dimension(200, 100));
-		JScrollPane scroll = new JScrollPane(bt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		//JScrollPane scroll = new JScrollPane(bt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
-		this.add(scroll);
+		//this.add(scroll);
         //tablePanel = new JPanel();
 		
 		//addLabel("Solucion: ", tablePanel);

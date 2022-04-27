@@ -1,52 +1,32 @@
 package algorithm.individuos;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import algorithm.functiones.TreeGenerator;
 import algorithm.individuos.tree.GenTree;
-import auxiliar.MyRandom;
 
 public class Individuo implements Comparable<Individuo> {
 
 	//public static String terminales[];
 
-	private GenTree cromosoma;
-	private int hMaxima;
-	//private Map<Integer, Vuelo> genesToObjects = new HashMap<>();
-
-	private TreeGenerator function;
-	private double aptitud;
+	private GenTree cromosoma = null;
+	private int aptitud;
     private double puntuacion; 
     private double puntuacionAcumulada;
 	private double aptitudRevisada;
 
 	public Individuo(Individuo individuo) {
-		function = individuo.getFunction();
+		//function = individuo.getFunction();
 		//size = individuo.getSize();
 		aptitud = individuo.getAptitud();
 		aptitudRevisada = individuo.getAptitudRevisada();
         puntuacion = individuo.getPuntuacion();
         puntuacionAcumulada = individuo.getPuntuacionAcumulada();
-		
-		//for (int i = 0; i < size; i++) genesToObjects.put(i + 1, new Vuelo(individuo.getVuelo(i + 1)));
-		//for (int i = 0; i < size; i++) genes.add(individuo.getGen(i));
+        cromosoma = individuo.getCromosoma();
 	}
 
-	public Individuo(TreeGenerator function) {     //params guarda la tolerancia[0] y el nï¿½ de vuelos[1]
-		//this.size = objects.size();
-		//this.hMaxima = hMaxima;
-		this.function = function;
-		
-		cromosoma = new GenTree();
-		cromosoma.generate(function);
-		//for(int i = 0; i < size; i++) genesToObjects.put(i + 1, new Vuelo(objects.get(i)));
-		//MyRandom.getRandomNoRepeat(genes, size, 1, size); // genes vacio -> 0 - 11
-	}
+	public Individuo(String type, int alturaArbol) {     //le pasamos el tipo de arbol que tendrá, que podrá ser completo, creciente o Ramped&Half
+		GenTree.setAlturaTree(alturaArbol);
+		cromosoma = TreeFactory.getInstance().treeGenerator(type);     //Genera el árbol
 
-	/*public Map<Integer, Vuelo> getGenesToObjects() {
-		return genesToObjects;
-	}*/
+	}
 
 	public GenTree getCromosoma() {
 		return cromosoma;
@@ -56,19 +36,19 @@ public class Individuo implements Comparable<Individuo> {
 		this.cromosoma = cromosoma;
 	}
 
-	public Boolean fitness() {
-		return cromosoma.getAptitud();
+	public int fitness() {
+		return 0;
 	}
 
-	public void setAptitud(double aptitud) {
+	public void setAptitud(int aptitud) {
 		this.aptitud = aptitud;
 	}
 
-	public double getAptitud() {
+	public int getAptitud() {
 		return aptitud;
 	}
 
-	public TreeGenerator getFunction() {
+	/*public TreeGenerator getFunction() {
 		return function;
 	}
 	
