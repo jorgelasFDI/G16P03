@@ -29,6 +29,8 @@ public abstract class GenTree {
 	            left = null; 
 	            right = null; 
 	            center = null;
+	            num_nodos = 1;
+	            profundidad = 1;
 	        }   
 	        
 	        Node(Node node){ 
@@ -36,6 +38,8 @@ public abstract class GenTree {
 	            this.left = node.left; 
 	            this.right = node.right; 
 	            this.center = node.center;
+	            this.num_nodos = node.num_nodos;
+	            this.profundidad = node.profundidad;
 	        } 
 	}
 		
@@ -64,20 +68,34 @@ public abstract class GenTree {
 	public Node generaArbolFuncion(int altura, Node raiz) {
 		String value = funciones[MyRandom.getInstance().nextInt(funciones.length)];
 		raiz = new Node(value);    //Con sus ramas inicialmente vacias
+		int prof = 0;
 		
 		if(value.equals("NOT")) {
 			raiz.center = inicializacion(raiz.center, altura + 1);
 		}
 		else {	
 			//Genera arbol izquierdo
-			raiz.left = inicializacion(raiz.left, altura + 1);
+			Node izq = inicializacion(raiz.left, altura + 1);
+			raiz.left = izq;    raiz.num_nodos += izq.num_nodos;
+			prof = izq.profundidad;
+
 			//Genera arbol derecho
-			raiz.right = inicializacion(raiz.right, altura + 1);
+			Node dcho = inicializacion(raiz.right, altura + 1);
+			raiz.right = dcho;     raiz.num_nodos += dcho.num_nodos;
+			
+			if(prof < dcho.profundidad) {
+				prof = dcho.profundidad;
+			}
 			
 			if(value.equals("IF")) {
 				raiz.center = inicializacion(raiz.center, altura + 1);
+				
+				if(prof < raiz.center.profundidad) {
+					prof = raiz.center.profundidad;
+				}
 			}
 		}
+		raiz.profundidad = prof + 1;
 		
 		return raiz;
 	}

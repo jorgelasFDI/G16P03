@@ -45,8 +45,8 @@ public class AlgoritmoGenetico {
             poblacion.evalua();
             
             generaciones.addGeneracion(new Generacion(poblacion.get(0).getAptitud(), poblacion.getMediaAptitud(), poblacion.getMejorAbsoluto()));
-            //Siguiente generacion
-            generacionActual++;*/
+            //Siguiente generacion*/
+            generacionActual++;
             //System.out.println(generacionActual);
         }
                 
