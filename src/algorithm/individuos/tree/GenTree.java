@@ -82,7 +82,7 @@ public abstract class GenTree {
 	private int getAptitud(Node root) {      //Devuelve la aptitud recorriendo el árbol recursivamente
 		int salida = 0;
 		
-		if()
+		
 		
 		return salida;
 	}

@@ -2,9 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/JL/Documents/GitHub/G16P02/lib/guava-31.1-jre.jar"/>
-	<classpathentry kind="lib" path="C:/Users/JL/Documents/GitHub/G16P02/lib/javatuples-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/JL/Documents/GitHub/G16P02/lib/JMathArray.jar"/>
-	<classpathentry kind="lib" path="C:/Users/JL/Documents/GitHub/G16P02/lib/jmathplot.jar"/>
+	<classpathentry kind="lib" path="lib/guava-31.1-jre.jar"/>
+	<classpathentry kind="lib" path="lib/javatuples-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/JMathArray.jar"/>
+	<classpathentry kind="lib" path="lib/jmathplot.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
