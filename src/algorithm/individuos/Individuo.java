@@ -1,5 +1,7 @@
 package algorithm.individuos;
 
+import java.util.ArrayList;
+
 import algorithm.individuos.tree.GenTree;
 
 public class Individuo implements Comparable<Individuo> {
@@ -34,8 +36,15 @@ public class Individuo implements Comparable<Individuo> {
 		this.cromosoma = cromosoma;
 	}
 
-	public int fitness() {
-		return 0;
+	public int fitness(ArrayList<ArrayList<Integer>> combinaciones, Integer[] solution) {
+		int total = 0;
+		
+		for(int i = 0; i < combinaciones.size(); i++) {
+			if(cromosoma.getAptitud(combinaciones.get(i)) == solution[i])
+				total++;
+		}
+		
+		return total;
 	}
 
 	public void setAptitud(int aptitud) {

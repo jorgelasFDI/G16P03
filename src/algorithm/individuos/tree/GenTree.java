@@ -1,5 +1,7 @@
 package algorithm.individuos.tree;
 
+import java.util.ArrayList;
+
 import auxiliar.MyRandom;
 
 public abstract class GenTree {
@@ -45,12 +47,44 @@ public abstract class GenTree {
 		
 	public abstract Node inicializacion(Node root, int altura);
 
-	public Boolean getAptitud(){    
+	public int getAptitud(ArrayList<Integer> combinacion){    
 		return getAptitud(root);
 	}
 	
-	private Boolean getAptitud(Node root) {      //Devuelve la aptitud recorriendo el árbol recursivamente
-		return true;
+	private int and(int a, int b) {
+		if(a == 1 && b == 1)
+			return 1;
+		
+		return 0;
+	}
+	
+	private int or(int a, int b) {
+		if(a == 1 || b == 1)
+			return 1;
+		
+		return 0;
+	}
+	
+	private int not(int a) {
+		if(a == 1)
+			return 0;
+		
+		return 1;
+	}
+	
+	private int if_function(int a, int b, int c) {
+		if(a == 1)
+			return b;
+		
+		return c;
+	}
+	
+	private int getAptitud(Node root) {      //Devuelve la aptitud recorriendo el árbol recursivamente
+		int salida = 0;
+		
+		if()
+		
+		return salida;
 	}
 	
 	public int getAltura() {

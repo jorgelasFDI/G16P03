@@ -12,6 +12,8 @@ import algorithm.operations.Operation;
 
 public class Poblacion implements Iterable<Individuo> {
 
+	private static Integer[] solution = {0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1};
+	private static ArrayList<ArrayList<Integer>> combinaciones = new ArrayList<>();
 	private Operation cruce;
 	private Operation mutacion;
 	private Operation seleccion;
@@ -49,13 +51,31 @@ public class Poblacion implements Iterable<Individuo> {
 		this.eliteSize = (int) Math.floor(eliteSize * size);
 		mejorIndividuo = null;
 		mediaAptitud = 0.0;
-
+         //Genera las combinaciones de números, también sirve por si deseamos cambiar el tamanio del multiplexor
 		generaPoblacion(type, alturaArbol); 
 		
 		evalua();
 	}
 	
+	public static void generateCombinations() {
+		int num_combinations = 64;
+		
+		for(int i = 0; i < num_combinations; i++) {
+			String binary = Integer.toBinaryString(i);
+			String[] combString = binary.split("");
+			ArrayList<Integer> comb = new ArrayList<>();
+			
+			for(int j = 0; j < 6 - combString.length; j++)
+				comb.add(0);
+			
+			for(int j = 0; j < combString.length; j++)
+				comb.add(Integer.parseInt(combString[j]));
+			
+			combinaciones.add(comb);
+		}
+	}
 	
+
 	private void generaPoblacion(String type, int alturaArbol) {
 		// TODO Auto-generated method stub
 		if(type.equals("RampedAndHalf")) {       //Generacion de la poblacion sin Ramped&Half
@@ -91,8 +111,9 @@ public class Poblacion implements Iterable<Individuo> {
 		double fmax = Double.NEGATIVE_INFINITY;
 		double fmin = Double.POSITIVE_INFINITY;
 		int sumAptitud = 0;
+				
 		for (Individuo i: poblacion) {
-			int rawAptitud = i.fitness();
+			int rawAptitud = i.fitness(combinaciones, solution);
 			sumAptitud += rawAptitud;
 			i.setAptitud(rawAptitud);
 			if (rawAptitud > fmax) fmax = rawAptitud;
@@ -200,5 +221,17 @@ public class Poblacion implements Iterable<Individuo> {
 	@Override
 	public Iterator<Individuo> iterator() {
 		return poblacion.iterator();
+	}
+
+	public static void printCombinaciones() {
+		// TODO Auto-generated method stub
+		for(int i = 0; i < combinaciones.size(); i++) {
+			ArrayList comb = combinaciones.get(i);
+			for(int j = 0; j < comb.size(); j++) {
+				System.out.print(comb.get(j) + " ");
+			}
+			System.out.println();
+		}
+		System.out.print("FIN");
 	}
 }
