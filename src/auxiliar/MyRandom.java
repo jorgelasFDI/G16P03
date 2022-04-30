@@ -1,7 +1,9 @@
 package auxiliar;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.javatuples.Pair;
 
@@ -24,6 +26,14 @@ public class MyRandom {
             last = Math.max(last, num);
             first = Math.min(first, num);
         } return new Pair<>(first, last);
+    }
+
+    public static <T> T getRandomValueInSet(Set<T> set) {
+        int index = random.nextInt(set.size());
+        Iterator<T> iter = set.iterator();
+        for (int i = 0; i < index; i++) {
+            iter.next();
+        } return iter.next();
     }
 
     public static String getSizeVuelo() {

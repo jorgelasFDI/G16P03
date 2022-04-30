@@ -3,6 +3,7 @@ package algorithm.individuos;
 import java.util.ArrayList;
 
 import algorithm.individuos.tree.GenTree;
+import auxiliar.Binary;
 
 public class Individuo implements Comparable<Individuo> {
 
@@ -40,7 +41,7 @@ public class Individuo implements Comparable<Individuo> {
 		int total = 0;
 		
 		for(int i = 0; i < combinaciones.size(); i++) {
-			if(cromosoma.getAptitud(combinaciones.get(i)) == solution[i])
+			if(cromosoma.execFunction(combinaciones.get(i)) == Binary.toBool(solution[i]));
 				total++;
 		}
 		

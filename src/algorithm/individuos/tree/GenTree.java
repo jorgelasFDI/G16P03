@@ -1,18 +1,42 @@
 package algorithm.individuos.tree;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.BinaryOperator;
 
+import auxiliar.Binary;
 import auxiliar.MyRandom;
 
 public abstract class GenTree {
 	
 	//TreeGenerator treeGenerator;
 	Node root;              //Raiz del arbol GenTree. Inicialmente a null
+
+	private interface TernaryOperator<T> {
+		public T ternary(T x, T y, T z);
+	}
 	
-	public int alturaTree = 0;
-	public static final String terminales[] = { "A0", "A1", "D0", "D1", "D2", "D3" };
-	public static final String funciones[] = { "AND", "OR", "NOT", "IF" };
+	public int alturaTree;
+	public static final Map<String, Integer> terminales = new HashMap<>(){{
+		put("A0", 0);
+		put("A1", 1);
+		put("D0", 2);
+		put("D1", 3);
+		put("D2", 4);
+		put("D3", 5);
+	}};
 	
+	public static final Map<String, TernaryOperator<Boolean>> funciones = new HashMap<>(){{
+		put("AND", (a, b, c) -> (a && b));
+		put("OR", (a, b, c) -> (a || b));
+		put("NOT", (a, b, c) -> (!a));
+		put("IF", (a, b, c) -> (a ? b : c));
+	}};
+		
 	public GenTree(int alturaTree) {
 		super();
 		this.root = null;
@@ -21,70 +45,46 @@ public abstract class GenTree {
 	}
 
 	class Node {    
-	    	String value; 
-	        Node left, right, center; 
-	    	int num_nodos; // número de nodos 
-	    	int profundidad; // profundidad del árbol
-	          
-	        Node(String value){ 
-	            this.value = value; 
-	            left = null; 
-	            right = null; 
-	            center = null;
-	            num_nodos = 1;
-	            profundidad = 1;
-	        }   
-	        
-	        Node(Node node){ 
-	            this.value = node.value; 
-	            this.left = node.left; 
-	            this.right = node.right; 
-	            this.center = node.center;
-	            this.num_nodos = node.num_nodos;
-	            this.profundidad = node.profundidad;
-	        } 
+		String value; 
+		Node left, right, center; 
+		int num_nodos; // número de nodos 
+		int profundidad; // profundidad del árbol
+			
+		Node(String value) { 
+			this.value = value; 
+			left = null; 
+			right = null; 
+			center = null;
+			num_nodos = 1;
+			profundidad = 1;
+		}   
+		
+		Node(Node node) { 
+			this.value = node.value; 
+			this.left = node.left; 
+			this.right = node.right; 
+			this.center = node.center;
+			this.num_nodos = node.num_nodos;
+			this.profundidad = node.profundidad;
+		}
 	}
 		
 	public abstract Node inicializacion(Node root, int altura);
 
-	public int getAptitud(ArrayList<Integer> combinacion){    
-		return getAptitud(root);
+	public boolean execFunction(ArrayList<Integer> combinacion){    
+		return execFunction(root, combinacion);
 	}
-	
-	private int and(int a, int b) {
-		if(a == 1 && b == 1)
-			return 1;
+
+	private boolean execFunction(Node root, ArrayList<Integer> combinacion) {      //Devuelve la aptitud recorriendo el árbol recursivamente
+		if (terminales.containsKey(root.value)) 
+			return Binary.toBool(combinacion.get(terminales.get(root.value)));
 		
-		return 0;
-	}
-	
-	private int or(int a, int b) {
-		if(a == 1 || b == 1)
-			return 1;
-		
-		return 0;
-	}
-	
-	private int not(int a) {
-		if(a == 1)
-			return 0;
-		
-		return 1;
-	}
-	
-	private int if_function(int a, int b, int c) {
-		if(a == 1)
-			return b;
-		
-		return c;
-	}
-	
-	private int getAptitud(Node root) {      //Devuelve la aptitud recorriendo el árbol recursivamente
-		int salida = 0;
-		
-		
-		
-		return salida;
+         //Si el nodo es una funcion se mira en sus sub-arboles recursivamente
+		boolean x = execFunction(root.left, combinacion);
+		boolean y = execFunction(root.center, combinacion);
+		boolean z = execFunction(root.right, combinacion);
+
+		return funciones.get(root.value).ternary(x, y, z);
 	}
 	
 	public int getAltura() {
@@ -100,12 +100,12 @@ public abstract class GenTree {
 	}
 	
 	public Node generaArbolFuncion(int altura, Node raiz) {
-		String value = funciones[MyRandom.getInstance().nextInt(funciones.length)];
+		String value = MyRandom.getRandomValueInSet(funciones.keySet());
 		raiz = new Node(value);    //Con sus ramas inicialmente vacias
 		int prof = 0;
 		
 		if(value.equals("NOT")) {
-			raiz.center = inicializacion(raiz.center, altura + 1);
+			raiz.left = inicializacion(raiz.left, altura + 1);
 		}
 		else {	
 			//Genera arbol izquierdo
@@ -134,8 +134,8 @@ public abstract class GenTree {
 		return raiz;
 	}
 	
-	public Node generaTerminal(Node raiz) {
-		String value = terminales[MyRandom.getInstance().nextInt(terminales.length)];
+	public Node generaTerminal(Node raiz) {	
+		String value = MyRandom.getRandomValueInSet(terminales.keySet());
 		return new Node(value);
 	}
 

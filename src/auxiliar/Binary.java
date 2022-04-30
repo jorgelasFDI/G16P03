@@ -11,4 +11,8 @@ public class Binary {
         return sum;
     }
 
+    public static boolean toBool(int a) {
+		return (a == 1 ? true : false);
+	}
+
 }
