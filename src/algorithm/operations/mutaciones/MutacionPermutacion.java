@@ -2,11 +2,11 @@ package algorithm.operations.mutaciones;
 
 import algorithm.individuos.Individuo;
 
-public class MutacionFuncional extends Mutacion {
+public class MutacionPermutacion extends Mutacion {
 	
-	public static final String name = "Mutacion funcional";
+	public static final String name = "Mutacion permutacion";
 
-	public MutacionFuncional() {
+	public MutacionPermutacion() {
 		super.name = name; 
 	} 
 	

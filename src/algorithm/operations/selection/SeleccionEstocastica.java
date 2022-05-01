@@ -22,7 +22,7 @@ public class SeleccionEstocastica extends Operation {
 		int posElegida = 0;
 		for(int i = 0; i < poblacion.size(); i++) {
 			while(posElegida < poblacion.size() - 1 && prob > poblacion.get(posElegida).getPuntuacionAcumulada()) posElegida++;
-			poblacion.set(i, new Individuo(nuevaPoblacion.get(posElegida)));    //new Individuo(nuevaPoblacion.get(posElegida)
+			poblacion.set(i, nuevaPoblacion.get(posElegida).copy());    //new Individuo(nuevaPoblacion.get(posElegida)
 			prob += aux;          //Comprobar si sale de rango
 		}
 	}

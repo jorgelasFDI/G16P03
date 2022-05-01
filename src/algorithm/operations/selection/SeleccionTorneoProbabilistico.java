@@ -35,9 +35,9 @@ public class SeleccionTorneoProbabilistico extends Operation {
 			double d = random.nextDouble();
 			
 			if(d >= p)
-				poblacion.set(i, new Individuo(antiguaPoblacion.get(elegido)));
+				poblacion.set(i, antiguaPoblacion.get(elegido).copy());
 			else
-				poblacion.set(i, new Individuo(antiguaPoblacion.get(otro)));
+				poblacion.set(i, antiguaPoblacion.get(otro).copy());
 			
 			elegido = -1;    otro = -1;
 		}

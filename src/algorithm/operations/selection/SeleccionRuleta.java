@@ -20,7 +20,7 @@ public class SeleccionRuleta extends Operation {
 			int posElegida = 0;
 			double probRuleta = random.nextDouble();
 			while(probRuleta > nuevaPoblacion.get(posElegida).getPuntuacionAcumulada()) posElegida++;
-			poblacion.set(i, new Individuo(nuevaPoblacion.get(posElegida)));
+			poblacion.set(i, nuevaPoblacion.get(posElegida).copy());
 		} //Se selecciona a los individuos mas aptos y se crea la nueva poblacion
 	}
 

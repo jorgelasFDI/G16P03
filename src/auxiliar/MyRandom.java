@@ -16,11 +16,15 @@ public class MyRandom {
         return random;
     }
 
+    public static int getRandomInt(int min, int max) {
+        return random.nextInt((max + 1) - min) + min;
+    }
+
     public static Pair<Integer, Integer> getRandomNoRepeat(List<Integer> selected, int ammount, int lowerbound, int upperbound) {
         int last = Integer.MIN_VALUE;
         int first = Integer.MAX_VALUE;
         while (selected.size() < ammount) {
-            int num = random.nextInt((upperbound + 1) - lowerbound) + lowerbound;
+            int num = getRandomInt(lowerbound, upperbound);
             if (selected.contains(num)) continue;
             selected.add(num);
             last = Math.max(last, num);

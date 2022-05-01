@@ -41,7 +41,7 @@ public class SeleccionTorneoDeterministico extends Operation {
 				}
 
 			}
-			poblacion.set(i, new Individuo(mejorConjunto));
+			poblacion.set(i, mejorConjunto.copy());
 			
 			for(Integer ind: colaSelected) {
 				selected.set(ind, false);

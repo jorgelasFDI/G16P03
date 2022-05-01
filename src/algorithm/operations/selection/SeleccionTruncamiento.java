@@ -21,7 +21,7 @@ public class SeleccionTruncamiento extends Operation {
 		int aux = poblacion.size() - 1;
 		
 		for(int i = 0; i < indTrunc; i++) {
-			poblacion.set(aux - i, new Individuo(poblacion.get(i)));
+			poblacion.set(aux - i, poblacion.get(i).copy());
 		}
 	}
 

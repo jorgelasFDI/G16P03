@@ -8,19 +8,18 @@ import javax.swing.SpinnerNumberModel;
 import org.javatuples.Pair;
 
 import algorithm.operations.cruces.*;
-import algorithm.individuos.tree.GenTree;
 import algorithm.operations.mutaciones.*;
+import algorithm.functions.Function;
+import algorithm.functions.Function1;
 import algorithm.operations.Operation;
 import algorithm.population.Poblacion;
-import auxiliar.MyRandom;
-import auxiliar.RandomGenerator;
+import algorithm.population.PoblacionTree;
+import auxiliar.tree.LogicalNode;
 import algorithm.operations.selection.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -54,7 +53,7 @@ public class LeftPanel extends JPanel {
 
 	private List<Operation> mutacionesGenericas = Arrays.asList(
 		new MutacionTerminal(),
-		new MutacionFuncional(),
+		new MutacionPermutacion(),
 		new MutacionSubArbol()
 	);
 
@@ -64,17 +63,17 @@ public class LeftPanel extends JPanel {
 	private List<Operation> crucesGenericos = Arrays.asList(
 		new CruceIntercambioArboles()
 	);
-	
-	private Map<String, Map<String, Double>> matrizSEP;
 
 	// FUNCIONES
-	/*private List<GenTree> functions = Arrays.asList(
-		new Tree(),
-		new Fitness2()
-	);*/ 
+
+	private JComboBox<Function> functionComboBox = new JComboBox<>();
+
+	private List<Function> funcionesGenericas = Arrays.asList(
+		new Function1()
+	);
+
 	private List<String> tipos = Arrays.asList("Completo", "Creciente", "RampdedAndHalf");
 	private JComboBox<String> typeComboBox = new JComboBox<>(tipos.toArray(new String[0]));
-	//private JComboBox<String> typeComboBox = new JComboBox<>(types.toArray(types[0]));
 	
 	private int altura = 3;
 	private JSpinner alturaSpinner = new JSpinner(new SpinnerNumberModel(altura, 2, 10, 1));
@@ -91,16 +90,39 @@ public class LeftPanel extends JPanel {
 
 	private JPanel rangesPanelWrap = new JPanel();
 	private JPanel rangesPanel = new JPanel();
+
+	private List<Integer> solution = new ArrayList<>(
+		Arrays.asList(0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1)
+	); private List<List<Integer>> combinaciones = new ArrayList<>();
+	private List<String> allvalues = new ArrayList<>(Arrays.asList("A0", "A1", "D0", "D1", "D2", "D3", "AND", "OR", "IF", "NOT")); 
+
+	public void generateCombinations() {
+		int num_combinations = 64;
+		
+		for(int i = 0; i < num_combinations; i++) {
+			String binary = Integer.toBinaryString(i);
+			String[] combString = binary.split("");
+			ArrayList<Integer> comb = new ArrayList<>();
+			
+			for(int j = 0; j < 6 - combString.length; j++)
+				comb.add(0);
+			
+			for(int j = 0; j < combString.length; j++)
+				comb.add(Integer.parseInt(combString[j]));
+			
+			combinaciones.add(comb);
+		}
+
+		for (String term: allvalues) {
+			LogicalNode.add(term);
+		}
+
+	}
 		
 	public LeftPanel(MainFrame mainFrame) {
     	this.frame = mainFrame;
-    	
-    	inicializaDatos();
+		generateCombinations();
 		initGUI();
-	}
-	
-	private void inicializaDatos() {       //Provisional hasta que podamos modificar los parametros de entrada, primero comprobar que funciona el algoritmo
-
 	}
      
     private void addLabel(String label, JPanel panel) {
@@ -132,19 +154,23 @@ public class LeftPanel extends JPanel {
     	seleccionComboBox.setModel(new DefaultComboBoxModel<Operation>(seleccionesGenericas.toArray(new Operation[0])));
 		cruceComboBox.setModel(new DefaultComboBoxModel<Operation>(crucesGenericos.toArray(new Operation[0])));
 		mutacionComboBox.setModel(new DefaultComboBoxModel<Operation>(mutacionesGenericas.toArray(new Operation[0])));
+		functionComboBox.setModel(new DefaultComboBoxModel<Function>(funcionesGenericas.toArray(new Function[0])));
 		// SET LAYOUTS
     	this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		rangesPanelWrap.setLayout(new BoxLayout(rangesPanelWrap, BoxLayout.Y_AXIS));
 		rangesPanel.setLayout(new BoxLayout(rangesPanel, BoxLayout.Y_AXIS));
 
+		addComponentPanel(Arrays.asList(
+			new Pair<>("Funcion", functionComboBox)
+		), globalMargin, this, null);
 		// ADD COMPONENTS
 		addComponentPanel(Arrays.asList(
-			new Pair<>("Tipo de árbol", typeComboBox)
+			new Pair<>("Tipo de ï¿½rbol", typeComboBox)
 		), globalMargin, this, null);
 
 		addComponentPanel(sizeTextField, "TamaÃ±o poblaciÃ³n", globalMargin, this, null);
 		addComponentPanel(generacionesTextField, "Numero de generaciones", globalMargin, this, null);
-		addComponentPanel(alturaSpinner, "Altura del árbol", globalMargin, this, null);
+		addComponentPanel(alturaSpinner, "Altura del ï¿½rbol", globalMargin, this, null);
 		
         addComponentPanel(Arrays.asList(
 			new Pair<>("Seleccion", seleccionComboBox), 
@@ -170,8 +196,10 @@ public class LeftPanel extends JPanel {
             Operation mut = (Operation) mutacionComboBox.getSelectedItem();
 			Operation select = (Operation) seleccionComboBox.getSelectedItem();
 			String type = (String) typeComboBox.getSelectedItem();
-			int altura = (int) alturaSpinner.getModel().getValue();
-			//function = (TreeGenerator) functionComboBox.getSelectedItem();
+			int depth = (int) alturaSpinner.getModel().getValue();
+			Function1 function = (Function1) functionComboBox.getSelectedItem();
+			LogicalNode.setCombinaciones(combinaciones);
+			LogicalNode.setSolution(solution);
 
 			int size = Integer.parseInt(sizeTextField.getText());
 			int numGeneraciones = Integer.parseInt(generacionesTextField.getText());
@@ -183,10 +211,10 @@ public class LeftPanel extends JPanel {
 			
 			mut.setProb(probMutacion);
 			cruz.setProb(probCruce);
-			
-			Poblacion.generateCombinations();
-			Poblacion.printCombinaciones();
-			Poblacion poblacion = new Poblacion(size, probElite, cruz, mut, select, presion, type, altura);
+
+			Poblacion poblacion = new Poblacion(new PoblacionTree(), probElite, cruz, mut, select, presion);
+			poblacion.generaPoblacion(type, depth, size, function);
+
 			frame.setPoblacion(poblacion);
 			frame.run(numGeneraciones);
 		

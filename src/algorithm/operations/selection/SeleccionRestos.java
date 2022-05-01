@@ -23,13 +23,13 @@ public class SeleccionRestos extends Operation {
 
 		List<Individuo> nuevaPoblacion = new ArrayList<>();
 		while(poblacion.get(ind).getPuntuacion() * poblacion.size() < limit)
-			nuevaPoblacion.add(new Individuo(poblacion.get(ind--)));
+			nuevaPoblacion.add(poblacion.get(ind--).copy());
 
 		Poblacion.evalua(nuevaPoblacion, nuevaPoblacion.get(0).getAptitud() >= nuevaPoblacion.get(nuevaPoblacion.size() - 1).getAptitud(), null, null);
 		if (nuevaPoblacion.size() > 0) Operation.operate(seleccion, nuevaPoblacion);
 
 		for (int i = ind + 1, j = 0; i < poblacion.size(); i++, j++)
-			poblacion.set(i, new Individuo(nuevaPoblacion.get(j)));
+			poblacion.set(i, nuevaPoblacion.get(j).copy());
 	}
 
 }

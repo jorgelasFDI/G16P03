@@ -1,95 +1,68 @@
 package algorithm.individuos;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-import algorithm.individuos.tree.GenTree;
-import auxiliar.Binary;
+import algorithm.functions.Function;
 
-public class Individuo implements Comparable<Individuo> {
+public abstract class Individuo<TYPE, OBJ, ITER> implements Comparable<Individuo<TYPE, OBJ, ITER>>, Iterable<ITER> {
 
-	//public static String terminales[];
+	protected Iterable<ITER> iterable = null;
+	protected Map<TYPE, OBJ> genesToObjects = new HashMap<>();
 
-	private GenTree cromosoma = null;
-	private int aptitud;
-    private double puntuacion; 
-    private double puntuacionAcumulada;
-	private double aptitudRevisada;
+	protected double aptitud;
+    protected double puntuacion; 
+    protected double puntuacionAcumulada;
+	protected double aptitudRevisada;
 
-	public Individuo(Individuo individuo) {
-		//function = individuo.getFunction();
-		//size = individuo.getSize();
+	protected int size = 0;
+	protected Function function;
+
+	public Individuo(Function function) {
+		this.function = function;
+	}
+
+	public Individuo(Individuo<TYPE, OBJ, ITER> individuo) {
+		function = individuo.getFunction();
 		aptitud = individuo.getAptitud();
 		aptitudRevisada = individuo.getAptitudRevisada();
         puntuacion = individuo.getPuntuacion();
         puntuacionAcumulada = individuo.getPuntuacionAcumulada();
-        cromosoma = individuo.getCromosoma();
+		iterable = individuo.copyGenes();
 	}
 
-	public Individuo(String type, int alturaArbol) {     //le pasamos el tipo de arbol que tendrá, que podrá ser completo, creciente o Ramped&Half
-		cromosoma = TreeFactory.getInstance().treeGenerator(type, alturaArbol);     //Genera el árbol
+	public abstract Iterable<ITER> copyGenes();
+	public abstract Individuo<TYPE, OBJ, ITER> copy();
+	public abstract int getSize();
+	public abstract void swapGen(int idx, int j, Individuo<TYPE, OBJ, ITER> other);
+
+	public void swapGen(int idx, Individuo<TYPE, OBJ, ITER> other) {
+		swapGen(idx, idx, other);
 	}
 
-	public GenTree getCromosoma() {
-		return cromosoma;
+	public void swapBit(int idx, int j) {
+		swapGen(idx, j, this);
 	}
 
-	public void setCromosoma(GenTree cromosoma) {
-		this.cromosoma = cromosoma;
+	public double fitness() {
+		return function.fitnessInstance(this);
 	}
 
-	public int fitness(ArrayList<ArrayList<Integer>> combinaciones, Integer[] solution) {
-		int total = 0;
-		
-		for(int i = 0; i < combinaciones.size(); i++) {
-			if(cromosoma.execFunction(combinaciones.get(i)) == Binary.toBool(solution[i]));
-				total++;
-		}
-		
-		return total;
+	public Function getFunction() {
+		return function;
 	}
 
-	public void setAptitud(int aptitud) {
+	public void setFunction(Function function) {
+		this.function = function;
+	}
+
+	public void setAptitud(double aptitud) {
 		this.aptitud = aptitud;
 	}
 
-	public int getAptitud() {
+	public double getAptitud() {
 		return aptitud;
-	}
-
-	/*public TreeGenerator getFunction() {
-		return function;
-	}
-	
-	/*public double getFenotipo(int idx) {
-		return genes.get(idx);
-	}
-
-	public Vuelo getVuelo(int gen) {
-		return genesToObjects.get(gen);
-	}*/
-
-	/*public void setGen(int idx, int value) {
-		genes.set(idx, value);
-	}
-
-	public int getGen(int idx) {
-		return genes.get(idx);
-	}*/
-	
-	public void swapTree(int idx, Individuo other) {
-		swapTree(idx, other, idx);
-	}
-
-	private void swapTree(int idx, Individuo other, int j) {
-		/*
-		int aux = other.getGen(j);
-		other.setGen(j, genes.get(idx));
-		setGen(idx, aux);
-		*/
-	}
-	
-	public int getAltura(){
-		return cromosoma.getAltura();
 	}
 	
     public double getPuntuacion() {
@@ -116,42 +89,32 @@ public class Individuo implements Comparable<Individuo> {
 		this.aptitudRevisada = aptitudRevisada;
 	}
 
+	public void setObject(TYPE key, OBJ value) {
+		genesToObjects.put(key, value);
+	}
+
+	public OBJ getObject(TYPE key) {
+		return genesToObjects.get(key);
+	}
+
+	public void setGenesToObjects(Map<TYPE, OBJ> genesToObjects) {
+		this.genesToObjects = genesToObjects;
+	}
+
+	public Map<TYPE, OBJ> getGenesToObjects() {
+		return genesToObjects;
+	}
+
 	@Override
-	public int compareTo(Individuo individuo) {
-		// TODO Auto-generated method stub
+	public int compareTo(Individuo<TYPE, OBJ, ITER> individuo) {
 		if (getAptitudRevisada() > individuo.getAptitudRevisada()) return 1;
         if (getAptitudRevisada() == individuo.getAptitudRevisada()) return 0;
         return -1;
 	}
 
-	public void print() {
-		// TODO Auto-generated method stub
-		/*
-		for(int i = 0; i < genes.size(); i++) {
-			System.out.print(genes.get(i) + " ");
-		}
-		System.out.println(); 
-		for(int i = 0; i < genes.size(); i++) {
-			System.out.print(genesToObjects.get(genes.get(i)).getTLA() + " ");
-		}
-		System.out.println(); 		
-		for(int i = 0; i < genes.size(); i++) {
-			System.out.print(genesToObjects.get(genes.get(i)).getPista() + " ");
-		}
-		System.out.println(); 
-		
-		System.out.println("APTITUD INDIVIDUO --> " + this.getAptitud());
-		//System.out.println();
-		//System.out.println();*/
-	}
-
-	/*public List<Integer> getGenes() {
-		return genes;
-	}
-
 	@Override
-	public Iterator<Integer> iterator() {
-		return genes.iterator();
-	}*/
+	public Iterator<ITER> iterator() {
+		return iterable.iterator();
+	}
 
 }

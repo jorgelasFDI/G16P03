@@ -27,7 +27,7 @@ public abstract class Operation {
 
     protected List<Individuo> copy(List<Individuo> poblacion) {
         List<Individuo> nuevaPoblacion = new ArrayList<>(poblacion.size());
-        for (Individuo individuo: poblacion) nuevaPoblacion.add(new Individuo(individuo));
+        for (Individuo individuo: poblacion) nuevaPoblacion.add(individuo.copy());
         return nuevaPoblacion;
     }
 
