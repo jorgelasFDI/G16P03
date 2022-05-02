@@ -75,6 +75,8 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 	public void init(int depth, BiFunction<Integer, Integer, Boolean> isLeaf, Map<String, LogicalNode> map) {
 		iterable = new Tree<>();
 		setGenesToObjects(map);
+		maxDepth = depth;
+		this.isLeaf = isLeaf;
 		size = IndividuoTree.init((Tree<String>) iterable, 1, depth, isLeaf);
 	}
 
