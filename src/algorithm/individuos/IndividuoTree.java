@@ -103,11 +103,11 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 	}
 
 	public Tree<String> getRandomNode(String type) {
-		int nodoIdx = MyRandom.getRandomInt(1, size - 1);
+		int nodoIdx = MyRandom.getRandomInt(1, size - 1); // 10 -> 5 pero que sea del tipo LEAF
 		Iterator<Tree<String>> iter = iterator();
 		Tree<String> nodo = null;
 		int i = 0;
-		while (i < nodoIdx || nodo == null) {
+		while (i < nodoIdx || nodo == null && i < size) {
 			Tree<String> other = iter.next();
 			if (getObject(other.data).type == type) 
 				nodo = other;

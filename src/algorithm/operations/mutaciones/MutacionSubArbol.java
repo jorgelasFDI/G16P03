@@ -18,7 +18,7 @@ public class MutacionSubArbol extends Mutacion {
 		IndividuoTree individuoTree = (IndividuoTree) individuo;
 		int nodoIdx = MyRandom.getRandomInt(1, individuo.getSize() - 1);
 		Tree<String> other = new Tree<>();
-		IndividuoTree.init(other, 1, individuoTree.getMaxDepth(), individuoTree.getBiFunction());
+		IndividuoTree.init(other, individuoTree.get(nodoIdx).depth() + 1, individuoTree.getMaxDepth(), individuoTree.getBiFunction());
 		individuoTree.set(nodoIdx, other);
 	}
 

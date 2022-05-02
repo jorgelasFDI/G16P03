@@ -21,7 +21,7 @@ public class CruceIntercambioArboles extends Cruce {
 		int nodo_cruce1 = MyRandom.getRandomInt(1, padre1.getSize() - 1);
  		int nodo_cruce2 = MyRandom.getRandomInt(1, padre2.getSize() - 1);
  		
- 		padre1.swapGen(nodo_cruce1, nodo_cruce2, padre2); 
+ 		padre1.swapGen(nodo_cruce1, nodo_cruce2, padre2);
 	}
 
 }
