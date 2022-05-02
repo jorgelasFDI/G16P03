@@ -53,10 +53,10 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 	public void swapGen(int idx, int j, Individuo<String, LogicalNode, Tree<String>> other) {
 		Tree<String> otherChild = other.get(j);
 		Tree<String> thisChild = this.get(idx);
+		Tree<String> otherParent = otherChild.parent;
 		int auxIdx = otherChild.index;
-		this.set(idx, otherChild);
-		other.set(j, thisChild);
-		thisChild.index = auxIdx;
+		thisChild.parent.setChild(otherChild, thisChild.index);
+		otherParent.setChild(thisChild, auxIdx);
 	}
 
 	// CUSTOM FUNCTIONS FOR THIS INDIVIDUAL
