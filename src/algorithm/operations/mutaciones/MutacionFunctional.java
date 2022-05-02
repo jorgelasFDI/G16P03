@@ -8,7 +8,7 @@ import auxiliar.tree.Tree;
 
 public class MutacionFunctional extends Mutacion {
 	
-	public static final String name = "Mutacion permutacion";
+	public static final String name = "Mutacion funcional";
 
 	public MutacionFunctional() {
 		super.name = name; 
