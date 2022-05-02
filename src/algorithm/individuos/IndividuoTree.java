@@ -15,6 +15,8 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 
 	public IndividuoTree(IndividuoTree individuo) {
 		super(individuo);
+		this.maxDepth = individuo.getMaxDepth();
+		this.isLeaf = individuo.getBiFunction();
 	}
 
 	public IndividuoTree(Function function) {

@@ -1,7 +1,5 @@
 package algorithm.operations.mutaciones;
 
-import java.util.Iterator;
-
 import algorithm.individuos.Individuo;
 import algorithm.individuos.IndividuoTree;
 import auxiliar.MyRandom;
