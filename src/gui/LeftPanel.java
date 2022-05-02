@@ -215,11 +215,13 @@ public class LeftPanel extends JPanel {
 			Poblacion poblacion = new Poblacion(new PoblacionTree(), probElite, cruz, mut, select, presion);
 			poblacion.generaPoblacion(type, depth, size, function);
 
-			poblacion.cruzar();
-			poblacion.mutar();
+			while (true) {
+				poblacion.cruzar();
+				poblacion.mutar();
+			}
 
-			frame.setPoblacion(poblacion);
-			frame.run(numGeneraciones);
+			// frame.setPoblacion(poblacion);
+			// frame.run(numGeneraciones);
 		
         });
     }

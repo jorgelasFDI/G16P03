@@ -34,19 +34,14 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 	}
 
 	@Override
-	public int getSize() {
-		return size;
-	}
-
-	@Override
 	public Tree<String> get(int idx) {
 		return ((Tree<String>) iterable).get(idx);
 	}
 
 	@Override
 	public void set(int idx, Tree<String> other) {
-		((Tree<String>) iterable).set(idx, other);
-		this.size += other.depth() - ((Tree<String>) iterable).depth();
+		Tree<String> node = ((Tree<String>) iterable).set(idx, other);
+		this.size += other.numNodos() - node.numNodos();
 	}
 
 	@Override
@@ -54,9 +49,12 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 		Tree<String> otherChild = other.get(j);
 		Tree<String> thisChild = this.get(idx);
 		Tree<String> otherParent = otherChild.parent;
+		Tree<String> thisParent = thisChild.parent;
 		int auxIdx = otherChild.index;
-		thisChild.parent.setChild(otherChild, thisChild.index);
+		thisParent.setChild(otherChild, thisChild.index);
 		otherParent.setChild(thisChild, auxIdx);
+		this.size += otherChild.numNodos() - thisChild.numNodos();
+		other.size += thisChild.numNodos() - otherChild.numNodos();
 	}
 
 	// CUSTOM FUNCTIONS FOR THIS INDIVIDUAL

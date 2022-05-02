@@ -75,10 +75,10 @@ public class Tree<T> implements Iterable<Tree<T>> {
 		return children.size() == 0 ? false : true;
 	}
 
-	public int getLevel() {
+	public int depth() {
 		if (this.isRoot())
-			return 0;
-		return parent.getLevel() + 1;
+			return 1;
+		return parent.depth() + 1;
 	}
 
 	private void registerChildForSearch(Tree<T> node) {
@@ -102,9 +102,10 @@ public class Tree<T> implements Iterable<Tree<T>> {
 		return iter.next();
 	}
 
-	public void set(int idx, Tree<T> other) {
+	public Tree<T> set(int idx, Tree<T> other) {
 		Tree<T> node = get(idx);
 		node.parent.setChild(other, node.index);
+		return node;
 	}
 	
 	public Tree<T> getChild(int i) {
@@ -118,9 +119,12 @@ public class Tree<T> implements Iterable<Tree<T>> {
 		other.parent = this;
 	}
 
-	public int depth() {
+	public int numNodos() {
 		if (children.isEmpty()) return 1;
-		return 1 + MyMath.max(children.stream().map((child) -> child.depth()).collect(Collectors.toList()));
+		int value = 1;
+		for(Tree<T> child: children){
+			value += child.numNodos();
+		} return value;
 	}
 
 	@Override

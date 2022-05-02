@@ -10,11 +10,11 @@ public class IndividuoFactory {
         switch (type) {
             case "Completo":
                 IndividuoTree individuoComplete = new IndividuoTree(function);
-                individuoComplete.init(depth, (x, y) -> (x == y), LogicalNode.map);
+                individuoComplete.init(depth, (x, y) -> (x >= y), LogicalNode.map);
                 return individuoComplete;
             case "Creciente":
                 IndividuoTree individuoCreciente = new IndividuoTree(function);
-                individuoCreciente.init(depth, (x, y) -> (0.75 < MyRandom.getInstance().nextDouble() || x == y), LogicalNode.map);
+                individuoCreciente.init(depth, (x, y) -> (0.75 < MyRandom.getInstance().nextDouble() || x >= y), LogicalNode.map);
                 return individuoCreciente;
             default:
                 return null;

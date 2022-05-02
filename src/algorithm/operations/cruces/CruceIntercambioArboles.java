@@ -13,8 +13,6 @@ public class CruceIntercambioArboles extends Cruce {
 	@Override
 	public void cruzar(Individuo individuoPrev, Individuo individuo) {
 
-		double prob = 0.9;
-
 		IndividuoTree padre1 = (IndividuoTree) individuoPrev;
 		IndividuoTree padre2 = (IndividuoTree) individuo;
 

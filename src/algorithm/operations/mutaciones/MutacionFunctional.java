@@ -19,10 +19,11 @@ public class MutacionFunctional extends Mutacion {
 		
  		IndividuoTree tIndividuo = (IndividuoTree) individuo;
 		Tree<String> node = tIndividuo.getRandomNode("NODE");
-		
+
 		String key = MyRandom.getRandomValueInSet(LogicalNode.funciones.keySet());
-		while (LogicalNode.funcionesOperandos.get(key) != node.index);
-		node.data = key;
+		while (LogicalNode.funcionesOperandos.get(key) != tIndividuo.getObject(node.data).index) {
+			key = MyRandom.getRandomValueInSet(LogicalNode.funciones.keySet());
+		}; node.data = key;
 		
 	}
 

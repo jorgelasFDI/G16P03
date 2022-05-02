@@ -35,10 +35,17 @@ public abstract class Individuo<TYPE, OBJ, ITER> implements Comparable<Individuo
 
 	public abstract Iterable<ITER> copyGenes();
 	public abstract Individuo<TYPE, OBJ, ITER> copy();
-	public abstract int getSize();
 	public abstract void swapGen(int idx, int j, Individuo<TYPE, OBJ, ITER> other);
 	public abstract ITER get(int i);
 	public abstract void set(int i, ITER other);
+
+	public int getSize() {
+		return size;
+	};
+
+	public void setSize(int i) {
+		size = i;
+	}
 
 	public void swapGen(int idx, Individuo<TYPE, OBJ, ITER> other) {
 		swapGen(idx, idx, other);
