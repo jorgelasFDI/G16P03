@@ -32,6 +32,11 @@ public class MyRandom {
         } return new Pair<>(first, last);
     }
 
+    public static <T> T getRandomValueInList(List<T> list) {
+        int index = random.nextInt(list.size());
+        return list.get(index);
+    }
+
     public static <T> T getRandomValueInSet(Set<T> set) {
         int index = random.nextInt(set.size());
         Iterator<T> iter = set.iterator();

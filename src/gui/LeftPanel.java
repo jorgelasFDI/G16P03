@@ -53,7 +53,7 @@ public class LeftPanel extends JPanel {
 
 	private List<Operation> mutacionesGenericas = Arrays.asList(
 		new MutacionTerminal(),
-		new MutacionPermutacion(),
+		new MutacionFunctional(),
 		new MutacionSubArbol()
 	);
 
@@ -214,6 +214,9 @@ public class LeftPanel extends JPanel {
 
 			Poblacion poblacion = new Poblacion(new PoblacionTree(), probElite, cruz, mut, select, presion);
 			poblacion.generaPoblacion(type, depth, size, function);
+
+			poblacion.cruzar();
+			poblacion.mutar();
 
 			frame.setPoblacion(poblacion);
 			frame.run(numGeneraciones);

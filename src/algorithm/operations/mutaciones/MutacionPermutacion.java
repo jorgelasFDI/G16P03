@@ -12,7 +12,6 @@ public class MutacionPermutacion extends Mutacion {
 	
 	@Override
 	public void mutar(Individuo individuo) {
-		// TODO Auto-generated method stub
 		
 	}
 

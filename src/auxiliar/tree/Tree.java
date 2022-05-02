@@ -3,6 +3,10 @@ package auxiliar.tree;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+import auxiliar.MyMath;
 
 public class Tree<T> implements Iterable<Tree<T>> {
 
@@ -10,8 +14,6 @@ public class Tree<T> implements Iterable<Tree<T>> {
 	public int index;
 	public Tree<T> parent;
 	public List<Tree<T>> children;
-	public int depth;
-	public int numNodos;
 
 	public boolean isRoot() {
 		return parent == null;
@@ -21,17 +23,47 @@ public class Tree<T> implements Iterable<Tree<T>> {
 		return children.size() == 0;
 	}
 
-	private List<Tree<T>> elementsIndex;
+	List<Tree<T>> elementsIndex;
+
+	public Tree() {
+		this.data = null;
+		this.children = new LinkedList<Tree<T>>();
+		this.elementsIndex = new LinkedList<Tree<T>>();
+		this.elementsIndex.add(this);
+		this.index = 0;
+	}
 
 	public Tree(T data) {
 		this.data = data;
 		this.children = new LinkedList<Tree<T>>();
 		this.elementsIndex = new LinkedList<Tree<T>>();
 		this.elementsIndex.add(this);
-		this.numNodos = 1;
+	}
+
+	public Tree(Tree<T> other) {
+		this(other.data);
+		Iterator<Tree<T>> childrenIter = other.children.iterator();
+		while (childrenIter.hasNext()) {
+			addChild(childrenIter.next());
+		}
+	}
+
+	private Tree<T> addChild(Tree<T> other) {
+		Tree<T> childNode = new Tree<T>(other);
+		childNode.parent = this;
+		childNode.index = children.size();
+		this.children.add(childNode);
+		this.registerChildForSearch(childNode);
+		return childNode;
 	}
 
 	public Tree<T> addChild(T child) {
+
+		if (this.isRoot() && this.data == null) {
+			this.data = child;
+			return this;
+		}
+
 		Tree<T> childNode = new Tree<T>(child);
 		childNode.parent = this;
 		childNode.index = children.size();
@@ -47,8 +79,7 @@ public class Tree<T> implements Iterable<Tree<T>> {
 	public int getLevel() {
 		if (this.isRoot())
 			return 0;
-		else
-			return parent.getLevel() + 1;
+		return parent.getLevel() + 1;
 	}
 
 	private void registerChildForSearch(Tree<T> node) {
@@ -64,21 +95,33 @@ public class Tree<T> implements Iterable<Tree<T>> {
 				return element;
 		} return null;
 	}
-	
-	public int getNumNodos(){
-		return numNodos;
+
+	public Tree<T> get(int idx) {
+		Iterator<Tree<T>> iter = iterator();
+		for (int i = 0; i < idx; i++)
+			iter.next();
+		return iter.next();
+	}
+
+	public void set(int idx, Tree<T> other) {
+		Tree<T> node = get(idx);
+		node.parent.setChild(other, node.index);
 	}
 	
-	public void updateNumNodos(int n){
-		numNodos += n;
+	public Tree<T> getChild(int i) {
+		if (children.size() <= i || i < 0) return null; 
+		return children.get(i);
 	}
 	
-	public Tree<T> getGen(int idx){
-		return children.get(idx);
-	}
-	
-	public void setGen(Tree<T> other, int idx){       //idx puede ser 0, 1, 2
+	public void setChild(Tree<T> other, int idx){       //idx puede ser 0, 1, 2
 		children.set(idx, other);
+		other.index = idx;
+		other.parent = this;
+	}
+
+	public int depth() {
+		if (children.isEmpty()) return 1;
+		return 1 + MyMath.max(children.stream().map((child) -> child.depth()).collect(Collectors.toList()));
 	}
 
 	@Override
@@ -88,13 +131,7 @@ public class Tree<T> implements Iterable<Tree<T>> {
 
 	@Override
 	public Iterator<Tree<T>> iterator() {
-		TreeIter<T> iter = new TreeIter<T>(this);
-		return iter;
-	}
-
-	public Tree<T> get(int i) {
-		if (children.size() <= i || i < 0) return null; 
-		return children.get(i);
+		return new TreeIter<T>(this);
 	}
 
 }

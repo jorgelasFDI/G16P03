@@ -12,56 +12,40 @@ public class TreeIter<T> implements Iterator<Tree<T>> {
 
 	public TreeIter(Tree<T> treeNode) {
 		this.treeNode = treeNode;
-		this.doNext = ProcessStages.ProcessParent;
+		hasNext = true;
 		this.childrenCurNodeIter = treeNode.children.iterator();
+		this.childrenSubNodeIter = null;
+		this.next = treeNode;
 	}
 
 	private ProcessStages doNext;
+	private boolean hasNext;
 	private Tree<T> next;
 	private Iterator<Tree<T>> childrenCurNodeIter;
 	private Iterator<Tree<T>> childrenSubNodeIter;
 
-	@Override
 	public boolean hasNext() {
-
-		if (this.doNext == ProcessStages.ProcessParent) {
-			this.next = this.treeNode;
-			this.doNext = ProcessStages.ProcessChildCurNode;
-			return true;
-		}
-
-		if (this.doNext == ProcessStages.ProcessChildCurNode) {
-			if (childrenCurNodeIter.hasNext()) {
-				Tree<T> childDirect = childrenCurNodeIter.next();
-				childrenSubNodeIter = childDirect.iterator();
-				this.doNext = ProcessStages.ProcessChildSubNode;
-				return hasNext();
-			}
-
-			else {
-				this.doNext = null;
-				return false;
-			}
-		}
-		
-		if (this.doNext == ProcessStages.ProcessChildSubNode) {
-			if (childrenSubNodeIter.hasNext()) {
-				this.next = childrenSubNodeIter.next();
-				return true;
-			}
-			else {
-				this.next = null;
-				this.doNext = ProcessStages.ProcessChildCurNode;
-				return hasNext();
-			}
-		}
-
-		return false;
+		return hasNext;
 	}
 
-	@Override
 	public Tree<T> next() {
-		return this.next;
+		if (!hasNext) return null;
+		Tree<T> current = next;
+
+		doNext = null; hasNext = false;
+		if (childrenSubNodeIter != null && childrenSubNodeIter.hasNext()) {
+			doNext = ProcessStages.ProcessChildSubNode;
+			hasNext = true;
+		} else if (childrenCurNodeIter.hasNext()) {
+			doNext = ProcessStages.ProcessChildCurNode;
+			hasNext = true;
+		}
+
+		if (doNext == ProcessStages.ProcessChildCurNode) 
+			childrenSubNodeIter = childrenCurNodeIter.next().iterator();
+		next = hasNext ? childrenSubNodeIter.next() : null;
+		
+		return current;
 	}
 
 	@Override

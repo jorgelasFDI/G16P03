@@ -9,7 +9,6 @@ public class Main {
 	private static MainFrame mainPanel = new MainFrame(aGenetico);
 
 	public static void main(String[] args) {
-
 		mainPanel.initGUI();
 	}
 }

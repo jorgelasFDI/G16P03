@@ -1,10 +1,13 @@
 package algorithm.operations.mutaciones;
 
 import algorithm.individuos.Individuo;
+import algorithm.individuos.IndividuoTree;
+import auxiliar.MyRandom;
+import auxiliar.tree.Tree;
 
 public class MutacionSubArbol extends Mutacion {
 	
-	public static final String name = "Mutacion por sub-árbol";
+	public static final String name = "Mutacion por sub-ï¿½rbol";
 
 	public MutacionSubArbol() {
 		super.name = name; 
@@ -12,8 +15,11 @@ public class MutacionSubArbol extends Mutacion {
 	
 	@Override
 	public void mutar(Individuo individuo) {
-		// TODO Auto-generated method stub
-		
+		IndividuoTree individuoTree = (IndividuoTree) individuo;
+		int nodoIdx = MyRandom.getRandomInt(1, individuo.getSize() - 1);
+		Tree<String> other = new Tree<>();
+		IndividuoTree.init(other, 1, individuoTree.getMaxDepth(), individuoTree.getBiFunction());
+		individuoTree.set(nodoIdx, other);
 	}
 
 }

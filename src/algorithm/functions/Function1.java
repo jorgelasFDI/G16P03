@@ -1,6 +1,5 @@
 package algorithm.functions;
 
-import java.util.Iterator;
 import java.util.List;
 
 import algorithm.individuos.Individuo;
@@ -27,9 +26,9 @@ public class Function1 extends Function {
 			return Binary.toBool(combinacion.get(obj.index));
 		
         //Si el nodo es una funcion se mira en sus sub-arboles recursivamente
-		Boolean x = execFunction(root.get(0), combinacion, cromosoma);
-		Boolean y = execFunction(root.get(1), combinacion, cromosoma);
-		Boolean z = execFunction(root.get(2), combinacion, cromosoma);
+		Boolean x = execFunction(root.getChild(0), combinacion, cromosoma);
+		Boolean y = execFunction(root.getChild(1), combinacion, cromosoma);
+		Boolean z = execFunction(root.getChild(2), combinacion, cromosoma);
 
 		return obj.ternary(x, y, z);
 	}
@@ -37,19 +36,11 @@ public class Function1 extends Function {
     @Override
     public double fitnessInstance(Individuo cromosoma) {
         int total = 0;
-
-        IndividuoTree individuo = (IndividuoTree) cromosoma;
-
-        Tree<String> root = null;
-        Iterator<Tree<String>> iter = individuo.iterator();
-        if (iter.hasNext() && iter.hasNext()) root = iter.next();
-		
+        IndividuoTree individuo = (IndividuoTree) cromosoma;	
 		for(int i = 0; i < LogicalNode.combinaciones.size(); i++) {
-			if(execFunction(root, LogicalNode.combinaciones.get(i), individuo) == Binary.toBool(LogicalNode.solution.get(i)))
+			if (execFunction(individuo.get(0), LogicalNode.combinaciones.get(i), individuo) == Binary.toBool(LogicalNode.solution.get(i)))
 				total++;
-		}
-
-		return total;
+		} return total;
     }
     
 }

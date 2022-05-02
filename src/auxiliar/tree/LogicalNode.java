@@ -28,12 +28,19 @@ public class LogicalNode implements TernaryOperator<Boolean> {
 		put("IF", (a, b, c) -> (a ? b : c));
 	}};
 
+	public static Map<String, Integer> funcionesOperandos = new HashMap<>(){{
+		put("AND", 2);
+		put("OR", 2);
+		put("NOT", 1);
+		put("IF", 3);
+	}};
+
 	public static Map<String, Integer> terminales = new HashMap<>();
 
 	public static boolean add(String key) {
 		if (map.containsKey(key)) return false;
 		if (funciones.containsKey(key)) {
-			map.put(key, new LogicalNode("NODE", funciones.get(key), -1));
+			map.put(key, new LogicalNode("NODE", funciones.get(key), funcionesOperandos.get(key)));
 		} else {
 			map.put(key, new LogicalNode("LEAF", null, numTerminales));
 			terminales.put(key, numTerminales);

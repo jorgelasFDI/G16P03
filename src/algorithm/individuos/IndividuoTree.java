@@ -28,7 +28,7 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 
 	@Override
     public Tree<String> copyGenes() {
-		return null;
+		return new Tree<String>((Tree<String>) iterable);
 	}
 
 	@Override
@@ -37,38 +37,49 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 	}
 
 	@Override
+	public Tree<String> get(int idx) {
+		return ((Tree<String>) iterable).get(idx);
+	}
+
+	@Override
+	public void set(int idx, Tree<String> other) {
+		((Tree<String>) iterable).set(idx, other);
+		this.size += other.depth() - ((Tree<String>) iterable).depth();
+	}
+
+	@Override
 	public void swapGen(int idx, int j, Individuo<String, LogicalNode, Tree<String>> other) {
-		Iterator<Tree<String>> thisIter = iterable.iterator();
-		Iterator<Tree<String>> otherIter = other.iterator();
-		
-		for (int i = 0; i <= idx; i++) thisIter.hasNext();
-		Tree<String> thisChild = thisIter.next();
-		Tree<String> thisParent = thisChild.parent;
-
-		for (int i = 0; i <= j; i++) otherIter.hasNext();
-		Tree<String> otherChild = otherIter.next();
-		Tree<String> otherParent = otherChild.parent;
-
-		int aux = otherChild.index;
-		otherChild.index = thisChild.index;
-		thisChild.index = aux;
-
-		otherParent.setGen(thisChild, thisChild.index);
-		thisParent.setGen(otherChild, otherChild.index);
+		Tree<String> otherChild = other.get(j);
+		Tree<String> thisChild = this.get(idx);
+		int auxIdx = otherChild.index;
+		this.set(idx, otherChild);
+		other.set(j, thisChild);
+		thisChild.index = auxIdx;
 	}
 
 	// CUSTOM FUNCTIONS FOR THIS INDIVIDUAL
 
+	private int maxDepth;
+	private BiFunction<Integer, Integer, Boolean> isLeaf;
+
+	public int getMaxDepth() {
+		return maxDepth;
+	}
+
+	public BiFunction<Integer, Integer, Boolean> getBiFunction() {
+		return isLeaf;
+	}
+
 	public void init(int depth, BiFunction<Integer, Integer, Boolean> isLeaf, Map<String, LogicalNode> map) {
-		iterable = new Tree<>(null);
+		iterable = new Tree<>();
 		setGenesToObjects(map);
 		size = IndividuoTree.init((Tree<String>) iterable, 1, depth, isLeaf);
 	}
 
-	private static int init(Tree<String> tree, int current, int depth, BiFunction<Integer, Integer, Boolean> isLeaf) {
-	
+	public static int init(Tree<String> tree, int current, int depth, BiFunction<Integer, Integer, Boolean> isLeaf) {
+	 
 		if (isLeaf.apply(current, depth)) {
-			tree.addChild(MyRandom.getRandomValueInSet(LogicalNode.terminales.keySet()));
+			Tree<String> child = tree.addChild(MyRandom.getRandomValueInSet(LogicalNode.terminales.keySet()));
 			return 1;
 		}
 
@@ -77,7 +88,6 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 		int value = 1;
 		switch (child.data) {
 			case "NOT":
-				tree.updateNumNodos(child.getNumNodos());
                 value += init(child, current + 1, depth, isLeaf);
 				break;
 			case "IF":
@@ -90,5 +100,18 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 				value += init(child, current + 1, depth, isLeaf);
 				break;
 		} return value;
+	}
+
+	public Tree<String> getRandomNode(String type) {
+		int nodoIdx = MyRandom.getRandomInt(1, size - 1);
+		Iterator<Tree<String>> iter = iterator();
+		Tree<String> nodo = null;
+		int i = 0;
+		while (i < nodoIdx || nodo == null) {
+			Tree<String> other = iter.next();
+			if (getObject(other.data).type == type) 
+				nodo = other;
+			i++;
+		} return nodo;
 	}
 }
