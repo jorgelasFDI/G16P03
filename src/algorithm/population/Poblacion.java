@@ -45,16 +45,17 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 		mutacion.operationInstance(poblacion);
 	}
 
-	public Poblacion(PoblacionInterface generarPInterface, double eliteSize, Operation cruce, Operation mutacion, Operation seleccion, double presion) {
-		this(eliteSize, cruce, mutacion, seleccion, presion);
+	public Poblacion(PoblacionInterface generarPInterface, int size, double eliteSize, Operation cruce, Operation mutacion, Operation seleccion, double presion) {
+		this(size, eliteSize, cruce, mutacion, seleccion, presion);
 		this.generarPInterface = generarPInterface;
 	}
 
-	public Poblacion(double eliteSize, Operation cruce, Operation mutacion, Operation seleccion, double presion) {
+	public Poblacion(int size, double eliteSize, Operation cruce, Operation mutacion, Operation seleccion, double presion) {
 		this.cruce = cruce;
 		this.mutacion = mutacion;
 		this.seleccion = seleccion;
 		this.presion = presion;
+		this.size = size;
 		poblacion = new ArrayList<>(size);
 		this.eliteSize = (int) Math.floor(eliteSize * size);
 		mejorIndividuo = null;
@@ -92,6 +93,7 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 			if (rawAptitud > fmax) fmax = rawAptitud;
 			if (rawAptitud < fmin) fmin = rawAptitud;
 		}  fmax *= 1.05;
+		averageDepth = totalNodes / poblacion.size();
 		double mediaAptitud = sumAptitud / poblacion.size(); 
 
 		int sumAptitudRevisada = 0;

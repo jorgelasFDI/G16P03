@@ -74,11 +74,17 @@ public class Tree<T> implements Iterable<Tree<T>> {
 	public boolean hasChildren() {
 		return children.size() == 0 ? false : true;
 	}
-
+	
 	public int depth() {
+		if(children.isEmpty())
+			return 1;
+		return 1 + MyMath.max(children.stream().map(child -> child.depth()).collect(Collectors.toList()));
+	}
+
+	public int getLevel() {
 		if (this.isRoot())
 			return 1;
-		return parent.depth() + 1;
+		return parent.getLevel() + 1;
 	}
 
 	private void registerChildForSearch(Tree<T> node) {
