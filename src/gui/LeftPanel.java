@@ -53,7 +53,7 @@ public class LeftPanel extends JPanel {
 
 	private List<Operation> mutacionesGenericas = Arrays.asList(
 		new MutacionTerminal(),
-		new MutacionFunctional(),
+		new MutacionHoist(),
 		new MutacionSubArbol()
 	);
 

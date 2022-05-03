@@ -110,7 +110,8 @@ public class Tree<T> implements Iterable<Tree<T>> {
 
 	public Tree<T> set(int idx, Tree<T> other) {
 		Tree<T> node = get(idx);
-		node.parent.setChild(other, node.index);
+		if(parent != null)
+			node.parent.setChild(other, node.index);
 		return node;
 	}
 	
