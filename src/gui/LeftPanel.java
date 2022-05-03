@@ -72,7 +72,7 @@ public class LeftPanel extends JPanel {
 		new Function1()
 	);
 
-	private List<String> tipos = Arrays.asList("Completo", "Creciente", "RampdedAndHalf");
+	private List<String> tipos = Arrays.asList("Completo", "Creciente", "RampedAndHalf");
 	private JComboBox<String> typeComboBox = new JComboBox<>(tipos.toArray(new String[0]));
 	
 	private int altura = 3;

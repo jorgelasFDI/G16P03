@@ -20,6 +20,7 @@ public class MutacionTerminal extends Mutacion {
 	public void mutar(Individuo individuo) {
 		
 		IndividuoTree tIndividuo = (IndividuoTree) individuo;
+		
 		Tree<String> node = tIndividuo.getRandomNode("LEAF");
 		node.data = MyRandom.getRandomValueInSet(LogicalNode.terminales.keySet());
 

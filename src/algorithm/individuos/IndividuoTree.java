@@ -105,7 +105,7 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 	}
 
 	public Tree<String> getRandomNode(String type) {
-		int nodoIdx = MyRandom.getRandomInt(1, size - 1); // 10 -> 5 pero que sea del tipo LEAF
+		int nodoIdx = MyRandom.getRandomInt(0, size - 1); // 10 -> 5 pero que sea del tipo LEAF
 		Iterator<Tree<String>> iter = iterator();
 		Tree<String> nodo = null;
 		int i = 0;
