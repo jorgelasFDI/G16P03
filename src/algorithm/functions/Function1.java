@@ -4,7 +4,9 @@ import java.util.List;
 
 import algorithm.individuos.Individuo;
 import algorithm.individuos.IndividuoTree;
+import algorithm.population.Poblacion;
 import auxiliar.Binary;
+import auxiliar.MyRandom;
 import auxiliar.tree.LogicalNode;
 import auxiliar.tree.Tree;
 
@@ -35,11 +37,24 @@ public class Function1 extends Function {
     @Override
     public double fitnessInstance(Individuo cromosoma) {
         int total = 0;
+        int averageSize;
         IndividuoTree individuo = (IndividuoTree) cromosoma;	
 		for(int i = 0; i < LogicalNode.combinaciones.size(); i++) {
 			if (execFunction(individuo.get(0), LogicalNode.combinaciones.get(i), individuo) == Binary.toBool(LogicalNode.solution.get(i)))
 				total++;
-		} return total;
+		}
+		//return total;
+		return bloating(individuo.get(0), total);
     }
     
+    private double bloating(Tree<String> cromosoma, int total) {
+    	int n = 2;            //Con este parámetro indicamos que la mitad de los individuos grandes(con más nodos que la media) muere
+    	
+    	//Si el arbol actual tiene tamaño más grande que la media de la población, entonces tiene un 50% de probabilidades de morir
+    	if(cromosoma.depth() > (Poblacion.getAverageDepth() + 1) && MyRandom.getInstance().nextDouble() > (1 / n)) {
+    		return (total / 2);
+    	}
+    	
+    	return total;
+    }
 }

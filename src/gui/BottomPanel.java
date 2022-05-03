@@ -12,6 +12,7 @@ import javax.swing.border.TitledBorder;
 import algorithm.AlgoritmoGenetico;
 import algorithm.individuos.Individuo;
 import algorithm.population.Generaciones;
+import auxiliar.tree.LogicalNode;
 
 public class BottomPanel extends JPanel implements Observers {
     /**
@@ -46,7 +47,7 @@ public class BottomPanel extends JPanel implements Observers {
 	@Override
 	public void actualizaVista(Generaciones generaciones, Individuo mejorIndividuo) {
 		// TODO Auto-generated method stub
-		border.setTitle("Mejor individuo con aptitud: " + mejorIndividuo.getAptitud());
+		border.setTitle("Mejor individuo con aptitud: " + (int) mejorIndividuo.getAptitud() + "/" + LogicalNode.combinaciones.size());
 		this.repaint();
 		//updateUI();
 	}
