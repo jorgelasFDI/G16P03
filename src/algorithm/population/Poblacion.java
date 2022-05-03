@@ -65,6 +65,7 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 	@Override
 	public List<Individuo> generaPoblacion(String type, int depth, int size, Function function) {
 		poblacion = generarPInterface.generaPoblacion(type, depth, size, function);
+		this.minimizar = function.getMinimizar();
 		averageDepth = depth;
 		evalua(); return null;
 	}
@@ -80,7 +81,7 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 		// REVISION
 		double fmax = Double.NEGATIVE_INFINITY;
 		double fmin = Double.POSITIVE_INFINITY;
-		int sumAptitud = 0;
+		double sumAptitud = 0;
 		int totalNodes = 0;
 				
 		for (Individuo i: poblacion) {
@@ -93,15 +94,15 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 			if (rawAptitud > fmax) fmax = rawAptitud;
 			if (rawAptitud < fmin) fmin = rawAptitud;
 		}  fmax *= 1.05;
-		averageDepth = totalNodes / poblacion.size();
-		double mediaAptitud = sumAptitud / poblacion.size(); 
+		averageDepth = (double) totalNodes / (double) poblacion.size();
+		double mediaAptitud = sumAptitud / (double) poblacion.size();
 
-		int sumAptitudRevisada = 0;
+		double sumAptitudRevisada = 0;
 		for (Individuo i: poblacion) {
 			if (minimizar) i.setAptitudRevisada(fmax - i.getAptitud());
 			else i.setAptitudRevisada(Math.abs(fmin) + i.getAptitud());
 			sumAptitudRevisada += i.getAptitudRevisada();
-		} double mediaAptitudRevisada = sumAptitudRevisada / poblacion.size();
+		} double mediaAptitudRevisada = sumAptitudRevisada / (double) poblacion.size();
 
 		// ORDENAR
 		Poblacion.sort(poblacion);
@@ -115,6 +116,7 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 			mejorIndividuo = mejorGeneracion;
 
 		// ESCALADO	
+		///*
 		if (presion != null) {
 			double aMax = ((presion - 1)*mediaAptitudRevisada)/(mejorGeneracion.getAptitudRevisada() - mediaAptitudRevisada);
 			double bMax = (1 - aMax)*mediaAptitudRevisada;
@@ -130,7 +132,7 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 				i.setAptitudRevisada(value);
 				sumAptitudRevisada += i.getAptitudRevisada();
 			}
-		}
+		}//*/
 
 		// NORMAL
 		double puntAcum = 0.0;

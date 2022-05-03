@@ -42,16 +42,16 @@ public class Function1 extends Function {
 			if (execFunction(individuo.get(0), LogicalNode.combinaciones.get(i), individuo) == Binary.toBool(LogicalNode.solution.get(i)))
 				total++;
 		}
-		return total;
-		//return bloating(individuo.get(0), total);
+		return ((double) total) / (double) LogicalNode.combinaciones.size();
+		// return bloating(individuo.get(0), total);
     }
     
     private double bloating(Tree<String> cromosoma, int total) {
-    	int n = 3;            //Con este parámetro indicamos que la mitad de los individuos grandes(con más nodos que la media) muere
+    	double n = 2.0;            //Con este parï¿½metro indicamos que la mitad de los individuos grandes(con mï¿½s nodos que la media) muere
     	
-    	//Si el arbol actual tiene tamaño más grande que la media de la población, entonces tiene un 50% de probabilidades de morir
-    	if(cromosoma.depth() > (Poblacion.getAverageDepth()) && MyRandom.getInstance().nextDouble() > (1 / n)) {
-    		return (total / 2);
+    	//Si el arbol actual tiene tamaï¿½o mï¿½s grande que la media de la poblaciï¿½n, entonces tiene un 50% de probabilidades de morir
+    	if(cromosoma.depth() > (Poblacion.getAverageDepth()) && MyRandom.getInstance().nextDouble() > (1.0 / n)) {
+    		return 5;
     	}
     	
     	return total;

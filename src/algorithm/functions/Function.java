@@ -21,4 +21,8 @@ public abstract class Function {
         return name;
     }
 
+    public boolean getMinimizar() {
+        return minimizar;
+    }
+
 }
