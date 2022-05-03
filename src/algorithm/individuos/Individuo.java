@@ -30,6 +30,7 @@ public abstract class Individuo<TYPE, OBJ, ITER> implements Comparable<Individuo
         puntuacion = individuo.getPuntuacion();
         puntuacionAcumulada = individuo.getPuntuacionAcumulada();
 		size = individuo.getSize();
+		genesToObjects = individuo.getGenesToObjects();
 		iterable = individuo.copyGenes();
 	}
 
