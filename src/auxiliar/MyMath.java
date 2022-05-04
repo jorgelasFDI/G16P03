@@ -45,4 +45,12 @@ public class MyMath {
     	return (total/n);
     }
 
+	public static int convertToInt(List<Integer> list, int s) {
+		// TODO Auto-generated method stub
+		if(s == list.size() - 1)
+			return (int) Math.pow(2, s) * list.get(s);
+		
+		return (int) Math.pow(2, s) * list.get(s) + convertToInt(list, s + 1);
+	}
+
 }

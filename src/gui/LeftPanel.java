@@ -15,6 +15,7 @@ import algorithm.individuos.Individuo;
 import algorithm.operations.Operation;
 import algorithm.population.Poblacion;
 import algorithm.population.PoblacionTree;
+import auxiliar.MyMath;
 import auxiliar.tree.LogicalNode;
 import algorithm.operations.selection.*;
 
@@ -80,6 +81,8 @@ public class LeftPanel extends JPanel {
 	
 	private int altura = 3;
 	private JSpinner alturaSpinner = new JSpinner(new SpinnerNumberModel(altura, 2, 10, 1));
+	private int num_entradas = 2;
+	private JSpinner entradasSpinner = new JSpinner(new SpinnerNumberModel(altura, 2, 4, 1));
 	// TEXT FIELDS AND OTHERS
     private JTextField sizeTextField = new JTextField("100");
     private JTextField generacionesTextField = new JTextField("200");
@@ -94,20 +97,21 @@ public class LeftPanel extends JPanel {
 	private JPanel rangesPanelWrap = new JPanel();
 	private JPanel rangesPanel = new JPanel();
 
-	private List<Integer> solution = new ArrayList<>(
-		Arrays.asList(0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1)
-	); private List<List<Integer>> combinaciones = new ArrayList<>();
+	//Arrays.asList(0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1)
+	private List<Integer> solution = new ArrayList<>(); 
+	private List<List<Integer>> combinaciones = new ArrayList<>();
 	private List<String> allvalues = new ArrayList<>(Arrays.asList("A0", "A1", "D0", "D1", "D2", "D3", "AND", "OR", "IF", "NOT")); 
-	
-	public void generateCombinations() {
-		int num_combinations = 64;
+
+	public void generateCombinations(int num_entradas) {
+		int entradasTotales = (int) (num_entradas + Math.pow(2, num_entradas));
+		int num_combinations = (int) Math.pow(2, entradasTotales);
 		
 		for(int i = 0; i < num_combinations; i++) {
 			String binary = Integer.toBinaryString(i);
 			String[] combString = binary.split("");
 			ArrayList<Integer> comb = new ArrayList<>();
 			
-			for(int j = 0; j < 6 - combString.length; j++)
+			for(int j = 0; j < entradasTotales - combString.length; j++)
 				comb.add(0);
 			
 			for(int j = 0; j < combString.length; j++)
@@ -115,16 +119,39 @@ public class LeftPanel extends JPanel {
 			
 			combinaciones.add(comb);
 		}
+		
+		//GENERAMOS LA SOLUCION DEL MULTIPLEXOR CON X ENTRADAS
+		solution = new ArrayList<>();
+		for(int i = 0; i < num_combinations; i++) {
+			List<Integer> list = new ArrayList<>();
+			for(int j = 0; j < num_entradas; j++) {
+				list.add(combinaciones.get(i).get(j));
+			}
+			int bin = MyMath.convertToInt(list, 0);
+			solution.add(combinaciones.get(i).get(entradasTotales - bin - 1));
+			
+		}
 
 		for (String term: allvalues) {
 			LogicalNode.add(term);
 		}
 
+		
+		/*for(int i = 0; i < num_combinations; i++) {
+			for(int j = 0; j < combinaciones.get(i).size(); j++) {
+				System.out.print(combinaciones.get(i).get(j) + " ");
+			}
+			System.out.println();
+		}*/
+		
+		/*System.out.println("SOLUCION :");
+		for(int i = 0; i < solution.size(); i++) {
+			System.out.print(solution.get(i) + " ");
+		}*/
 	}
 		
 	public LeftPanel(MainFrame mainFrame) {
     	this.frame = mainFrame;
-		generateCombinations();
 		initGUI();
 	}
      
@@ -174,6 +201,7 @@ public class LeftPanel extends JPanel {
 		addComponentPanel(sizeTextField, "Tamaño población", globalMargin, this, null);
 		addComponentPanel(generacionesTextField, "Numero de generaciones", globalMargin, this, null);
 		addComponentPanel(alturaSpinner, "Altura del �rbol", globalMargin, this, null);
+		addComponentPanel(entradasSpinner, "N�mero de entradas", globalMargin, this, null);
 		
         addComponentPanel(Arrays.asList(
 			new Pair<>("Seleccion", seleccionComboBox), 
@@ -200,7 +228,10 @@ public class LeftPanel extends JPanel {
 			Operation select = (Operation) seleccionComboBox.getSelectedItem();
 			String type = (String) typeComboBox.getSelectedItem();
 			int depth = (int) alturaSpinner.getModel().getValue();
+			int num_entradas = (int) entradasSpinner.getModel().getValue();
 			Function1 function = (Function1) functionComboBox.getSelectedItem();
+			
+			generateCombinations(num_entradas);
 			LogicalNode.setCombinaciones(combinaciones);
 			LogicalNode.setSolution(solution);
 
