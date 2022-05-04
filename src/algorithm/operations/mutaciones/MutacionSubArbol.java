@@ -20,7 +20,7 @@ public class MutacionSubArbol extends Mutacion {
 		Tree<String> nodo = individuoTree.get(nodoIdx);
 		Tree<String> other = new Tree<>();
 		try {
-			IndividuoTree.init(other, nodo.getLevel(), individuoTree.getMaxDepth(), individuoTree.getBiFunction());
+			IndividuoTree.init(other, nodo.getLevel(), Math.round(individuoTree.getMaxDepth()), individuoTree.getBiFunction());
 			other = other.get(0);
 		} catch (Exception e) {
 			System.err.println(e);

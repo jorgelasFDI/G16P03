@@ -61,6 +61,7 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 
 	private double maxDepth;
 	private BiFunction<Integer, Double, Boolean> isLeaf;
+	private double mediaAptitud;
 
 	public double getMaxDepth() {
 		return maxDepth;
@@ -124,5 +125,13 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 
 	public void setMaxDepth(double depth) {
 		maxDepth = depth;
+	}
+
+	public double getMediaAptitud() {
+		return mediaAptitud;
+	}
+
+	public void setMediaAptitud(double mediaAptitud) {
+		this.mediaAptitud = mediaAptitud;
 	}
 }

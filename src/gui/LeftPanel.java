@@ -98,7 +98,7 @@ public class LeftPanel extends JPanel {
 		Arrays.asList(0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1)
 	); private List<List<Integer>> combinaciones = new ArrayList<>();
 	private List<String> allvalues = new ArrayList<>(Arrays.asList("A0", "A1", "D0", "D1", "D2", "D3", "AND", "OR", "IF", "NOT")); 
-
+	
 	public void generateCombinations() {
 		int num_combinations = 64;
 		

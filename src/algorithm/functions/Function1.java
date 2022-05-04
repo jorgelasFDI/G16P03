@@ -4,7 +4,6 @@ import java.util.List;
 
 import algorithm.individuos.Individuo;
 import algorithm.individuos.IndividuoTree;
-import algorithm.population.Poblacion;
 import auxiliar.Binary;
 import auxiliar.MyRandom;
 import auxiliar.tree.LogicalNode;
@@ -43,28 +42,52 @@ public class Function1 extends Function {
 				total++;
 		}
 		// double value = ((double) total) / (double) LogicalNode.combinaciones.size();
-		double value = total;
-		return bloating(individuo.get(0), (double) total);
+		return total;
     }
     
-    /*private double bloating(IndividuoTree individuo, double total) {
-    	// double n = 5;            //Con este parï¿½metro indicamos que la mitad de los individuos grandes(con mï¿½s nodos que la media) muere
-    	
+	@Override
+    public double bloatingInstance(Individuo cromosoma) {
+
+		IndividuoTree individuo = (IndividuoTree) cromosoma;	
+
+    	double DEPTH = 5;
+		double FITNESS = 10;           //Con este parï¿½metro indicamos que la mitad de los individuos grandes(con mï¿½s nodos que la media) muere
+		
+		double depth = individuo.get(0).depth();
+		double maxDepth = individuo.getMaxDepth();
+
+		double prob = prob(FITNESS, DEPTH, individuo);
     	//Si el arbol actual tiene tamaï¿½o mï¿½s grande que la media de la poblaciï¿½n, entonces tiene un 50% de probabilidades de morir
-    	if(individuo.get(0).depth() > individuo.getMaxDepth() && MyRandom.getInstance().nextDouble() < 0.5) {
+    	if(depth > maxDepth && MyRandom.getInstance().nextDouble() < 0.5) {
     		return 0;
-    	} return total;
-    }*/
+    	} return individuo.getAptitudRevisada();
+    }
+
+	private double prob(double FITNESS, double DEPTH, IndividuoTree individuoTree) {
+		double depth = individuoTree.get(0).depth();
+		double maxDepth = individuoTree.getMaxDepth();
+		double scaledFitness = (individuoTree.getAptitudRevisada() - individuoTree.getMediaAptitud())/individuoTree.getAptitudRevisada();
+		
+		return Math.max(func(DEPTH, depth - maxDepth) - func2(FITNESS, scaledFitness), 0);
+	}
+
+	private double func(double influence, double var) {
+		return 1.0 - 1.0/(influence * Math.max(var, 0) + 1);
+	}
+
+	private double func2(double influence, double var) {
+		return 1.0 - influence/(Math.max(var, 0) + influence);
+	}
     
-    private double bloating(Tree<String> cromosoma, double total) { 
-    	//Si la correlacion es buena entre las diferentes profundidades de los individuos no se modificará
-    	//la profundidad, en cambio si es mala se penalizará al individuo
+    /*private double bloating(Tree<String> cromosoma, double total) { 
+    	//Si la correlacion es buena entre las diferentes profundidades de los individuos no se modificarï¿½
+    	//la profundidad, en cambio si es mala se penalizarï¿½ al individuo
     	double correlacion = Poblacion.getCorrelacion();
     	
-    	//Solo penaliza si la correlación es negativa
+    	//Solo penaliza si la correlaciï¿½n es negativa
     	if(correlacion < 0)
     		return total + correlacion * cromosoma.depth();
     	
     	return total;
-    }
+    }*/
 }

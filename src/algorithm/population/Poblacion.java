@@ -77,52 +77,61 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 	}
 
 	public void evalua() {
-		Pair<Pair<Double, Double>, Individuo> pareja = evalua(poblacion, minimizar, mejorIndividuo, presion, profIndividuos, fitnessIndividuos);
-		mediaAptitud = pareja.getValue0().getValue0();
-		averageDepth = pareja.getValue0().getValue1();
+		Pair<Double, Individuo> pareja = evalua(poblacion, minimizar, mejorIndividuo, presion, eliteSize);
+		mediaAptitud = pareja.getValue0();
 		mejorIndividuo = pareja.getValue1();
-		calculaCovarianza();
 	}
 	
-	public static Pair<Pair<Double, Double>, Individuo> evalua(List<Individuo> poblacion, boolean minimizar, Individuo mejorIndividuo, Double presion, List<Integer> profIndividuos, List<Double> fitnessIndividuos) {
+	public static Pair<Double, Individuo> evalua(List<Individuo> poblacion, boolean minimizar, Individuo mejorIndividuo, Double presion, Integer eliteSize) {
 
 		// REVISION
 		double fmax = Double.NEGATIVE_INFINITY;
 		double fmin = Double.POSITIVE_INFINITY;
 		double sumAptitud = 0;
+		double mediaAptitud = 0;
+		double sumAptitudRevisada = 0;
+		double mediaAptitudRevisada = 0;
+		double sumAptitudBloating = 0;
+		double mediaAptitudBloating = 0;
 		int depth = 0;
 		int totalNodes = 0;
-		int j = 0;
+		double averageDepth = 0;
 
+		// CALCULATE AVERAGE DEPTH
 		for (Individuo i: poblacion) {
 			IndividuoTree ind = (IndividuoTree) i;
 			Tree<String> tree = ind.get(0);
-			int depht = tree.depth();
+			depth = tree.depth();
 			totalNodes += depth;
-			profIndividuos.set(j, depth);
-			j++;
-		} double averageDepth = (double) totalNodes / (double) poblacion.size();
-				
-		j = 0;
+		} averageDepth = (double) totalNodes / (double) poblacion.size();
+
 		for (Individuo i: poblacion) {
 			IndividuoTree ind = (IndividuoTree) i;
-			double rawAptitud = i.fitness();
 			ind.setMaxDepth(averageDepth);
-			fitnessIndividuos.set(j, rawAptitud);
-			sumAptitud += rawAptitud;
+		}
+
+		// CALCULATE COVARIANCE
+
+		// CALCULATE FITNESS
+		for (Individuo i: poblacion) {
+			double rawAptitud = i.fitness();
 			i.setAptitud(rawAptitud);
+			sumAptitud += i.getAptitud();
 			if (rawAptitud > fmax) fmax = rawAptitud;
 			if (rawAptitud < fmin) fmin = rawAptitud;
-			j++;
-		}  fmax *= 1.05;
-		double mediaAptitud = sumAptitud / (double) poblacion.size();
+		}  fmax *= 1.05; mediaAptitud = sumAptitud / (double) poblacion.size();
 
-		double sumAptitudRevisada = 0;
+		for (Individuo i: poblacion) {
+			IndividuoTree ind = (IndividuoTree) i;
+			ind.setMediaAptitud(mediaAptitud);
+		}
+
+		// CALCULATE REVISION
 		for (Individuo i: poblacion) {
 			if (minimizar) i.setAptitudRevisada(fmax - i.getAptitud());
 			else i.setAptitudRevisada(Math.abs(fmin) + i.getAptitud());
 			sumAptitudRevisada += i.getAptitudRevisada();
-		} double mediaAptitudRevisada = sumAptitudRevisada / (double) poblacion.size();
+		} mediaAptitudRevisada = sumAptitudRevisada / (double) poblacion.size();
 
 		// ORDENAR
 		Poblacion.sort(poblacion);
@@ -134,6 +143,13 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 			mejorIndividuo = mejorGeneracion;
 		else if(!minimizar && mejorGeneracion.getAptitud() > mejorIndividuo.getAptitud())
 			mejorIndividuo = mejorGeneracion;
+
+		// CALCULATE BLOATING
+		for (int i = eliteSize; i < poblacion.size(); i++) {
+			Individuo ind = poblacion.get(i);
+			ind.setAptitudBloating(ind.bloating());
+			sumAptitudBloating += ind.getAptitudBloating();
+		} mediaAptitudBloating = sumAptitudBloating / (double) poblacion.size();
 
 		// ESCALADO	
 		/*
@@ -157,12 +173,12 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 		// NORMAL
 		double puntAcum = 0.0;
 		for(Individuo i: poblacion) {
-			i.setPuntuacion(i.getAptitudRevisada() / sumAptitudRevisada);
+			i.setPuntuacion(i.getAptitudBloating() / sumAptitudBloating);
 			puntAcum += i.getPuntuacion();
 			i.setPuntuacionAcumulada(puntAcum);
 		}
 
-		return new Pair<>(new Pair<>(mediaAptitud, averageDepth), mejorIndividuo);
+		return new Pair<>(mediaAptitud, mejorIndividuo);
 	}
 
 	public void generarElite() {
@@ -170,7 +186,7 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 		elite = new ArrayList<>(eliteSize);
 		for (int i = 0; i < eliteSize; i++) {
 			elite.add(poblacion.get(i).copy());
-		}
+		} return;
 	}
 
 	public void introducirElite() {
@@ -178,15 +194,6 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 		for (int i = 1; i <= elite.size(); i++) {
 			poblacion.set(poblacion.size() - i, elite.get(i - 1).copy());
 		}
-	}
-	
-	private void calculaCovarianza() {
-		double cov = MyMath.covariance(profIndividuos, fitnessIndividuos, averageDepth, mediaAptitud);
-		double var = MyMath.variance(profIndividuos, averageDepth);
-		
-		correlacion = cov / var;
-	
-		//System.out.println(covariance);
 	}
 
 	public Individuo getMejorIndividuo() {

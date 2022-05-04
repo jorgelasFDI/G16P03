@@ -13,7 +13,6 @@ public abstract class Mutacion extends Operation {
 			Individuo individuo = poblacion.get(i);
 			if (random.nextDouble() < prob) {
                 mutar(individuo);
-                individuo.setAptitud(individuo.fitness());
 			}
         }
     }
