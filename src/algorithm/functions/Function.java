@@ -13,9 +13,9 @@ public abstract class Function {
         this.name = name;
     }
 
-    public static double fitness(Function function, Individuo cromosoma) {
+    public static int fitness(Function function, Individuo cromosoma) {
         return function.fitnessInstance(cromosoma);
-    } public abstract double fitnessInstance(Individuo cromosoma);
+    } public abstract int fitnessInstance(Individuo cromosoma);
 
     public String toString() {
         return name;

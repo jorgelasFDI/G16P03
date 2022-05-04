@@ -19,5 +19,30 @@ public class MyMath {
                 minValue = value;
         } return minValue;
     }
+    
+    public static double covariance(List<Integer> profIndividuos, List<Double> fitnessIndividuos, double avgDepth, double avgFitness) {
+    	int n = profIndividuos.size();
+    	double total = 0.0;
+    	
+    	for(int i = 0; i < n; i++) {
+    		double prof = (double) (profIndividuos.get(i) - avgDepth);
+    		double fitness = (double) (fitnessIndividuos.get(i) - avgFitness);
+    		total += (prof * fitness);
+    	}
+    	
+    	return total / n;
+    }
+    
+    public static double variance(List<Integer> profIndividuos, double avgDepth) {
+    	int n = profIndividuos.size();
+    	double total = 0.0;
+    	
+    	for(int i = 0; i < n; i++) {
+    		double prof = (double) (profIndividuos.get(i) - avgDepth);
+    		total += (double) Math.pow(prof, 2);
+    	}
+    	
+    	return (total/n);
+    }
 
 }
