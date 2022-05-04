@@ -11,6 +11,7 @@ import algorithm.functions.Function;
 import algorithm.individuos.Individuo;
 import algorithm.individuos.IndividuoTree;
 import algorithm.operations.Operation;
+import auxiliar.MyMath;
 import auxiliar.tree.Tree;
 
 public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
@@ -25,8 +26,13 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 	private double presion;
 	private List<Individuo> poblacion;
 	private List<Individuo> elite;
+	private List<Integer> profIndividuos;
+	private List<Double> fitnessIndividuos;
 
 	private double mediaAptitud;
+	private double averageDepth;
+	private static double correlacion;
+	
 	private Individuo mejorIndividuo;
 	private boolean minimizar = false;
 	
@@ -58,43 +64,56 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 		this.eliteSize = (int) Math.floor(eliteSize * size);
 		mejorIndividuo = null;
 		mediaAptitud = 0.0;
+		correlacion = 0.0;
+		inicializaList();
 	}
 
 	@Override
 	public List<Individuo> generaPoblacion(String type, double depth, int size, Function function) {
 		poblacion = generarPInterface.generaPoblacion(type, depth, size, function);
 		this.minimizar = function.getMinimizar();
+		averageDepth = depth;
 		evalua(); return null;
 	}
 
 	public void evalua() {
-		Pair<Double, Individuo> pareja = evalua(poblacion, minimizar, mejorIndividuo, presion);
-		mediaAptitud = pareja.getValue0();
+		Pair<Pair<Double, Double>, Individuo> pareja = evalua(poblacion, minimizar, mejorIndividuo, presion, profIndividuos, fitnessIndividuos);
+		mediaAptitud = pareja.getValue0().getValue0();
+		averageDepth = pareja.getValue0().getValue1();
 		mejorIndividuo = pareja.getValue1();
+		calculaCovarianza();
 	}
 	
-	public static Pair<Double, Individuo> evalua(List<Individuo> poblacion, boolean minimizar, Individuo mejorIndividuo, Double presion) {
+	public static Pair<Pair<Double, Double>, Individuo> evalua(List<Individuo> poblacion, boolean minimizar, Individuo mejorIndividuo, Double presion, List<Integer> profIndividuos, List<Double> fitnessIndividuos) {
 
 		// REVISION
 		double fmax = Double.NEGATIVE_INFINITY;
 		double fmin = Double.POSITIVE_INFINITY;
 		double sumAptitud = 0;
+		int depth = 0;
 		int totalNodes = 0;
+		int j = 0;
 
 		for (Individuo i: poblacion) {
 			IndividuoTree ind = (IndividuoTree) i;
 			Tree<String> tree = ind.get(0);
-			totalNodes += tree.depth();
+			int depht = tree.depth();
+			totalNodes += depth;
+			profIndividuos.set(j, depth);
+			j++;
 		} double averageDepth = (double) totalNodes / (double) poblacion.size();
 				
+		j = 0;
 		for (Individuo i: poblacion) {
 			IndividuoTree ind = (IndividuoTree) i;
 			double rawAptitud = i.fitness();
 			ind.setMaxDepth(averageDepth);
+			fitnessIndividuos.set(j, rawAptitud);
 			sumAptitud += rawAptitud;
 			i.setAptitud(rawAptitud);
 			if (rawAptitud > fmax) fmax = rawAptitud;
 			if (rawAptitud < fmin) fmin = rawAptitud;
+			j++;
 		}  fmax *= 1.05;
 		double mediaAptitud = sumAptitud / (double) poblacion.size();
 
@@ -143,7 +162,7 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 			i.setPuntuacionAcumulada(puntAcum);
 		}
 
-		return new Pair<>(mediaAptitud, mejorIndividuo);
+		return new Pair<>(new Pair<>(mediaAptitud, averageDepth), mejorIndividuo);
 	}
 
 	public void generarElite() {
@@ -159,6 +178,15 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 		for (int i = 1; i <= elite.size(); i++) {
 			poblacion.set(poblacion.size() - i, elite.get(i - 1).copy());
 		}
+	}
+	
+	private void calculaCovarianza() {
+		double cov = MyMath.covariance(profIndividuos, fitnessIndividuos, averageDepth, mediaAptitud);
+		double var = MyMath.variance(profIndividuos, averageDepth);
+		
+		correlacion = cov / var;
+	
+		//System.out.println(covariance);
 	}
 
 	public Individuo getMejorIndividuo() {
@@ -188,9 +216,24 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 	public static void sort(List<Individuo> poblacion) {
 		Collections.sort(poblacion, Collections.reverseOrder());
 	}
+	
+	private void inicializaList() {
+		// TODO Auto-generated method stub
+		profIndividuos = new ArrayList<>(size);
+		fitnessIndividuos = new ArrayList<>(size);
+		for(int i = 0; i < size; i++) {
+			profIndividuos.add(0);
+			fitnessIndividuos.add(0.0);
+		}
+	}
 
 	@Override
 	public Iterator<Individuo> iterator() {
 		return poblacion.iterator();
+	}
+
+	public static double getCorrelacion() {
+		// TODO Auto-generated method stub
+		return correlacion;
 	}
 }

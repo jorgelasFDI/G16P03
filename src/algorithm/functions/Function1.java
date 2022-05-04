@@ -44,15 +44,27 @@ public class Function1 extends Function {
 		}
 		// double value = ((double) total) / (double) LogicalNode.combinaciones.size();
 		double value = total;
-		return bloating(individuo, value);
+		return bloating(individuo.get(0), (double) total);
     }
     
-    private double bloating(IndividuoTree individuo, double total) {
+    /*private double bloating(IndividuoTree individuo, double total) {
     	// double n = 5;            //Con este parï¿½metro indicamos que la mitad de los individuos grandes(con mï¿½s nodos que la media) muere
     	
     	//Si el arbol actual tiene tamaï¿½o mï¿½s grande que la media de la poblaciï¿½n, entonces tiene un 50% de probabilidades de morir
     	if(individuo.get(0).depth() > individuo.getMaxDepth() && MyRandom.getInstance().nextDouble() < 0.5) {
     		return 0;
     	} return total;
+    }*/
+    
+    private double bloating(Tree<String> cromosoma, double total) { 
+    	//Si la correlacion es buena entre las diferentes profundidades de los individuos no se modificará
+    	//la profundidad, en cambio si es mala se penalizará al individuo
+    	double correlacion = Poblacion.getCorrelacion();
+    	
+    	//Solo penaliza si la correlación es negativa
+    	if(correlacion < 0)
+    		return total + correlacion * cromosoma.depth();
+    	
+    	return total;
     }
 }
