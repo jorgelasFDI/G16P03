@@ -10,10 +10,10 @@ import algorithm.individuos.IndividuoFactory;
 public class PoblacionTree implements PoblacionInterface {
     
     @Override
-    public List<Individuo> generaPoblacion(String type, int depth, int size, Function function) {
+    public List<Individuo> generaPoblacion(String type, double depth, int size, Function function) {
         List<Individuo> poblacion = new ArrayList<>(size);
-        int numGrupos = depth - 1;
-        int tamGrupo = size / (depth - 1);
+        int numGrupos = (int) depth - 1;
+        int tamGrupo = size / numGrupos;
         int profundidad = 2;        //Profundidad para el primer grupo
         if(type.equals("RampedAndHalf")) {
             for(int i = 0; i < numGrupos; i++) {

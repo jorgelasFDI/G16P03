@@ -59,26 +59,31 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 
 	// CUSTOM FUNCTIONS FOR THIS INDIVIDUAL
 
-	private int maxDepth;
-	private BiFunction<Integer, Integer, Boolean> isLeaf;
+	private double maxDepth;
+	private BiFunction<Integer, Double, Boolean> isLeaf;
 
-	public int getMaxDepth() {
+	public double getMaxDepth() {
 		return maxDepth;
 	}
 
-	public BiFunction<Integer, Integer, Boolean> getBiFunction() {
+	public BiFunction<Integer, Double, Boolean> getBiFunction() {
 		return isLeaf;
 	}
 
-	public void init(int depth, BiFunction<Integer, Integer, Boolean> isLeaf, Map<String, LogicalNode> map) {
+	public void init(double depth, BiFunction<Integer, Double, Boolean> isLeaf, Map<String, LogicalNode> map) {
 		iterable = new Tree<>();
 		setGenesToObjects(map);
 		maxDepth = depth;
 		this.isLeaf = isLeaf;
-		size = IndividuoTree.init((Tree<String>) iterable, 1, depth, isLeaf);
+		try {
+			size = IndividuoTree.init((Tree<String>) iterable, 1, depth, isLeaf);
+		} catch (Exception e) {
+			System.err.println(e);
+			e.printStackTrace();
+		}
 	}
 
-	public static int init(Tree<String> tree, int current, int depth, BiFunction<Integer, Integer, Boolean> isLeaf) {
+	public static int init(Tree<String> tree, int current, double depth, BiFunction<Integer, Double, Boolean> isLeaf) throws Exception {
 	 
 		if (isLeaf.apply(current, depth)) {
 			Tree<String> child = tree.addChild(MyRandom.getRandomValueInSet(LogicalNode.terminales.keySet()));
@@ -104,16 +109,20 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 		} return value;
 	}
 
-	public Tree<String> getRandomNode(String type) {
-		int nodoIdx = MyRandom.getRandomInt(0, size - 1); // 10 -> 5 pero que sea del tipo LEAF
+	public Tree<String> getRandomNode(String type, int min, int max) {
+		int nodoIdx = MyRandom.getRandomInt(min, max); // 10 -> 5 pero que sea del tipo LEAF
 		Iterator<Tree<String>> iter = iterator();
 		Tree<String> nodo = null;
 		int i = 0;
 		while (i < nodoIdx || nodo == null && i < size) {
 			Tree<String> other = iter.next();
-			if (getObject(other.data).type == type) 
+			if (getObject(other.data).type == type || type == null)
 				nodo = other;
 			i++;
 		} return nodo;
+	}
+
+	public void setMaxDepth(double depth) {
+		maxDepth = depth;
 	}
 }

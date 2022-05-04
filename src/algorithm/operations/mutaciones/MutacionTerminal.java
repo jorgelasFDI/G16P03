@@ -21,7 +21,7 @@ public class MutacionTerminal extends Mutacion {
 		
 		IndividuoTree tIndividuo = (IndividuoTree) individuo;
 		
-		Tree<String> node = tIndividuo.getRandomNode("LEAF");
+		Tree<String> node = tIndividuo.getRandomNode("LEAF", 0, individuo.getSize() - 1);
 		node.data = MyRandom.getRandomValueInSet(LogicalNode.terminales.keySet());
 
 	}

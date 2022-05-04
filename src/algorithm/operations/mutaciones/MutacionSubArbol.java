@@ -16,14 +16,18 @@ public class MutacionSubArbol extends Mutacion {
 	@Override
 	public void mutar(Individuo individuo) {
 		IndividuoTree individuoTree = (IndividuoTree) individuo;
-		if(individuoTree.getSize() > 1) {
-			int nodoIdx = MyRandom.getRandomInt(1, individuo.getSize() - 1);
-			Tree<String> other = new Tree<>();
-			Tree<String> nodo = individuoTree.get(nodoIdx);
+		int nodoIdx = MyRandom.getRandomInt(0, individuo.getSize() - 1);
+		Tree<String> nodo = individuoTree.get(nodoIdx);
+		Tree<String> other = new Tree<>();
+		try {
 			IndividuoTree.init(other, nodo.getLevel(), individuoTree.getMaxDepth(), individuoTree.getBiFunction());
-			nodo.parent.setChild(other, nodo.index);
-			individuoTree.setSize(individuoTree.getSize() + other.numNodos() - nodo.numNodos());
+			other = other.get(0);
+		} catch (Exception e) {
+			System.err.println(e);
+			e.printStackTrace();
 		}
+		nodo.parent.setChild(other, nodo.index);
+		individuoTree.setSize(individuoTree.getSize() + other.numNodos() - nodo.numNodos());
 	}
 
 }

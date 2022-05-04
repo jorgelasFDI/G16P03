@@ -13,13 +13,14 @@ public class MutacionHoist extends Mutacion {
 	} 
 	@Override
 	public void mutar(Individuo individuo) {
-		// TODO Auto-generated method stub
 		IndividuoTree tIndividuo = (IndividuoTree) individuo;
 		Tree<String> node = tIndividuo.get(0);
 		if(individuo.getSize() > 1) {
-			node = tIndividuo.getRandomNode("NODE");
+			node = tIndividuo.getRandomNode("NODE", 1, individuo.getSize() - 1);
 			if(node != null) {
-				tIndividuo.set(0, node);
+				node.parent = null;
+				tIndividuo.setIterable(node);
+				tIndividuo.setSize(node.numNodos());
 			}
 		}
 	}

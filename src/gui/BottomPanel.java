@@ -41,7 +41,7 @@ public class BottomPanel extends JPanel implements Observers {
 	@Override
 	public void actualizaVista(Generaciones generaciones, Individuo mejorIndividuo) {
 		// TODO Auto-generated method stub
-		border.setTitle("Mejor individuo con aptitud: " + (int) (mejorIndividuo.getAptitud() * LogicalNode.combinaciones.size()) + "/" + LogicalNode.combinaciones.size());
+		border.setTitle("Mejor individuo con aptitud: " + (int) (mejorIndividuo.getAptitud()) + "/" + LogicalNode.combinaciones.size());
 		label.setText(String.valueOf(((IndividuoTree) mejorIndividuo).get(0).depth()));
 		this.repaint();
 		//updateUI();

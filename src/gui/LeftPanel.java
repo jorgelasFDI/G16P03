@@ -11,6 +11,7 @@ import algorithm.operations.cruces.*;
 import algorithm.operations.mutaciones.*;
 import algorithm.functions.Function;
 import algorithm.functions.Function1;
+import algorithm.individuos.Individuo;
 import algorithm.operations.Operation;
 import algorithm.population.Poblacion;
 import algorithm.population.PoblacionTree;
@@ -52,9 +53,11 @@ public class LeftPanel extends JPanel {
 	private JComboBox<Operation> mutacionComboBox = new JComboBox<>();
 
 	private List<Operation> mutacionesGenericas = Arrays.asList(
+		new MutacionSubArbol(),	
 		new MutacionTerminal(),
 		new MutacionHoist(),
-		new MutacionSubArbol()
+		new MutacionFunctional(),
+		new MutacionTerminalFuncional()
 	);
 
 	// CRUCES
@@ -72,18 +75,18 @@ public class LeftPanel extends JPanel {
 		new Function1()
 	);
 
-	private List<String> tipos = Arrays.asList("Completo", "Creciente", "RampedAndHalf");
+	private List<String> tipos = Arrays.asList("RampedAndHalf", "Completo", "Creciente");
 	private JComboBox<String> typeComboBox = new JComboBox<>(tipos.toArray(new String[0]));
 	
 	private int altura = 3;
 	private JSpinner alturaSpinner = new JSpinner(new SpinnerNumberModel(altura, 2, 10, 1));
 	// TEXT FIELDS AND OTHERS
     private JTextField sizeTextField = new JTextField("100");
-    private JTextField generacionesTextField = new JTextField("100");
+    private JTextField generacionesTextField = new JTextField("200");
     private JTextField eliteTextField = new JTextField("0");
-	private JTextField mutacionTextField = new JTextField("5");
-	private JTextField cruceTextField = new JTextField("60");
-	private JTextField presionTextField = new JTextField("1.2");
+	private JTextField mutacionTextField = new JTextField("50");
+	private JTextField cruceTextField = new JTextField("70");
+	private JTextField presionTextField = new JTextField("1.5");
 	
 	private JButton enter = new JButton("Ejecutar");
 	private int globalMargin = 20;
@@ -220,5 +223,11 @@ public class LeftPanel extends JPanel {
 		
         });
     }
+
+	private boolean find(Poblacion poblacion) {
+		for (Individuo i: poblacion) {
+			if (i.getSize()  == 1) return true;
+		} return false;
+	}
 
 }

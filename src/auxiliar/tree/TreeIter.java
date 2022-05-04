@@ -8,10 +8,9 @@ public class TreeIter<T> implements Iterator<Tree<T>> {
 		ProcessParent, ProcessChildCurNode, ProcessChildSubNode
 	}
 
-	private Tree<T> treeNode;
-
 	public TreeIter(Tree<T> treeNode) {
-		this.treeNode = treeNode;
+		if (treeNode.isRoot()) 
+			treeNode = treeNode.children.get(0);
 		hasNext = true;
 		this.childrenCurNodeIter = treeNode.children.iterator();
 		this.childrenSubNodeIter = null;

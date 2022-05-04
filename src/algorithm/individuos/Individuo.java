@@ -128,4 +128,8 @@ public abstract class Individuo<TYPE, OBJ, ITER> implements Comparable<Individuo
 		return iterable.iterator();
 	}
 
+	public void setIterable(Iterable<ITER> iterable) {
+		this.iterable = iterable;
+	}
+
 }

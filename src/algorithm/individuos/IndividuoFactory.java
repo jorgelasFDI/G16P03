@@ -6,7 +6,7 @@ import auxiliar.tree.LogicalNode;
 
 public class IndividuoFactory {
 
-    public static Individuo create(String type, int depth, Function function) {
+    public static Individuo create(String type, double depth, Function function) {
         switch (type) {
             case "Completo":
                 IndividuoTree individuoComplete = new IndividuoTree(function);

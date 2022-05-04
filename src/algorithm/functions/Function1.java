@@ -42,18 +42,17 @@ public class Function1 extends Function {
 			if (execFunction(individuo.get(0), LogicalNode.combinaciones.get(i), individuo) == Binary.toBool(LogicalNode.solution.get(i)))
 				total++;
 		}
-		return ((double) total) / (double) LogicalNode.combinaciones.size();
-		// return bloating(individuo.get(0), total);
+		// double value = ((double) total) / (double) LogicalNode.combinaciones.size();
+		double value = total;
+		return bloating(individuo, value);
     }
     
-    private double bloating(Tree<String> cromosoma, int total) {
-    	double n = 2.0;            //Con este par�metro indicamos que la mitad de los individuos grandes(con m�s nodos que la media) muere
+    private double bloating(IndividuoTree individuo, double total) {
+    	// double n = 5;            //Con este par�metro indicamos que la mitad de los individuos grandes(con m�s nodos que la media) muere
     	
     	//Si el arbol actual tiene tama�o m�s grande que la media de la poblaci�n, entonces tiene un 50% de probabilidades de morir
-    	if(cromosoma.depth() > (Poblacion.getAverageDepth()) && MyRandom.getInstance().nextDouble() > (1.0 / n)) {
-    		return 5;
-    	}
-    	
-    	return total;
+    	if(individuo.get(0).depth() > individuo.getMaxDepth() && MyRandom.getInstance().nextDouble() < 0.5) {
+    		return 0;
+    	} return total;
     }
 }

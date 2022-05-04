@@ -29,7 +29,6 @@ public class Tree<T> implements Iterable<Tree<T>> {
 		this.children = new LinkedList<Tree<T>>();
 		this.elementsIndex = new LinkedList<Tree<T>>();
 		this.elementsIndex.add(this);
-		this.index = 0;
 	}
 
 	public Tree(T data) {
@@ -43,11 +42,11 @@ public class Tree<T> implements Iterable<Tree<T>> {
 		this(other.data);
 		Iterator<Tree<T>> childrenIter = other.children.iterator();
 		while (childrenIter.hasNext()) {
-			addChild(childrenIter.next());
+			copyChild(childrenIter.next());
 		}
 	}
 
-	private Tree<T> addChild(Tree<T> other) {
+	private Tree<T> copyChild(Tree<T> other) {
 		Tree<T> childNode = new Tree<T>(other);
 		childNode.parent = this;
 		childNode.index = children.size();
@@ -56,11 +55,10 @@ public class Tree<T> implements Iterable<Tree<T>> {
 		return childNode;
 	}
 
-	public Tree<T> addChild(T child) {
+	public Tree<T> addChild(T child) throws Exception {
 
-		if (this.isRoot() && this.data == null) {
-			this.data = child;
-			return this;
+		if (this.isRoot() && this.hasChildren()) {
+			throw new Exception("Cannot add more than one node to the root");
 		}
 
 		Tree<T> childNode = new Tree<T>(child);
@@ -76,14 +74,16 @@ public class Tree<T> implements Iterable<Tree<T>> {
 	}
 	
 	public int depth() {
-		if(children.isEmpty())
-			return 1;
-		return 1 + MyMath.max(children.stream().map(child -> child.depth()).collect(Collectors.toList()));
+		int value = 1;
+		if (isRoot()) value = 0;
+		if (!hasChildren())
+			return value;
+		return value + MyMath.max(children.stream().map(child -> child.depth()).collect(Collectors.toList()));
 	}
 
 	public int getLevel() {
 		if (this.isRoot())
-			return 1;
+			return 0;
 		return parent.getLevel() + 1;
 	}
 
@@ -127,8 +127,9 @@ public class Tree<T> implements Iterable<Tree<T>> {
 	}
 
 	public int numNodos() {
-		if (children.isEmpty()) return 1;
 		int value = 1;
+		if (isRoot()) value = 0;
+		if (!hasChildren()) return value;
 		for(Tree<T> child: children){
 			value += child.numNodos();
 		} return value;
