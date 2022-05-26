@@ -19,14 +19,14 @@ public class PoblacionTree implements PoblacionInterface {
             for(int i = 0; i < numGrupos; i++) {
                 for(int j = 0; j < tamGrupo; j++) {
                     if(j < tamGrupo/2)
-                        poblacion.add(IndividuoFactory.create("Completo", profundidad, function));
+                        poblacion.add(IndividuoFactory.create("Completo", (double) profundidad, null, null, function));
                     else 
-                    	poblacion.add(IndividuoFactory.create("Creciente", profundidad, function));
+                    	poblacion.add(IndividuoFactory.create("Creciente", (double) profundidad, null, null, function));
                 } profundidad++;
             }
         } else {
             for (int i = 0; i < size; i++) {
-                poblacion.add(IndividuoFactory.create(type, depth, function));
+                poblacion.add(IndividuoFactory.create(type, depth, null, null, function));
             }
         } return poblacion;
     }

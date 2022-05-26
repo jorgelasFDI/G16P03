@@ -1,12 +1,15 @@
 package algorithm.individuos;
 
+import java.util.List;
+
 import algorithm.functions.Function;
+import algorithm.individuos.gen.GenRange;
 import auxiliar.MyRandom;
 import auxiliar.tree.LogicalNode;
 
 public class IndividuoFactory {
 
-    public static Individuo create(String type, double depth, Function function) {
+    public static Individuo create(String type, Double depth, Double tolerancia, List<GenRange> ranges, Function function) {
         switch (type) {
             case "Completo":
                 IndividuoTree individuoComplete = new IndividuoTree(function);
@@ -18,9 +21,11 @@ public class IndividuoFactory {
                 return individuoCreciente;
             case "Real":
                 IndividuoReal individuoReal = new IndividuoReal(function);
+                individuoReal.init(ranges);
                 return individuoReal;
             case "Binary":
-                IndividuoReal individuoBinary = new IndividuoReal(function);
+                IndividuoBinary individuoBinary = new IndividuoBinary(function);
+                individuoBinary.init(tolerancia, ranges);
                 return individuoBinary;
             default:
                 return null;

@@ -7,6 +7,7 @@ import algorithm.individuos.IndividuoReal;
 import algorithm.individuos.gen.Gen;
 import algorithm.individuos.gen.GenRange;
 import algorithm.operations.Operation;
+import algorithm.population.Poblacion;
 
 public class MutacionUniforme extends Mutacion {
 
@@ -18,15 +19,10 @@ public class MutacionUniforme extends Mutacion {
 
     @Override
     public void mutar(Individuo individuo) {
-        GenRange range;
-        Double gen;
         IndividuoReal real = (IndividuoReal) individuo;
         for (int j = 0; j < real.getSize(); j++) {
-            gen = real.get(j);
-            range = gen.getRange();
-            for (int z = 0; z < gen.getSize(); z++) {
-                individuo.setBit(z, random.nextDouble()*(range.getMax() - range.getMin()) + range.getMin());
-            }
+            GenRange range = real.getObject((double) j);
+            real.set(j, random.nextDouble()*(range.getMax() - range.getMin()) + range.getMin());
         }
     }
 

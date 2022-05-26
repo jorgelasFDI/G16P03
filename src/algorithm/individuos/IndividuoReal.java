@@ -1,6 +1,7 @@
 package algorithm.individuos;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import algorithm.functions.Function;
@@ -23,10 +24,12 @@ public class IndividuoReal extends Individuo<Double, GenRange, Double> {
         size = ranges.size();
         genes = new ArrayList<Double>(size);
         iterable = genes;
+        HashMap<Double, GenRange> map = new HashMap<>();
         for (int i = 0; i < size; i++) {
             GenRange range = ranges.get(i);
             genes.add(MyRandom.getInstance().nextDouble()*(range.getMax() - range.getMin()) + range.getMin());
-		}
+            map.put((double) i, range);
+		} setGenesToObjects(map);
     }
 
     @Override
