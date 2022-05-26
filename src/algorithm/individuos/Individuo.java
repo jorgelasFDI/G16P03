@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import algorithm.functions.Function;
+import algorithm.population.Poblacion;
 
 public abstract class Individuo<TYPE, OBJ, ITER> implements Comparable<Individuo<TYPE, OBJ, ITER>>, Iterable<ITER> {
 
@@ -18,16 +19,18 @@ public abstract class Individuo<TYPE, OBJ, ITER> implements Comparable<Individuo
 
 	protected int size = 0;
 	protected Function function;
+	protected Poblacion poblacion;
 	
-
-	public Individuo(Function function) {
+	public Individuo(Function function, Poblacion poblacion) {
 		this.function = function;
+		this.poblacion = poblacion;
 	}
 
 	public Individuo(Individuo<TYPE, OBJ, ITER> individuo) {
 		function = individuo.getFunction();
 		aptitud = individuo.getAptitud();
 		aptitudRevisada = individuo.getAptitudRevisada();
+		poblacion = individuo.getPoblacion();
         puntuacion = individuo.getPuntuacion();
         puntuacionAcumulada = individuo.getPuntuacionAcumulada();
 		size = individuo.getSize();
@@ -40,6 +43,10 @@ public abstract class Individuo<TYPE, OBJ, ITER> implements Comparable<Individuo
 	public abstract void swapGen(int idx, int j, Individuo<TYPE, OBJ, ITER> other);
 	public abstract ITER get(int i);
 	public abstract void set(int i, ITER other);
+
+	public Poblacion getPoblacion() {
+		return poblacion;
+	}
 
 	public int getSize() {
 		return size;
@@ -58,7 +65,7 @@ public abstract class Individuo<TYPE, OBJ, ITER> implements Comparable<Individuo
 	}
 
 	public double fitness() {
-		return function.fitnessInstance(this);
+		return function.fitnessInstance(this, poblacion);
 	}
 
 	public double bloating() {

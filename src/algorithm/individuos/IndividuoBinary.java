@@ -6,6 +6,7 @@ import algorithm.functions.Function;
 import algorithm.individuos.gen.Gen;
 import algorithm.individuos.gen.GenList;
 import algorithm.individuos.gen.GenRange;
+import algorithm.population.Poblacion;
 
 public class IndividuoBinary extends Individuo<Boolean, GenRange, Boolean> {
 
@@ -15,8 +16,8 @@ public class IndividuoBinary extends Individuo<Boolean, GenRange, Boolean> {
         super(individuoBinary);
     }
 
-    public IndividuoBinary(Function function) {
-        super(function);
+    public IndividuoBinary(Function function, Poblacion poblacion) {
+        super(function, poblacion);
     }
 
     public void init(double tolerancia, List<GenRange> ranges) {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import algorithm.individuos.Individuo;
 import algorithm.individuos.IndividuoTree;
+import algorithm.population.Poblacion;
 import auxiliar.Binary;
 import auxiliar.MyRandom;
 import auxiliar.tree.LogicalNode;
@@ -34,7 +35,15 @@ public class Function1 extends Function {
 	}
 
     @Override
-    public double fitnessInstance(Individuo cromosoma) {
+    public double fitnessInstance(Individuo cromosoma, Poblacion poblacion) {
+
+		// CALCULATE AVERAGE DEPTH
+		int totalNodes = 0;
+		for (Individuo i: poblacion) {
+			IndividuoTree ind = (IndividuoTree) i;
+			totalNodes += ind.get(0).depth();
+		} double averageDepth = (double) totalNodes / (double) poblacion.size();
+
         int total = 0;
         IndividuoTree individuo = (IndividuoTree) cromosoma;	
 		for(int i = 0; i < LogicalNode.combinaciones.size(); i++) {

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.function.BiFunction;
 
 import algorithm.functions.Function;
+import algorithm.population.Poblacion;
 import auxiliar.MyRandom;
 import auxiliar.tree.LogicalNode;
 import auxiliar.tree.Tree;
@@ -19,9 +20,9 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 		this.isLeaf = individuo.getBiFunction();
 	}
 
-	public IndividuoTree(Function function) {
-		super(function);
-	}
+	public IndividuoTree(Function function, Poblacion poblacion) {
+        super(function, poblacion);
+    }
 
 	@Override
 	public IndividuoTree copy() {

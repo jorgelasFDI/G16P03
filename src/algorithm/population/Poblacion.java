@@ -74,18 +74,6 @@ public class Poblacion implements Iterable<Individuo> {
 		double sumAptitudRevisada = 0;
 		double mediaAptitudRevisada = 0;
 
-		// CALCULATE AVERAGE DEPTH
-		/*for (Individuo i: poblacion) {
-			IndividuoTree ind = (IndividuoTree) i;
-			depth = ind.get(0).depth();
-			totalNodes += depth;
-		} averageDepth = (double) totalNodes / (double) poblacion.size();
-
-		for (Individuo i: poblacion) {
-			IndividuoTree ind = (IndividuoTree) i;
-			ind.setMaxDepth(averageDepth);
-		}*/
-
 		// CALCULATE FITNESS
 		for (Individuo i: poblacion) {
 			double rawAptitud = i.fitness();
@@ -94,11 +82,6 @@ public class Poblacion implements Iterable<Individuo> {
 			if (rawAptitud > fmax) fmax = rawAptitud;
 			if (rawAptitud < fmin) fmin = rawAptitud;
 		}  fmax *= 1.05; mediaAptitud = sumAptitud / (double) poblacion.size();
-
-		/*for (Individuo i: poblacion) {
-			IndividuoTree ind = (IndividuoTree) i;
-			ind.setMediaAptitud(mediaAptitud);
-		}*/
 
 		// CALCULATE REVISION
 		for (Individuo i: poblacion) {

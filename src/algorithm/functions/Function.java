@@ -1,6 +1,7 @@
 package algorithm.functions;
 
 import algorithm.individuos.Individuo;
+import algorithm.population.Poblacion;
 
 public abstract class Function {
 
@@ -14,8 +15,8 @@ public abstract class Function {
     }
 
     public static double fitness(Function function, Individuo cromosoma) {
-        return function.fitnessInstance(cromosoma);
-    } public abstract double fitnessInstance(Individuo cromosoma);
+        return function.fitnessInstance(cromosoma, null);
+    } public abstract double fitnessInstance(Individuo cromosoma, Poblacion poblacion);
 
     public String toString() {
         return name;

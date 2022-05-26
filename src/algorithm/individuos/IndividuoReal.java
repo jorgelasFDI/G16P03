@@ -6,6 +6,7 @@ import java.util.List;
 
 import algorithm.functions.Function;
 import algorithm.individuos.gen.GenRange;
+import algorithm.population.Poblacion;
 import auxiliar.MyRandom;
 
 public class IndividuoReal extends Individuo<Double, GenRange, Double> {
@@ -16,8 +17,8 @@ public class IndividuoReal extends Individuo<Double, GenRange, Double> {
         super(individuoBinary);
     }
 
-    public IndividuoReal(Function function) {
-        super(function);
+    public IndividuoReal(Function function, Poblacion poblacion) {
+        super(function, poblacion);
     }
 
     public void init(List<GenRange> ranges) {

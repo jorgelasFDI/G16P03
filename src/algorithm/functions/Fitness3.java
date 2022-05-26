@@ -2,6 +2,7 @@ package algorithm.functions;
 
 import algorithm.individuos.Individuo;
 import algorithm.individuos.IndividuoBinary;
+import algorithm.population.Poblacion;
 
 public class Fitness3 extends Function {
 
@@ -10,7 +11,7 @@ public class Fitness3 extends Function {
     }
 
 	@Override
-	public double fitnessInstance(Individuo cromosoma) {
+	public double fitnessInstance(Individuo cromosoma, Poblacion poblacion) {
 		IndividuoBinary individuoBinary = (IndividuoBinary) cromosoma;
 		double gen1 = individuoBinary.getGen(0).getFenotipo();
         double gen2 = individuoBinary.getGen(1).getFenotipo();
