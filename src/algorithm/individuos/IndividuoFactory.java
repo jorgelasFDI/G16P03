@@ -20,7 +20,7 @@ public class IndividuoFactory {
                 IndividuoReal individuoReal = new IndividuoReal(function);
                 return individuoReal;
             case "Binary":
-                IndividuoBinary individuoBinary = new IndividuoBinary(function);
+                IndividuoReal individuoBinary = new IndividuoReal(function);
                 return individuoBinary;
             default:
                 return null;

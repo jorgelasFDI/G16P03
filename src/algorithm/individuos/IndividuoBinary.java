@@ -1,8 +1,15 @@
 package algorithm.individuos;
 
-import algorithm.functions.Function;
+import java.util.List;
 
-public class IndividuoBinary extends Individuo<Double, Object, Double> {
+import algorithm.functions.Function;
+import algorithm.individuos.gen.Gen;
+import algorithm.individuos.gen.GenList;
+import algorithm.individuos.gen.GenRange;
+
+public class IndividuoBinary extends Individuo<Boolean, GenRange, Boolean> {
+
+    private GenList genes;
 
     public IndividuoBinary(IndividuoBinary individuoBinary) {
         super(individuoBinary);
@@ -12,34 +19,53 @@ public class IndividuoBinary extends Individuo<Double, Object, Double> {
         super(function);
     }
 
+    public void init(double tolerancia, List<GenRange> ranges) {
+        genes = new GenList(tolerancia, ranges);
+        size = genes.getNumBits();
+    }   
+
     @Override
-    public Iterable<Double> copyGenes() {
-        // TODO Auto-generated method stub
-        return null;
+    public Iterable<Boolean> copyGenes() {
+        return new GenList(genes);
     }
 
     @Override
-    public Individuo<Double, Object, Double> copy() {
-        // TODO Auto-generated method stub
-        return null;
+    public Individuo<Boolean, GenRange, Boolean> copy() {
+        return new IndividuoBinary(this);
     }
 
     @Override
-    public void swapGen(int idx, int j, Individuo<Double, Object, Double> other) {
-        // TODO Auto-generated method stub
-        
+    public void swapGen(int idx, int j, Individuo<Boolean, GenRange, Boolean> other) {
+        IndividuoBinary otherBin = (IndividuoBinary) other;
+        Boolean aux = otherBin.get(j);
+		otherBin.set(j, get(idx));
+		otherBin.set(idx, aux);
+    }
+
+    public int getNumGenes() {
+        return genes.getSize();
+    }
+
+    public void setGen(int idx, Gen value) {
+		genes.set(idx, value);
+	}
+
+	public Gen getGen(int idx) {
+		return genes.get(idx);
+	}
+
+    public void flip(int idx) {
+        genes.flip(idx);
+	}
+
+    @Override
+    public Boolean get(int i) {
+        return genes.getBit(i);
     }
 
     @Override
-    public Double get(int i) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public void set(int i, Double other) {
-        // TODO Auto-generated method stub
-        
+    public void set(int i, Boolean other) {
+        genes.setBit(i, other);
     }
     
 }

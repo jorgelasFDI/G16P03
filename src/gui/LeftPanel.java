@@ -240,8 +240,8 @@ public class LeftPanel extends JPanel {
 			mut.setProb(probMutacion);
 			cruz.setProb(probCruce);
 
-			Poblacion poblacion = new Poblacion(new PoblacionTree(), size, probElite, cruz, mut, select, presion);
-			poblacion.generaPoblacion(type, depth, size, function);
+			Poblacion poblacion = new Poblacion(size, probElite, cruz, mut, select, presion);
+			poblacion.generaPoblacion((new PoblacionTree()).generaPoblacion(type, depth, size, function), function);
 
 			frame.setPoblacion(poblacion);
 			frame.run(numGeneraciones);
