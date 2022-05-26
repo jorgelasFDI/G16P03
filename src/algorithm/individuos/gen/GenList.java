@@ -49,8 +49,22 @@ public class GenList implements Iterable<Boolean> {
 
     @Override
     public Iterator<Boolean> iterator() {
-        // TODO Auto-generated method stub
-        return null;
+        return new Iterator<Boolean>() {
+            private Iterator<Gen> genIter = genes.iterator();
+            private Iterator<Boolean> iter;
+
+            @Override
+            public boolean hasNext() {
+                return iter.hasNext() || genIter.hasNext();
+            }
+
+            @Override
+            public Boolean next() {
+                if (iter == null || !iter.hasNext()) iter = genIter.next().iterator();
+                return iter.next();
+            }
+            
+        };
     }
 
     public Boolean getBit(int i) {

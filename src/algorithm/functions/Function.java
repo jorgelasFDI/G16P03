@@ -27,7 +27,7 @@ public abstract class Function {
     }
 
     public static double bloating(Function function, Individuo cromosoma) {
-        return function.bloatingInstance(cromosoma);
-    } public abstract double bloatingInstance(Individuo individuo);
+        return function.bloatingInstance(cromosoma, null);
+    } public abstract double bloatingInstance(Individuo individuo, Poblacion poblacion);
 
 }

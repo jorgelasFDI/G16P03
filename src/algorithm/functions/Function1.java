@@ -37,14 +37,7 @@ public class Function1 extends Function {
     @Override
     public double fitnessInstance(Individuo cromosoma, Poblacion poblacion) {
 
-		// CALCULATE AVERAGE DEPTH
-		int totalNodes = 0;
-		for (Individuo i: poblacion) {
-			IndividuoTree ind = (IndividuoTree) i;
-			totalNodes += ind.get(0).depth();
-		} double averageDepth = (double) totalNodes / (double) poblacion.size();
-
-        int total = 0;
+		int total = 0;
         IndividuoTree individuo = (IndividuoTree) cromosoma;	
 		for(int i = 0; i < LogicalNode.combinaciones.size(); i++) {
 			if (execFunction(individuo.get(0), LogicalNode.combinaciones.get(i), individuo) == Binary.toBool(LogicalNode.solution.get(i)))
@@ -55,7 +48,14 @@ public class Function1 extends Function {
     }
     
 	@Override
-    public double bloatingInstance(Individuo cromosoma) {
+    public double bloatingInstance(Individuo cromosoma, Poblacion poblacion) {
+
+		// CALCULATE AVERAGE DEPTH
+		int totalNodes = 0;
+		for (Individuo i: poblacion) {
+			IndividuoTree ind = (IndividuoTree) i;
+			totalNodes += ind.get(0).depth();
+		} double maxDepth = (double) totalNodes / (double) poblacion.size();
 
 		IndividuoTree individuo = (IndividuoTree) cromosoma;	
 
@@ -63,11 +63,8 @@ public class Function1 extends Function {
 		double FITNESS = 20;           //Con este par�metro indicamos que la mitad de los individuos grandes(con m�s nodos que la media) muere
 		
 		double depth = individuo.get(0).depth();
-		double maxDepth = individuo.getMaxDepth();
 
 		double prob = prob(FITNESS, DEPTH, individuo);
-    	//Si el arbol actual tiene tama�o m�s grande que la media de la poblaci�n, entonces tiene un 50% de probabilidades de morir
-
     	if(depth > maxDepth && MyRandom.getInstance().nextDouble() < prob) {
     		return 0;
     	} return individuo.getAptitudRevisada();
@@ -88,16 +85,4 @@ public class Function1 extends Function {
 	private double func2(double influence, double var) {
 		return 1.0 - influence/(Math.max(var, 0) + influence);
 	}
-    
-    /*private double bloating(Tree<String> cromosoma, double total) { 
-    	//Si la correlacion es buena entre las diferentes profundidades de los individuos no se modificar�
-    	//la profundidad, en cambio si es mala se penalizar� al individuo
-    	double correlacion = Poblacion.getCorrelacion();
-    	
-    	//Solo penaliza si la correlaci�n es negativa
-    	if(correlacion < 0)
-    		return total + correlacion * cromosoma.depth();
-    	
-    	return total;
-    }*/
 }

@@ -69,7 +69,7 @@ public abstract class Individuo<TYPE, OBJ, ITER> implements Comparable<Individuo
 	}
 
 	public double bloating() {
-		return function.bloatingInstance(this);
+		return function.bloatingInstance(this, poblacion);
 	}
 
 	public Function getFunction() {

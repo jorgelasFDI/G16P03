@@ -14,7 +14,7 @@ import algorithm.functions.Function1;
 import algorithm.individuos.Individuo;
 import algorithm.operations.Operation;
 import algorithm.population.Poblacion;
-import algorithm.population.PoblacionTree;
+import algorithm.population.GeneratePoblacion;
 import auxiliar.MyMath;
 import auxiliar.tree.LogicalNode;
 import algorithm.operations.selection.*;
@@ -241,7 +241,7 @@ public class LeftPanel extends JPanel {
 			cruz.setProb(probCruce);
 
 			Poblacion poblacion = new Poblacion(size, probElite, cruz, mut, select, presion);
-			poblacion.generaPoblacion((new PoblacionTree()).generaPoblacion(type, depth, size, null, null, function, poblacion), function);
+			poblacion.generaPoblacion((new GeneratePoblacion()).generaPoblacion(type, depth, size, null, null, null, function, poblacion), function);
 
 			frame.setPoblacion(poblacion);
 			frame.run(numGeneraciones);

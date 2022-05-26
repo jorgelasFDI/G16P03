@@ -4,13 +4,14 @@ import java.util.List;
 
 import algorithm.functions.Function;
 import algorithm.individuos.gen.GenRange;
+import algorithm.individuos.vuelo.Vuelo;
 import algorithm.population.Poblacion;
 import auxiliar.MyRandom;
 import auxiliar.tree.LogicalNode;
 
 public class IndividuoFactory {
 
-    public static Individuo create(String type, Double depth, Double tolerancia, List<GenRange> ranges, Function function, Poblacion poblacion) {
+    public static Individuo create(String type, Double depth, Double tolerancia, List<GenRange> ranges, List<Vuelo> vuelos, Function function, Poblacion poblacion) {
         switch (type) {
             case "Completo":
                 IndividuoTree individuoComplete = new IndividuoTree(function, poblacion);
@@ -28,6 +29,10 @@ public class IndividuoFactory {
                 IndividuoBinary individuoBinary = new IndividuoBinary(function, poblacion);
                 individuoBinary.init(tolerancia, ranges);
                 return individuoBinary;
+            case "Vuelo":
+                IndividuoVuelo individuoVuelo = new IndividuoVuelo(function, poblacion);
+                individuoVuelo.init(vuelos);
+                return individuoVuelo;
             default:
                 return null;
         }

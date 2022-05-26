@@ -1,12 +1,13 @@
 package algorithm.individuos.gen;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import auxiliar.Binary;
 import auxiliar.MyRandom;
 
-public class Gen {
+public class Gen implements Iterable<Boolean> {
 
     // EVERYTHING ELSE
     protected List<Boolean> alelo;
@@ -68,5 +69,10 @@ public class Gen {
     
     public int getSize() {
         return size;
+    }
+
+    @Override
+    public Iterator<Boolean> iterator() {
+        return alelo.iterator();
     }
 }

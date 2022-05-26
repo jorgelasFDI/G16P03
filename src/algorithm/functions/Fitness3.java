@@ -21,7 +21,7 @@ public class Fitness3 extends Function {
 	}
 
 	@Override
-	public double bloatingInstance(Individuo individuo) {
+	public double bloatingInstance(Individuo individuo, Poblacion poblacion) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
