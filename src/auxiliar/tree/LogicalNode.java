@@ -1,8 +1,10 @@
 package auxiliar.tree;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import auxiliar.TernaryOperator;
 
@@ -21,6 +23,8 @@ public class LogicalNode implements TernaryOperator<Boolean> {
 
 	public static Map<String, LogicalNode> map = new HashMap<>();
 
+	public static Set<String> terminales = new HashSet<>();
+
 	public static Map<String, TernaryOperator<Boolean>> funciones = new HashMap<>(){{
 		put("AND", (a, b, c) -> (a && b));
 		put("OR", (a, b, c) -> (a || b));
@@ -35,21 +39,23 @@ public class LogicalNode implements TernaryOperator<Boolean> {
 		put("IF", 3);
 	}};
 
-	public static Map<String, Integer> terminales = new HashMap<>();
+	
+
+	public static void clear() {
+		map.clear();
+		terminales.clear();
+	}
 
 	public static boolean add(String key) {
 		if (map.containsKey(key)) return false;
 		if (funciones.containsKey(key)) {
 			map.put(key, new LogicalNode("NODE", funciones.get(key), funcionesOperandos.get(key)));
 		} else {
-			map.put(key, new LogicalNode("LEAF", null, numTerminales));
-			terminales.put(key, numTerminales);
-			numTerminales++;
+			map.put(key, new LogicalNode("LEAF", null, terminales.size()));
+			terminales.add(key);
 		} return true;
 	}
-
-	public static int numTerminales = 0;
-
+	
 	private TernaryOperator<Boolean> operator;
 	public String type;
 	public int index;

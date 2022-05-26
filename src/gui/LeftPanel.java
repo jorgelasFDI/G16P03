@@ -100,54 +100,48 @@ public class LeftPanel extends JPanel {
 	//Arrays.asList(0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1)
 	private List<Integer> solution = new ArrayList<>(); 
 	private List<List<Integer>> combinaciones = new ArrayList<>();
-	private List<String> allvalues = new ArrayList<>(Arrays.asList("A0", "A1", "D0", "D1", "D2", "D3", "AND", "OR", "IF", "NOT")); 
+	private List<String> allvalues = new ArrayList<>();
 
 	public void generateCombinations(int num_entradas) {
-		int entradasTotales = (int) (num_entradas + Math.pow(2, num_entradas));
+		int pow = (int) Math.pow(2, num_entradas);
+		int powpow = (int) Math.pow(2, pow);
+		int entradasTotales = (int) (num_entradas + pow);
 		int num_combinations = (int) Math.pow(2, entradasTotales);
-		
-		for(int i = 0; i < num_combinations; i++) {
-			String binary = Integer.toBinaryString(i);
-			String[] combString = binary.split("");
-			ArrayList<Integer> comb = new ArrayList<>();
-			
-			for(int j = 0; j < entradasTotales - combString.length; j++)
-				comb.add(0);
-			
-			for(int j = 0; j < combString.length; j++)
-				comb.add(Integer.parseInt(combString[j]));
-			
-			combinaciones.add(comb);
+
+		solution = new ArrayList<>(); 
+		combinaciones = new ArrayList<>();
+		allvalues = new ArrayList<>();
+		LogicalNode.clear();
+
+		allvalues.addAll(LogicalNode.funciones.keySet());
+
+		for (int i = 0; i < num_entradas; i++) {
+			allvalues.add("A" + i);
 		}
-		
-		//GENERAMOS LA SOLUCION DEL MULTIPLEXOR CON X ENTRADAS
-		solution = new ArrayList<>();
-		for(int i = 0; i < num_combinations; i++) {
-			List<Integer> list = new ArrayList<>();
-			for(int j = 0; j < num_entradas; j++) {
-				list.add(combinaciones.get(i).get(j));
+
+		for (int i = 0; i < pow; i++) {
+			allvalues.add("D" + i);
+		}
+
+		for (int i = 0; i < pow; i++) {
+			String binary = Integer.toBinaryString( (1 << num_entradas) | i ).substring( 1 );
+			for (int j = 0; j < powpow; j++) {
+				List<Integer> comb = new ArrayList<>();
+				String[] combString = binary.split("");
+				for(int z = 0; z < combString.length; z++)
+					comb.add(Integer.parseInt(combString[z]));
+				String str = Integer.toBinaryString( (1 << pow) | j ).substring( 1 );
+				String[] combString2 = str.split("");
+				for(int z = 0; z < combString2.length; z++)
+					comb.add(Integer.parseInt(combString2[z]));
+				combinaciones.add(comb);
+				solution.add(comb.get(num_entradas + i));
 			}
-			int bin = MyMath.convertToInt(list, 0);
-			solution.add(combinaciones.get(i).get(entradasTotales - bin - 1));
-			
 		}
 
 		for (String term: allvalues) {
 			LogicalNode.add(term);
 		}
-
-		
-		/*for(int i = 0; i < num_combinations; i++) {
-			for(int j = 0; j < combinaciones.get(i).size(); j++) {
-				System.out.print(combinaciones.get(i).get(j) + " ");
-			}
-			System.out.println();
-		}*/
-		
-		/*System.out.println("SOLUCION :");
-		for(int i = 0; i < solution.size(); i++) {
-			System.out.print(solution.get(i) + " ");
-		}*/
 	}
 		
 	public LeftPanel(MainFrame mainFrame) {
@@ -201,7 +195,7 @@ public class LeftPanel extends JPanel {
 		addComponentPanel(sizeTextField, "Tamaño población", globalMargin, this, null);
 		addComponentPanel(generacionesTextField, "Numero de generaciones", globalMargin, this, null);
 		addComponentPanel(alturaSpinner, "Altura del �rbol", globalMargin, this, null);
-		addComponentPanel(entradasSpinner, "N�mero de entradas", globalMargin, this, null);
+		addComponentPanel(entradasSpinner, "N�mero de entradas", globalMargin, this, null);
 		
         addComponentPanel(Arrays.asList(
 			new Pair<>("Seleccion", seleccionComboBox), 

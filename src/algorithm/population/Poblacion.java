@@ -11,8 +11,6 @@ import algorithm.functions.Function;
 import algorithm.individuos.Individuo;
 import algorithm.individuos.IndividuoTree;
 import algorithm.operations.Operation;
-import auxiliar.MyMath;
-import auxiliar.tree.Tree;
 
 public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 
@@ -26,16 +24,11 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 	private double presion;
 	private List<Individuo> poblacion;
 	private List<Individuo> elite;
-	private List<Integer> profIndividuos;
-	private List<Double> fitnessIndividuos;
 
 	private double mediaAptitud;
-	private double averageDepth;
-	private static double correlacion;
 	
 	private Individuo mejorIndividuo;
 	private boolean minimizar = false;
-	
 
 	public void cruzar() {
 		cruce.operationInstance(poblacion);
@@ -64,15 +57,12 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 		this.eliteSize = (int) Math.floor(eliteSize * size);
 		mejorIndividuo = null;
 		mediaAptitud = 0.0;
-		correlacion = 0.0;
-		inicializaList();
 	}
 
 	@Override
 	public List<Individuo> generaPoblacion(String type, double depth, int size, Function function) {
 		poblacion = generarPInterface.generaPoblacion(type, depth, size, function);
 		this.minimizar = function.getMinimizar();
-		averageDepth = depth;
 		evalua(); return null;
 	}
 
@@ -91,8 +81,6 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 		double mediaAptitud = 0;
 		double sumAptitudRevisada = 0;
 		double mediaAptitudRevisada = 0;
-		double sumAptitudBloating = 0;
-		double mediaAptitudBloating = 0;
 		int depth = 0;
 		int totalNodes = 0;
 		double averageDepth = 0;
@@ -100,8 +88,7 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 		// CALCULATE AVERAGE DEPTH
 		for (Individuo i: poblacion) {
 			IndividuoTree ind = (IndividuoTree) i;
-			Tree<String> tree = ind.get(0);
-			depth = tree.depth();
+			depth = ind.get(0).depth();
 			totalNodes += depth;
 		} averageDepth = (double) totalNodes / (double) poblacion.size();
 
@@ -109,8 +96,6 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 			IndividuoTree ind = (IndividuoTree) i;
 			ind.setMaxDepth(averageDepth);
 		}
-
-		// CALCULATE COVARIANCE
 
 		// CALCULATE FITNESS
 		for (Individuo i: poblacion) {
@@ -135,6 +120,8 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 
 		// ORDENAR
 		Poblacion.sort(poblacion);
+
+		// GET BEST AND WORST
 		Individuo mejorGeneracion = poblacion.get(0).copy();       //El individuo con mejor aptitud SIEMPRE se guarda en la 1a posicion
 		Individuo peorGeneracion = poblacion.get(poblacion.size() - 1).copy();
 		if(mejorIndividuo == null)
@@ -143,13 +130,6 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 			mejorIndividuo = mejorGeneracion;
 		else if(!minimizar && mejorGeneracion.getAptitud() > mejorIndividuo.getAptitud())
 			mejorIndividuo = mejorGeneracion;
-
-		// CALCULATE BLOATING
-		for (int i = eliteSize; i < poblacion.size(); i++) {
-			Individuo ind = poblacion.get(i);
-			ind.setAptitudBloating(ind.bloating());
-			sumAptitudBloating += ind.getAptitudBloating();
-		} mediaAptitudBloating = sumAptitudBloating / (double) poblacion.size();
 
 		// ESCALADO	
 		/*
@@ -169,15 +149,27 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 				sumAptitudRevisada += i.getAptitudRevisada();
 			}
 		}//*/
+		
+		// CALCULATE BLOATING
+		sumAptitudRevisada = 0;
+		for (int i = eliteSize; i < poblacion.size(); i++) {
+			Individuo ind = poblacion.get(i);
+			double bloating = ind.bloating();
+			ind.setAptitudRevisada(bloating);
+			sumAptitudRevisada += ind.getAptitudRevisada();
+		} mediaAptitudRevisada = sumAptitudRevisada / (double) poblacion.size();
+
+		// ORDENAR
+		Poblacion.sort(poblacion);
 
 		// NORMAL
 		double puntAcum = 0.0;
 		for(Individuo i: poblacion) {
-			i.setPuntuacion(i.getAptitudBloating() / sumAptitudBloating);
+			i.setPuntuacion(i.getAptitudRevisada() / sumAptitudRevisada);
 			puntAcum += i.getPuntuacion();
 			i.setPuntuacionAcumulada(puntAcum);
 		}
-
+		
 		return new Pair<>(mediaAptitud, mejorIndividuo);
 	}
 
@@ -223,24 +215,9 @@ public class Poblacion implements PoblacionInterface, Iterable<Individuo> {
 	public static void sort(List<Individuo> poblacion) {
 		Collections.sort(poblacion, Collections.reverseOrder());
 	}
-	
-	private void inicializaList() {
-		// TODO Auto-generated method stub
-		profIndividuos = new ArrayList<>(size);
-		fitnessIndividuos = new ArrayList<>(size);
-		for(int i = 0; i < size; i++) {
-			profIndividuos.add(0);
-			fitnessIndividuos.add(0.0);
-		}
-	}
 
 	@Override
 	public Iterator<Individuo> iterator() {
 		return poblacion.iterator();
-	}
-
-	public static double getCorrelacion() {
-		// TODO Auto-generated method stub
-		return correlacion;
 	}
 }

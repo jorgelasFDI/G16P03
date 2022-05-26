@@ -26,8 +26,6 @@ public class AlgoritmoGenetico {
     public void run(int numGeneraciones) {
         generaciones = new Generaciones(numGeneraciones);
         generacionActual = 0;
-        
-        //poblacion.print();
         	
         generaciones.addGeneracion(new Generacion(poblacion.get(0).getAptitud(), poblacion.getMediaAptitud(), poblacion.getMejorAbsoluto()));
         while (generacionActual < numGeneraciones - 1) {
@@ -47,7 +45,6 @@ public class AlgoritmoGenetico {
             generaciones.addGeneracion(new Generacion(poblacion.get(0).getAptitud(), poblacion.getMediaAptitud(), poblacion.getMejorAbsoluto()));
             //Siguiente generacion*/
             generacionActual++;
-            //System.out.println(generacionActual);
         }
                 
         for(Observers o: observadores) {

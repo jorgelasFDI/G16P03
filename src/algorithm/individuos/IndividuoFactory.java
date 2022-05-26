@@ -16,6 +16,12 @@ public class IndividuoFactory {
                 IndividuoTree individuoCreciente = new IndividuoTree(function);
                 individuoCreciente.init(depth, (x, y) -> (0.75 < MyRandom.getInstance().nextDouble() || x >= y), LogicalNode.map);
                 return individuoCreciente;
+            case "Real":
+                IndividuoReal individuoReal = new IndividuoReal(function);
+                return individuoReal;
+            case "Binary":
+                IndividuoBinary individuoBinary = new IndividuoBinary(function);
+                return individuoBinary;
             default:
                 return null;
         }

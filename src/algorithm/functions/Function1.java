@@ -50,15 +50,16 @@ public class Function1 extends Function {
 
 		IndividuoTree individuo = (IndividuoTree) cromosoma;	
 
-    	double DEPTH = 5;
-		double FITNESS = 10;           //Con este par�metro indicamos que la mitad de los individuos grandes(con m�s nodos que la media) muere
+    	double DEPTH = 20;
+		double FITNESS = 20;           //Con este par�metro indicamos que la mitad de los individuos grandes(con m�s nodos que la media) muere
 		
 		double depth = individuo.get(0).depth();
 		double maxDepth = individuo.getMaxDepth();
 
 		double prob = prob(FITNESS, DEPTH, individuo);
     	//Si el arbol actual tiene tama�o m�s grande que la media de la poblaci�n, entonces tiene un 50% de probabilidades de morir
-    	if(depth > maxDepth && MyRandom.getInstance().nextDouble() < 0.5) {
+
+    	if(depth > maxDepth && MyRandom.getInstance().nextDouble() < prob) {
     		return 0;
     	} return individuo.getAptitudRevisada();
     }

@@ -28,7 +28,7 @@ public class MutacionTerminalFuncional extends Mutacion {
 			while (LogicalNode.funcionesOperandos.get(key) != tIndividuo.getObject(node.data).index) {
 				key = MyRandom.getRandomValueInSet(LogicalNode.funciones.keySet());
 			};
-		} else key = MyRandom.getRandomValueInSet(LogicalNode.terminales.keySet());
+		} else key = MyRandom.getRandomValueInSet(LogicalNode.terminales);
 		node.data = key;
 			
 	}

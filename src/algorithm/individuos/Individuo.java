@@ -15,7 +15,6 @@ public abstract class Individuo<TYPE, OBJ, ITER> implements Comparable<Individuo
     protected double puntuacion; 
     protected double puntuacionAcumulada;
 	protected double aptitudRevisada;
-	protected double aptitudBloating;
 
 	protected int size = 0;
 	protected Function function;
@@ -97,14 +96,6 @@ public abstract class Individuo<TYPE, OBJ, ITER> implements Comparable<Individuo
     public void setPuntuacionAcumulada(double puntuacionAcumulada) {
         this.puntuacionAcumulada = puntuacionAcumulada;
     }
-
-	public double getAptitudBloating() {
-		return aptitudBloating;
-	}
-
-	public void setAptitudBloating(double bloating) {
-		aptitudBloating = bloating;
-	}
 
 	public double getAptitudRevisada() {
 		return aptitudRevisada;

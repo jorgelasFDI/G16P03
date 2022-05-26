@@ -87,7 +87,7 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 	public static int init(Tree<String> tree, int current, double depth, BiFunction<Integer, Double, Boolean> isLeaf) throws Exception {
 	 
 		if (isLeaf.apply(current, depth)) {
-			Tree<String> child = tree.addChild(MyRandom.getRandomValueInSet(LogicalNode.terminales.keySet()));
+			Tree<String> child = tree.addChild(MyRandom.getRandomValueInSet(LogicalNode.terminales));
 			return 1;
 		}
 
