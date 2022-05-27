@@ -36,22 +36,19 @@ public class CruceCO extends Cruce {
 		}
 	}
 	
-	private void assign(List<Integer> listaDinamica, IndividuoVuelo ind) {
+	private void assign(List<Integer> listaDinamica, List<Integer> ordinalPadre, Individuo ind) {
 		for(int j = 0; j < ind.getSize(); j++) {
-			int vuelo = ind.get(j);
+			int vuelo = ordinalPadre.get(j);
 			
 			Iterator<Integer> it = listaDinamica.iterator();
-			Boolean found = false;
+			int v = 0;
 			int idx = 0;
-			while(it.hasNext() && !found) {
-				int v = it.next();
-				if(vuelo == v)
-					found = true;
-				else
-					idx++;
+			while(idx < vuelo && it.hasNext()) {      //idx < listaDinamica.size()	
+				idx++;
+				v = it.next();
 			}
-			ind.set(idx, ind.get(idx));
-			listaDinamica.remove(idx);
+			ind.set(j, v);
+			listaDinamica.remove(idx - 1);
 		}
 	}
 
@@ -92,9 +89,9 @@ public class CruceCO extends Cruce {
 		
 		//--------------------------------------------------
 		
-		assign(listaDinamica, padre1);
+		assign(listaDinamica, ordinalPadre1, padre1);
 		inicializaLista(listaDinamica, padre2.getSize());
-		assign(listaDinamica, padre2);
+		assign(listaDinamica, ordinalPadre2, padre2);
 		
 	}
 }
