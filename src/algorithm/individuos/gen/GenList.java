@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class GenList implements Iterable<Boolean> {
+public class GenList implements Iterable<Gen> {
 
     private List<Gen> genes;
     private int size;
@@ -48,7 +48,11 @@ public class GenList implements Iterable<Boolean> {
     }
 
     @Override
-    public Iterator<Boolean> iterator() {
+    public Iterator<Gen> iterator() {
+        return genes.iterator();
+    }
+
+    public Iterator<Boolean> bitsIterator() {
         return new Iterator<Boolean>() {
             private Iterator<Gen> genIter = genes.iterator();
             private Iterator<Boolean> iter;

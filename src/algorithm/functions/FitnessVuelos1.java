@@ -13,7 +13,7 @@ public class FitnessVuelos1 extends Function {
     public static final String name = "Funcion 1";
 
     public FitnessVuelos1() {
-        super(true, name);
+        super(true, name, null, null);
     }
 
     @Override

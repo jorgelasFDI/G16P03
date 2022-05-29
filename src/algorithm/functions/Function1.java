@@ -13,7 +13,7 @@ import auxiliar.tree.Tree;
 public class Function1 extends Function {
 	
     public Function1() {
-        super(false, "function tree");
+        super(false, "function tree", null, null);
     }
 
     public Boolean execFunction(Tree<String> root, List<Integer> combinacion, IndividuoTree cromosoma) {

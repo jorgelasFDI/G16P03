@@ -1,14 +1,19 @@
 package algorithm.functions;
 
+import java.util.ArrayList;
+
 import algorithm.individuos.Individuo;
 import algorithm.individuos.IndividuoBinary;
+import algorithm.individuos.gen.GenRange;
 import algorithm.population.Poblacion;
 
 public class Fitness3 extends Function {
 
 	public Fitness3() {
-        super(false, "function binary 3");
-    }
+        super(false, "function binary 3", 2, new ArrayList<>());
+		ranges.add(new GenRange(-512.0, 512.0));
+        ranges.add(new GenRange(-512.0, 512.0));
+	}
 
 	@Override
 	public double fitnessInstance(Individuo cromosoma, Poblacion poblacion) {

@@ -1,13 +1,18 @@
 package algorithm.functions;
 
+import java.util.ArrayList;
+
 import algorithm.individuos.Individuo;
 import algorithm.individuos.IndividuoBinary;
+import algorithm.individuos.gen.GenRange;
 import algorithm.population.Poblacion;
 
 public class Fitness1 extends Function {
 
     public Fitness1() {
-        super(false, "function binary 1");
+        super(false, "function binary 1", 2, new ArrayList<>());
+        ranges.add(new GenRange(-3.0, 12.1));
+        ranges.add(new GenRange(4.1, 5.8));
     }
 
     @Override

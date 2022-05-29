@@ -8,7 +8,7 @@ import algorithm.individuos.gen.GenList;
 import algorithm.individuos.gen.GenRange;
 import algorithm.population.Poblacion;
 
-public class IndividuoBinary extends Individuo<Boolean, GenRange, Boolean> {
+public class IndividuoBinary extends Individuo<Boolean, GenRange, Gen> {
 
     private GenList genes;
 
@@ -26,21 +26,21 @@ public class IndividuoBinary extends Individuo<Boolean, GenRange, Boolean> {
     }   
 
     @Override
-    public Iterable<Boolean> copyGenes() {
+    public Iterable<Gen> copyGenes() {
         return new GenList(genes);
     }
 
     @Override
-    public Individuo<Boolean, GenRange, Boolean> copy() {
+    public Individuo<Boolean, GenRange, Gen> copy() {
         return new IndividuoBinary(this);
     }
 
     @Override
-    public void swapGen(int idx, int j, Individuo<Boolean, GenRange, Boolean> other) {
+    public void swapGen(int idx, int j, Individuo<Boolean, GenRange, Gen> other) {
         IndividuoBinary otherBin = (IndividuoBinary) other;
-        Boolean aux = otherBin.get(j);
-		otherBin.set(j, get(idx));
-		otherBin.set(idx, aux);
+        Boolean aux = otherBin.getBit(j);
+		otherBin.setBit(j, getBit(idx));
+		otherBin.setBit(idx, aux);
     }
 
     public int getNumGenes() {
@@ -60,12 +60,20 @@ public class IndividuoBinary extends Individuo<Boolean, GenRange, Boolean> {
 	}
 
     @Override
-    public Boolean get(int i) {
-        return genes.getBit(i);
+    public Gen get(int i) {
+        return genes.get(i);
     }
 
     @Override
-    public void set(int i, Boolean other) {
+    public void set(int i, Gen other) {
+        genes.set(i, other);
+    }
+
+    public Boolean getBit(int i) {
+        return genes.getBit(i);
+    }
+
+    public void setBit(int i, Boolean other) {
         genes.setBit(i, other);
     }
     

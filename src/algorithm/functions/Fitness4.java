@@ -1,15 +1,19 @@
 package algorithm.functions;
 
+import java.util.ArrayList;
+
 import algorithm.individuos.Individuo;
 import algorithm.individuos.IndividuoBinary;
+import algorithm.individuos.gen.GenRange;
 import algorithm.population.Poblacion;
 
 
 public class Fitness4 extends Function {
 
 	public Fitness4() {
-        super(true, "function real");
-    }
+        super(true, "function real", null, new ArrayList<>());
+		ranges.add(new GenRange(0, Math.PI));
+	}
 
 	@Override
 	public double fitnessInstance(Individuo cromosoma, Poblacion poblacion) {
