@@ -20,7 +20,7 @@ import algorithm.operations.Operation;
 import algorithm.population.Poblacion;
 import auxiliar.MyGui;
 
-public class LeftPanel1 implements View {
+public class LeftPanel3 implements View {
 
     private JComboBox<Operation> seleccionComboBox;
     private JComboBox<Operation> mutacionComboBox;
@@ -37,7 +37,7 @@ public class LeftPanel1 implements View {
 	private JTextField presionTextField = new JTextField("1.5");
 	private Integer numGenes = null;
 
-    public LeftPanel1(JComboBox<Operation> seleccionComboBox, JComboBox<Operation> mutacionComboBox,
+    public LeftPanel3(JComboBox<Operation> seleccionComboBox, JComboBox<Operation> mutacionComboBox,
             JComboBox<Operation> cruceComboBox, JComboBox<Function> functionComboBox) {
         functionComboBox.addActionListener(e -> numGenes = ((Function) functionComboBox.getSelectedItem()).getNumVars());
 		functionComboBox.addActionListener(e -> setRanges());

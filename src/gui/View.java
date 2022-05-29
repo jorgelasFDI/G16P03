@@ -7,8 +7,12 @@ import javax.swing.JPanel;
 
 import org.javatuples.Pair;
 
+import algorithm.population.Poblacion;
+
 public interface View {
 
     public List<Pair<List<Pair<String, JComponent>>, JPanel>> getPanelList();
+
+    public Poblacion getPoblacion();
     
 }

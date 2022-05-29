@@ -180,7 +180,8 @@ public class LeftPanel extends JPanel {
 			case "RampedAndHalf":
             case "Completo":
             case "Creciente":
-				treeType(); 
+				treeType();
+				view = new LeftPanel3(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox);
 				break;
             case "Real":
 				realType();
@@ -191,7 +192,9 @@ public class LeftPanel extends JPanel {
 				view = new LeftPanel1(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox);
 				break;
             case "Vuelo":
-				vueloType(); break;
+				vueloType(); 
+				view = new LeftPanel2(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox);
+				break;
             default: break;
         }
 
@@ -203,14 +206,24 @@ public class LeftPanel extends JPanel {
 		initGUI();
 	}
 
+	private JTextField sizeTextField = new JTextField("100");
+    private JTextField generacionesTextField = new JTextField("200");
+    private JTextField eliteTextField = new JTextField("0");
+
     private void initGUI() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		MyGui.addComponentPanel(typeComboBox, "Tipo", 0, null, this);
+		MyGui.addComponentPanel(Arrays.asList(
+			new Pair<>("Tipo", typeComboBox),
+			new Pair<>("Tamaño", sizeTextField),
+			new Pair<>("Numero de Generaciones", generacionesTextField),
+			new Pair<>("% Elite", eliteTextField)
+		), 0, null, this);
 		MyGui.addAllPanels(view.getPanelList(), 0, globalMargin, this);
 		add(enter);
     }
 
 	public void startAlg() {
-		System.out.println("Starting algorithm");
+		frame.setPoblacion(view.getPoblacion());
+		frame.run(Integer.parseInt(generacionesTextField.getText()));
 	}
 }
