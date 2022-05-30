@@ -82,6 +82,7 @@ public class LeftPanel1 implements View {
 			rangesSpinners.remove(rangesSpinners.size() - 1);
 			rangesPanel.remove(i);
 		} numGenes = n;
+		rangesPanelWrap.updateUI();
 	}
     
     private void setRanges() {
@@ -103,6 +104,7 @@ public class LeftPanel1 implements View {
 		addRanges(0, numGenes);
 
 		rangesPanelWrap.add(rangesPanel);
+		rangesPanelWrap.updateUI();
     }
 
     @Override
