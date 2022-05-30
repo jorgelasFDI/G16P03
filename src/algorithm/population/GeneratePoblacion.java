@@ -21,14 +21,14 @@ public class GeneratePoblacion {
                 for(int i = 0; i < numGrupos; i++) {
                     for(int j = 0; j < tamGrupo; j++) {
                         if(j < tamGrupo/2)
-                            poblacionList.add(IndividuoFactory.create("Completo", (double) profundidad, null, null, null, function, poblacion));
+                            poblacionList.add(IndividuoFactory.create("Completo", profundidad, null, null, null, function, poblacion));
                         else 
-                            poblacionList.add(IndividuoFactory.create("Creciente", (double) profundidad, null, null, null, function, poblacion));
+                            poblacionList.add(IndividuoFactory.create("Creciente", profundidad, null, null, null, function, poblacion));
                     } profundidad++;
                 }; break;
             default:
                 for (int i = 0; i < size; i++) {
-                    poblacionList.add(IndividuoFactory.create(type, (double) depth, tolerancia, ranges, vuelos, function, poblacion));
+                    poblacionList.add(IndividuoFactory.create(type, depth, tolerancia, ranges, vuelos, function, poblacion));
                 }; break;
         }; return poblacionList;
     }

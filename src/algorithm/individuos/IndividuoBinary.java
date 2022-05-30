@@ -14,6 +14,7 @@ public class IndividuoBinary extends Individuo<Boolean, GenRange, Gen> {
 
     public IndividuoBinary(IndividuoBinary individuoBinary) {
         super(individuoBinary);
+        genes = (GenList) iterable;
     }
 
     public IndividuoBinary(Function function, Poblacion poblacion) {
@@ -22,6 +23,7 @@ public class IndividuoBinary extends Individuo<Boolean, GenRange, Gen> {
 
     public void init(double tolerancia, List<GenRange> ranges) {
         genes = new GenList(tolerancia, ranges);
+        iterable = genes;
         size = genes.getNumBits();
     }   
 

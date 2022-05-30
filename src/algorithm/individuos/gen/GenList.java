@@ -21,6 +21,8 @@ public class GenList implements Iterable<Gen> {
     }
 
     public GenList(GenList genes2) {
+        size = genes2.getSize();
+        numBits = genes2.getNumBits();
         genes = new ArrayList<>(genes2.getSize());
         for (int i = 0; i < genes2.getSize(); i++) {
             genes.add(new Gen(genes2.get(i)));

@@ -11,7 +11,7 @@ import auxiliar.tree.LogicalNode;
 
 public class IndividuoFactory {
 
-    public static Individuo create(String type, Double depth, Double tolerancia, List<GenRange> ranges, List<Vuelo> vuelos, Function function, Poblacion poblacion) {
+    public static Individuo create(String type, Integer depth, Double tolerancia, List<GenRange> ranges, List<Vuelo> vuelos, Function function, Poblacion poblacion) {
         switch (type) {
             case "Completo":
                 IndividuoTree individuoComplete = new IndividuoTree(function, poblacion);
