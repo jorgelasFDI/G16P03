@@ -15,13 +15,13 @@ public class Vuelo {
     private int pistaAsignada = -1;
     private static Map<String, Map<String, Double>> matrizSEP;
 
-    public Vuelo(String idVuelo, String tipoAvion, List<Double> list, Map<String, Map<String, Double>> matrizSEP) {
+    public Vuelo(String idVuelo, String tipoAvion, List<Double> tiemposEstimados, Map<String, Map<String, Double>> matrizSEP) {
 		this.idVuelo = idVuelo;
 		this.tipoAvion = tipoAvion;
-		this.tiemposEstimados = list;
+		this.tiemposEstimados = tiemposEstimados;
         Vuelo.matrizSEP = matrizSEP;
         Vuelo.numPistas = tiemposEstimados.size();
-        for (double tiempo: list)
+        for (double tiempo: tiemposEstimados)
             this.minTEL = Math.min(minTEL, tiempo);
 	}
 

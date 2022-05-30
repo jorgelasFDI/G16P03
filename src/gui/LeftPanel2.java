@@ -1,7 +1,10 @@
 package gui;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -11,8 +14,11 @@ import javax.swing.JTextField;
 import org.javatuples.Pair;
 
 import algorithm.functions.*;
+import algorithm.individuos.vuelo.Vuelo;
 import algorithm.operations.Operation;
+import algorithm.population.GeneratePoblacion;
 import algorithm.population.Poblacion;
+import auxiliar.RandomGenerator;
 
 public class LeftPanel2 implements View {
 
@@ -58,6 +64,47 @@ public class LeftPanel2 implements View {
 
 	@Override
 	public Poblacion getPoblacion(int size, double eliteSize) {
-		return null;
+
+		/*	"W"	"G"	"P"
+		""  0.0	0.0	0.0
+		"W"	1.0	1.5	2.0
+		"G"	1.0	1.5	1.5
+		"P"	1.0	1.0	1.0
+		*/
+		Map<String, Map<String, Double>> matrizSEP = new HashMap<>() {{
+			put("", new HashMap<String, Double>() {{
+				put("W", 0.0); put("G", 0.0); put("P", 0.0);
+			}});
+			put("W", new HashMap<String, Double>() {{
+				put("W", 1.0); put("G", 1.5); put("P", 2.0); 
+			}});
+			put("G", new HashMap<String, Double>() {{
+				put("W", 1.0); put("G", 1.5); put("P", 1.5); 
+			}});
+			put("P", new HashMap<String, Double>() {{
+				put("W", 1.0); put("G", 1.0); put("P", 1.0); 
+			}});
+			
+		}};
+
+		List<Vuelo> vuelos = new ArrayList<>();
+
+		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "W", new ArrayList<Double>(Arrays.asList(11.0, 10.0, 9.0)), matrizSEP));
+		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "G", new ArrayList<Double>(Arrays.asList(15.0, 17.0, 19.0)), matrizSEP));
+		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "W", new ArrayList<Double>(Arrays.asList(6.0, 7.0, 8.0)), matrizSEP));
+		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "W", new ArrayList<Double>(Arrays.asList(6.0, 7.0, 8.0)), matrizSEP));
+		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "P", new ArrayList<Double>(Arrays.asList(9.0, 12.0, 15.0)), matrizSEP));
+		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "W", new ArrayList<Double>(Arrays.asList(7.0, 6.0, 5.0)), matrizSEP));
+		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "G", new ArrayList<Double>(Arrays.asList(15.0, 17.0, 19.0)), matrizSEP));
+		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "W", new ArrayList<Double>(Arrays.asList(6.0, 7.0, 8.0)), matrizSEP));
+		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "W", new ArrayList<Double>(Arrays.asList(6.0, 7.0, 8.0)), matrizSEP));
+		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "P", new ArrayList<Double>(Arrays.asList(9.0, 12.0, 15.0)), matrizSEP));
+		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "W", new ArrayList<Double>(Arrays.asList(7.0, 6.0, 5.0)), matrizSEP));
+		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "G", new ArrayList<Double>(Arrays.asList(9.0, 7.0, 5.0)), matrizSEP));
+
+		Function function = (Function) functionComboBox.getSelectedItem();
+		Poblacion poblacion = new Poblacion(size, eliteSize, (Operation) cruceComboBox.getSelectedItem(), (Operation) mutacionComboBox.getSelectedItem(), (Operation) seleccionComboBox.getSelectedItem(), null);
+		poblacion.generaPoblacion((new GeneratePoblacion()).generaPoblacion(type, null, size, null, null, vuelos, function, poblacion), function);
+		return poblacion;
 	}
 }
