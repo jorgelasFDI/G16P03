@@ -14,6 +14,7 @@ import javax.swing.border.TitledBorder;
 
 import org.javatuples.Pair;
 
+import algorithm.AlgoritmoGenetico;
 import algorithm.functions.*;
 import algorithm.individuos.Individuo;
 import algorithm.operations.Operation;
@@ -69,7 +70,7 @@ public class PanelInfo3 implements View {
 	}
 	
     @Override
-	public JPanel getBottomPanel(Generaciones generaciones, Individuo mejorIndividuo) {
+	public JPanel getBottomPanel(Generaciones generaciones, Individuo mejorIndividuo, AlgoritmoGenetico alg) {
 		// TODO Auto-generated method stub
     	JPanel panel = new JPanel();
     	
@@ -79,7 +80,9 @@ public class PanelInfo3 implements View {
     			"Mejor individuo",
     			TitledBorder.LEFT, TitledBorder.TOP);
 		panel.setBorder(border);
-		MyGui.addLabel("La aptitud del individuo es: ", panel);
+		
+		if(mejorIndividuo != null)
+			MyGui.addLabel("La aptitud del individuo es: " + mejorIndividuo.getAptitud(), panel);
 		
 		return panel;
 	}

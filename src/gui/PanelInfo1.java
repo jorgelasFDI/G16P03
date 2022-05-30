@@ -14,6 +14,7 @@ import javax.swing.SpinnerNumberModel;
 
 import org.javatuples.Pair;
 
+import algorithm.AlgoritmoGenetico;
 import algorithm.functions.*;
 import algorithm.individuos.Individuo;
 import auxiliar.binary.GenRange;
@@ -145,11 +146,12 @@ public class PanelInfo1 implements View {
 	}
 
 	@Override
-	public JPanel getBottomPanel(Generaciones generaciones, Individuo mejorIndividuo) {
+	public JPanel getBottomPanel(Generaciones generaciones, Individuo mejorIndividuo, AlgoritmoGenetico alg) {
 		// TODO Auto-generated method stub
 		JPanel horizontalPanel = new JPanel();
 		
-		MyGui.addLabel("Solucion: ", horizontalPanel);
+		if(mejorIndividuo != null)
+			MyGui.addLabel("Solucion: " + mejorIndividuo.getAptitud(), horizontalPanel);
 
 		return horizontalPanel;
 	}

@@ -11,10 +11,12 @@ public class BottomPanel extends JPanel implements Observers {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private AlgoritmoGenetico alg;
 	private View view;
     
     public BottomPanel(JFrame frame, AlgoritmoGenetico alg) {
 		alg.addObserver(this);
+		this.alg = alg;
     }
 
 	@Override
@@ -26,7 +28,7 @@ public class BottomPanel extends JPanel implements Observers {
 	@Override
 	public void actualizaVista(Generaciones generaciones, Individuo mejorIndividuo) {
 		removeAll();
-		add(view.getBottomPanel(generaciones, mejorIndividuo));
+		add(view.getBottomPanel(generaciones, mejorIndividuo, alg));
 		updateUI();
 	}
 

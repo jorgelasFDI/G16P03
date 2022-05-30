@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 import org.javatuples.Pair;
 
+import algorithm.AlgoritmoGenetico;
 import algorithm.individuos.Individuo;
 import algorithm.population.Generaciones;
 import algorithm.population.Poblacion;
@@ -17,6 +18,6 @@ public interface View {
 
     public Poblacion getPoblacion(int size, double eliteSize);
     
-    public JPanel getBottomPanel(Generaciones generaciones, Individuo mejorIndividuo);
+    public JPanel getBottomPanel(Generaciones generaciones, Individuo mejorIndividuo, AlgoritmoGenetico alg);
 
 }

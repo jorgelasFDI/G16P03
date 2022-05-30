@@ -1,18 +1,26 @@
 package gui;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 import org.javatuples.Pair;
 
+import algorithm.AlgoritmoGenetico;
 import algorithm.functions.*;
 import algorithm.individuos.Individuo;
 import auxiliar.vuelo.Vuelo;
@@ -112,12 +120,24 @@ public class PanelInfo2 implements View {
 	}
 
 	@Override
-	public JPanel getBottomPanel(Generaciones generaciones, Individuo mejorIndividuo) {
+	public JPanel getBottomPanel(Generaciones generaciones, Individuo mejorIndividuo, AlgoritmoGenetico alg) {
 		// TODO Auto-generated method stub
-		JPanel horizontalPanel = new JPanel();
+		JPanel panel = new JPanel();
 		
-		MyGui.addLabel("Solucion: ", horizontalPanel);
+		panel.setLayout(new BorderLayout());
+		TitledBorder border = BorderFactory.createTitledBorder(
+    			BorderFactory.createLineBorder(Color.black, 2),
+    			"Mejor individuo",
+    			TitledBorder.LEFT, TitledBorder.TOP);
+		panel.setBorder(border);
+		// TODO complete
+		BestIndTableModel bm = new BestIndTableModel(alg);
+		JTable bt =new JTable(bm);
+		//bt.setMinimumSize(new Dimension(200, 100));
+		JScrollPane scroll = new JScrollPane(bt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
-		return horizontalPanel;
+		panel.add(scroll);
+		
+		return panel;
 	}
 }
