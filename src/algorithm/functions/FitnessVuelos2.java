@@ -5,7 +5,7 @@ import java.util.List;
 
 import algorithm.individuos.Individuo;
 import algorithm.individuos.IndividuoVuelo;
-import algorithm.individuos.vuelo.Vuelo;
+import auxiliar.vuelo.Vuelo;
 import algorithm.population.Poblacion;
 
 public class FitnessVuelos2 extends Function {

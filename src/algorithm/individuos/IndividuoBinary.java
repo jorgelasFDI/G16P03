@@ -3,18 +3,18 @@ package algorithm.individuos;
 import java.util.List;
 
 import algorithm.functions.Function;
-import algorithm.individuos.gen.Gen;
-import algorithm.individuos.gen.GenList;
-import algorithm.individuos.gen.GenRange;
 import algorithm.population.Poblacion;
+import auxiliar.binary.BinaryList;
+import auxiliar.binary.Gen;
+import auxiliar.binary.GenRange;
 
 public class IndividuoBinary extends Individuo<Boolean, GenRange, Gen> {
 
-    private GenList genes;
+    private BinaryList genes;
 
     public IndividuoBinary(IndividuoBinary individuoBinary) {
         super(individuoBinary);
-        genes = (GenList) iterable;
+        genes = (BinaryList) iterable;
     }
 
     public IndividuoBinary(Function function, Poblacion poblacion) {
@@ -22,14 +22,14 @@ public class IndividuoBinary extends Individuo<Boolean, GenRange, Gen> {
     }
 
     public void init(double tolerancia, List<GenRange> ranges) {
-        genes = new GenList(tolerancia, ranges);
+        genes = new BinaryList(tolerancia, ranges);
         iterable = genes;
         size = genes.getNumBits();
     }   
 
     @Override
     public Iterable<Gen> copyGenes() {
-        return new GenList(genes);
+        return new BinaryList(genes);
     }
 
     @Override

@@ -14,11 +14,11 @@ import javax.swing.JTextField;
 import org.javatuples.Pair;
 
 import algorithm.functions.*;
-import algorithm.individuos.vuelo.Vuelo;
+import auxiliar.vuelo.Vuelo;
 import algorithm.operations.Operation;
 import algorithm.population.GeneratePoblacion;
 import algorithm.population.Poblacion;
-import auxiliar.RandomGenerator;
+import auxiliar.vuelo.RandomGenerator;
 
 public class LeftPanel2 implements View {
 

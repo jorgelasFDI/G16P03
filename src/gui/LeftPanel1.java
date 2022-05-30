@@ -15,7 +15,7 @@ import javax.swing.SpinnerNumberModel;
 import org.javatuples.Pair;
 
 import algorithm.functions.*;
-import algorithm.individuos.gen.GenRange;
+import auxiliar.binary.GenRange;
 import algorithm.operations.Operation;
 import algorithm.population.GeneratePoblacion;
 import algorithm.population.Poblacion;

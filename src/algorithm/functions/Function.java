@@ -3,7 +3,7 @@ package algorithm.functions;
 import java.util.List;
 
 import algorithm.individuos.Individuo;
-import algorithm.individuos.gen.GenRange;
+import auxiliar.binary.GenRange;
 import algorithm.population.Poblacion;
 
 public abstract class Function {

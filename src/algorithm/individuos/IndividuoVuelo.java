@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import algorithm.functions.Function;
-import algorithm.individuos.vuelo.Vuelo;
 import algorithm.population.Poblacion;
 import auxiliar.MyRandom;
+import auxiliar.vuelo.Vuelo;
 
 public class IndividuoVuelo extends Individuo<Integer, Vuelo, Integer> {
 

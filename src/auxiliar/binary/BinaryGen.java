@@ -1,13 +1,12 @@
-package algorithm.individuos.gen;
+package auxiliar.binary;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import auxiliar.Binary;
 import auxiliar.MyRandom;
 
-public class Gen implements Iterable<Boolean> {
+public class BinaryGen implements Iterable<Boolean> {
 
     // EVERYTHING ELSE
     protected List<Boolean> alelo;
@@ -16,7 +15,7 @@ public class Gen implements Iterable<Boolean> {
     protected int size;
 
     // STUFF FOR THE FACTORY
-    public Gen(GenRange range, int start, double tolerancia) {
+    public BinaryGen(GenRange range, int start, double tolerancia) {
         this.range = range;
         this.start = start;
         int size = (int) (Math.log(1 + (range.getDiff())/tolerancia)/Math.log(2));
@@ -26,7 +25,7 @@ public class Gen implements Iterable<Boolean> {
             alelo.add(MyRandom.getInstance().nextBoolean());
     }
 
-    public Gen(Gen gen) {
+    public BinaryGen(BinaryGen gen) {
         this.range = gen.getRange();
         this.alelo = gen.getAlelo();
         this.start = gen.getStart();

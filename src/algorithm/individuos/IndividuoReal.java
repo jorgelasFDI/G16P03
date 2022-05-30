@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import algorithm.functions.Function;
-import algorithm.individuos.gen.GenRange;
 import algorithm.population.Poblacion;
 import auxiliar.MyRandom;
+import auxiliar.binary.GenRange;
 
 public class IndividuoReal extends Individuo<Double, GenRange, Double> {
 

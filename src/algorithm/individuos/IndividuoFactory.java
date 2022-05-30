@@ -3,11 +3,11 @@ package algorithm.individuos;
 import java.util.List;
 
 import algorithm.functions.Function;
-import algorithm.individuos.gen.GenRange;
-import algorithm.individuos.vuelo.Vuelo;
 import algorithm.population.Poblacion;
 import auxiliar.MyRandom;
+import auxiliar.binary.GenRange;
 import auxiliar.tree.LogicalNode;
+import auxiliar.vuelo.Vuelo;
 
 public class IndividuoFactory {
 

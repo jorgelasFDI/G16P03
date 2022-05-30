@@ -1,4 +1,4 @@
-package algorithm.individuos.gen;
+package auxiliar.binary;
 
 public class GenRange {
     private double min;

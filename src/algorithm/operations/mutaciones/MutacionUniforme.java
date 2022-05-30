@@ -1,13 +1,8 @@
 package algorithm.operations.mutaciones;
 
-import java.util.List;
-
 import algorithm.individuos.Individuo;
 import algorithm.individuos.IndividuoReal;
-import algorithm.individuos.gen.Gen;
-import algorithm.individuos.gen.GenRange;
-import algorithm.operations.Operation;
-import algorithm.population.Poblacion;
+import auxiliar.binary.GenRange;
 
 public class MutacionUniforme extends Mutacion {
 

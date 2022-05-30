@@ -1,4 +1,4 @@
-package algorithm.individuos.vuelo;
+package auxiliar.vuelo;
 
 import java.util.ArrayList;
 import java.util.List;

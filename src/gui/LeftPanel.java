@@ -1,9 +1,6 @@
 package gui;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
 
 import org.javatuples.Pair;
 
@@ -17,7 +14,6 @@ import algorithm.functions.FitnessVuelos1;
 import algorithm.functions.FitnessVuelos2;
 import algorithm.functions.Function;
 import algorithm.functions.Function1;
-import algorithm.individuos.gen.GenRange;
 import algorithm.operations.Operation;
 import auxiliar.MyGui;
 import algorithm.operations.selection.*;

@@ -6,8 +6,8 @@ import java.util.List;
 import algorithm.functions.Function;
 import algorithm.individuos.Individuo;
 import algorithm.individuos.IndividuoFactory;
-import algorithm.individuos.gen.GenRange;
-import algorithm.individuos.vuelo.Vuelo;
+import auxiliar.binary.GenRange;
+import auxiliar.vuelo.Vuelo;
 
 public class GeneratePoblacion {
     

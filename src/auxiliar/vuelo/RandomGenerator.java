@@ -1,4 +1,6 @@
-package auxiliar;
+package auxiliar.vuelo;
+
+import auxiliar.MyRandom;
 
 public class RandomGenerator {
 	public static String generateRandomString() {       //Devuelve un string aleatorio para el id de los vuelos con su indice

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import algorithm.individuos.Individuo;
 import algorithm.individuos.IndividuoBinary;
-import algorithm.individuos.gen.GenRange;
+import auxiliar.binary.GenRange;
 import algorithm.population.Poblacion;
 
 public class Fitness2 extends Function {
