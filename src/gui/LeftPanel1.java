@@ -17,6 +17,7 @@ import org.javatuples.Pair;
 import algorithm.functions.*;
 import algorithm.individuos.gen.GenRange;
 import algorithm.operations.Operation;
+import algorithm.population.GeneratePoblacion;
 import algorithm.population.Poblacion;
 import auxiliar.MyGui;
 
@@ -26,6 +27,7 @@ public class LeftPanel1 implements View {
     private JComboBox<Operation> mutacionComboBox;
     private JComboBox<Operation> cruceComboBox;
     private JComboBox<Function> functionComboBox;
+	private String type;
 
     private JPanel rangesPanelWrap = new JPanel();
 	private JPanel rangesPanel = new JPanel();
@@ -38,7 +40,7 @@ public class LeftPanel1 implements View {
 	private Integer numGenes = null;
 
     public LeftPanel1(JComboBox<Operation> seleccionComboBox, JComboBox<Operation> mutacionComboBox,
-            JComboBox<Operation> cruceComboBox, JComboBox<Function> functionComboBox) {
+            JComboBox<Operation> cruceComboBox, JComboBox<Function> functionComboBox, String type) {
         functionComboBox.addActionListener(e -> numGenes = ((Function) functionComboBox.getSelectedItem()).getNumVars());
 		functionComboBox.addActionListener(e -> setRanges());
 		numGenesSpinner.addChangeListener(e -> updateNumGenes((int) numGenesSpinner.getValue()));
@@ -46,6 +48,7 @@ public class LeftPanel1 implements View {
         this.cruceComboBox = cruceComboBox;
         this.mutacionComboBox = mutacionComboBox;
         this.functionComboBox = functionComboBox;
+		this.type = type;
 
 		rangesPanelWrap.setLayout(new BoxLayout(rangesPanelWrap, BoxLayout.Y_AXIS));
 		rangesPanel.setLayout(new BoxLayout(rangesPanel, BoxLayout.Y_AXIS));
@@ -127,8 +130,15 @@ public class LeftPanel1 implements View {
     }
 
 	@Override
-	public Poblacion getPoblacion() {
-		return null;
+	public Poblacion getPoblacion(int size, double eliteSize) {
+		List<GenRange> ranges = new ArrayList<>();
+		for (Pair<JSpinner, JSpinner> rangePair: rangesSpinners) {
+			GenRange range = new GenRange((Double) rangePair.getValue0().getValue(), (Double) rangePair.getValue1().getValue());
+			ranges.add(range);
+		} Function function = (Function) functionComboBox.getSelectedItem();
+		Poblacion poblacion = new Poblacion(size, eliteSize, (Operation) cruceComboBox.getSelectedItem(), (Operation) mutacionComboBox.getSelectedItem(), (Operation) seleccionComboBox.getSelectedItem(), null);
+		poblacion.generaPoblacion((new GeneratePoblacion()).generaPoblacion(type, null, size, 0.1, ranges, null, function, poblacion), function);
+		return poblacion;
 	}
     
 

@@ -181,19 +181,19 @@ public class LeftPanel extends JPanel {
             case "Completo":
             case "Creciente":
 				treeType();
-				view = new LeftPanel3(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox);
+				view = new LeftPanel3(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox, type);
 				break;
             case "Real":
 				realType();
-				view = new LeftPanel1(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox);
+				view = new LeftPanel1(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox, type);
 				break;
             case "Binary":
 				binaryType();
-				view = new LeftPanel1(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox);
+				view = new LeftPanel1(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox, type);
 				break;
             case "Vuelo":
 				vueloType(); 
-				view = new LeftPanel2(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox);
+				view = new LeftPanel2(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox, type);
 				break;
             default: break;
         }
@@ -223,7 +223,7 @@ public class LeftPanel extends JPanel {
     }
 
 	public void startAlg() {
-		frame.setPoblacion(view.getPoblacion());
+		frame.setPoblacion(view.getPoblacion(Integer.parseInt(sizeTextField.getText()), Double.parseDouble(eliteTextField.getText())));
 		frame.run(Integer.parseInt(generacionesTextField.getText()));
 	}
 }

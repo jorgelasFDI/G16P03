@@ -19,7 +19,7 @@ public class Poblacion implements Iterable<Individuo> {
 
 	private int size;
 	private int eliteSize;
-	private double presion;
+	private Double presion;
 	private List<Individuo> poblacion;
 	private List<Individuo> elite;
 
@@ -40,7 +40,7 @@ public class Poblacion implements Iterable<Individuo> {
 		mutacion.operationInstance(poblacion);
 	}
 
-	public Poblacion(int size, double eliteSize, Operation cruce, Operation mutacion, Operation seleccion, double presion) {
+	public Poblacion(int size, double eliteSize, Operation cruce, Operation mutacion, Operation seleccion, Double presion) {
 		this.cruce = cruce;
 		this.mutacion = mutacion;
 		this.seleccion = seleccion;

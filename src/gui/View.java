@@ -13,6 +13,6 @@ public interface View {
 
     public List<Pair<List<Pair<String, JComponent>>, JPanel>> getPanelList();
 
-    public Poblacion getPoblacion();
+    public Poblacion getPoblacion(int size, double eliteSize);
     
 }

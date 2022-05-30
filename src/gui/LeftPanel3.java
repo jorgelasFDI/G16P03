@@ -20,17 +20,19 @@ public class LeftPanel3 implements View {
     private JComboBox<Operation> mutacionComboBox;
     private JComboBox<Operation> cruceComboBox;
     private JComboBox<Function> functionComboBox;
+	private String type;
 
 	private JTextField mutacionTextField = new JTextField("50");
 	private JTextField cruceTextField = new JTextField("70");
 	private JTextField presionTextField = new JTextField("1.5");
 
     public LeftPanel3(JComboBox<Operation> seleccionComboBox, JComboBox<Operation> mutacionComboBox,
-            JComboBox<Operation> cruceComboBox, JComboBox<Function> functionComboBox) {
+            JComboBox<Operation> cruceComboBox, JComboBox<Function> functionComboBox, String type) {
         this.seleccionComboBox = seleccionComboBox;
         this.cruceComboBox = cruceComboBox;
         this.mutacionComboBox = mutacionComboBox;
         this.functionComboBox = functionComboBox;
+		this.type = type;
     }
 
     @Override
@@ -55,7 +57,7 @@ public class LeftPanel3 implements View {
     }
 
 	@Override
-	public Poblacion getPoblacion() {
+	public Poblacion getPoblacion(int size, double eliteSize) {
 		return null;
 	}
 }
