@@ -21,6 +21,7 @@ public class IndividuoVuelo extends Individuo<Integer, Vuelo, Integer> {
     public void init(List<Vuelo> objects) {
         this.size = objects.size();		
 		for(int i = 0; i < size; i++) genesToObjects.put(i + 1, new Vuelo(objects.get(i)));
+        iterable = new ArrayList<Integer>(size);
 		MyRandom.getRandomNoRepeat((List<Integer>)iterable, size, 1, size); // genes vacio -> 0 - 11
     }
 
