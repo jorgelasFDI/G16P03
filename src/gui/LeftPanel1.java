@@ -121,11 +121,11 @@ public class LeftPanel1 implements View {
 			), null),
             new Pair<>(Arrays.asList(
 				new Pair<>("Mutaciones", mutacionComboBox),
-				new Pair<>("Probabilidad", mutacionTextField)
+				new Pair<>("Probabilidad mutacion", mutacionTextField)
 			), null),
             new Pair<>(Arrays.asList(
 				new Pair<>("Cruces", cruceComboBox),
-				new Pair<>("Probabilidad", cruceTextField)
+				new Pair<>("Probabilidad cruce", cruceTextField)
 			), null)
         );
     }
