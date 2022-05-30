@@ -122,6 +122,8 @@ public class PanelInfo2 implements View {
 	@Override
 	public JPanel getBottomPanel(Generaciones generaciones, Individuo mejorIndividuo, AlgoritmoGenetico alg) {
 		// TODO Auto-generated method stub
+		if (mejorIndividuo == null) return new JPanel();
+
 		JPanel panel = new JPanel();
 		
 		panel.setLayout(new BorderLayout());
@@ -131,8 +133,8 @@ public class PanelInfo2 implements View {
     			TitledBorder.LEFT, TitledBorder.TOP);
 		panel.setBorder(border);
 		// TODO complete
-		BestIndTableModel bm = new BestIndTableModel(alg);
-		JTable bt =new JTable(bm);
+		BestIndTableModel bm = new BestIndTableModel(mejorIndividuo);
+		JTable bt = new JTable(bm);
 		//bt.setMinimumSize(new Dimension(200, 100));
 		JScrollPane scroll = new JScrollPane(bt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		

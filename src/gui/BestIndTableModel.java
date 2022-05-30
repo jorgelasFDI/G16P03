@@ -11,7 +11,7 @@ import algorithm.individuos.IndividuoVuelo;
 import algorithm.population.Generaciones;
 import auxiliar.vuelo.Vuelo;
 
-public class BestIndTableModel extends AbstractTableModel implements Observers{
+public class BestIndTableModel extends AbstractTableModel {
 
 	/**
 	 * 
@@ -22,8 +22,6 @@ public class BestIndTableModel extends AbstractTableModel implements Observers{
 	private int numColumnas;
 	private int numFilas = 3;
 	List<String> columnNames = new ArrayList<>();
-	
-	public BestIndTableModel(AlgoritmoGenetico alg) {alg.addObserver(this);}
 	
 	@Override
 	public int getColumnCount() {
@@ -66,23 +64,16 @@ public class BestIndTableModel extends AbstractTableModel implements Observers{
 		return null;
 	}
 
-	@Override
-	public void actualizaVista(Generaciones generaciones, Individuo mejorIndividuo) {
+	public BestIndTableModel(Individuo mejorIndividuo) {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
-				ind = new IndividuoVuelo((IndividuoVuelo) mejorIndividuo);
-				numColumnas = ind.getSize();
-				columnNames.clear();
-				for(int i = 0; i < mejorIndividuo.getSize(); i++) {
-					columnNames.add("Vuelo " + mejorIndividuo.get(i));
-				}
-				fireTableStructureChanged();
-	}
-
-	@Override
-	public void actualizaView(View view) {
-		// TODO Auto-generated method stub
-		
+		ind = new IndividuoVuelo((IndividuoVuelo) mejorIndividuo);
+		numColumnas = ind.getSize();
+		columnNames.clear();
+		for(int i = 0; i < mejorIndividuo.getSize(); i++) {
+			columnNames.add("Vuelo " + mejorIndividuo.get(i));
+		}
+		fireTableStructureChanged();
 	}
 
 }

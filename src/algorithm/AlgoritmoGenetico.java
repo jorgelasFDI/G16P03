@@ -21,8 +21,9 @@ public class AlgoritmoGenetico {
     }
 
     public void notifyViewChange(View view) {
-        for(Observers o: observadores) {
-        	o.actualizaView(view);
+        int size = observadores.size();
+        for(int i = 0; i < size; i++) {
+        	observadores.get(i).actualizaView(view);
         }
     }
 
@@ -53,7 +54,7 @@ public class AlgoritmoGenetico {
             //Siguiente generacion*/
             generacionActual++;
         }
-                
+       
         for(Observers o: observadores) {
         	o.actualizaVista(generaciones, poblacion.getMejorIndividuo());
         }
