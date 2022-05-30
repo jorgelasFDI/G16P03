@@ -10,9 +10,9 @@ import auxiliar.binary.Binary;
 import auxiliar.tree.LogicalNode;
 import auxiliar.tree.Tree;
 
-public class Function1 extends Function {
+public class FitnessTree extends Function {
 	
-    public Function1() {
+    public FitnessTree() {
         super(false, "function tree", null, null);
     }
 

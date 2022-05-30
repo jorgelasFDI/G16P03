@@ -13,7 +13,7 @@ import algorithm.functions.Fitness4;
 import algorithm.functions.FitnessVuelos1;
 import algorithm.functions.FitnessVuelos2;
 import algorithm.functions.Function;
-import algorithm.functions.Function1;
+import algorithm.functions.FitnessTree;
 import algorithm.operations.Operation;
 import auxiliar.MyGui;
 import algorithm.operations.selection.*;
@@ -83,7 +83,7 @@ public class LeftPanel extends JPanel {
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	private List<String> tipos = Arrays.asList("Binary", "Completo", "RampedAndHalf", "Creciente", "Real", "Vuelo", "RampedAndHalf");
+	private List<String> tipos = Arrays.asList("Binary", "Completo", "RampedAndHalf", "Creciente", "Real", "Vuelo");
 	private JComboBox<String> typeComboBox = new JComboBox<>(tipos.toArray(new String[0]));
 	private int globalMargin = 20;
 	private View view;
@@ -103,7 +103,7 @@ public class LeftPanel extends JPanel {
 			new CruceIntercambioArboles()
 		));
 		funciones.addAll(Arrays.asList(
-			new Function1()
+			new FitnessTree()
 		));
 	}
 
