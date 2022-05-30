@@ -7,6 +7,7 @@ import algorithm.population.Generacion;
 import algorithm.population.Generaciones;
 import algorithm.population.Poblacion;
 import gui.Observers;
+import gui.View;
 
 public class AlgoritmoGenetico {
 
@@ -17,6 +18,12 @@ public class AlgoritmoGenetico {
     
     public void addObserver(Observers o) {
     	observadores.add(o);
+    }
+
+    public void notifyViewChange(View view) {
+        for(Observers o: observadores) {
+        	o.actualizaView(view);
+        }
     }
 
     public void setPoblacion(Poblacion poblacion) {

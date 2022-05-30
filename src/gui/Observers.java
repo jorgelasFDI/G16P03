@@ -5,4 +5,5 @@ import algorithm.population.Generaciones;
 
 public interface Observers {
 	public void actualizaVista(Generaciones generaciones, Individuo mejorIndividuo);
+	public void actualizaView(View view);
 }

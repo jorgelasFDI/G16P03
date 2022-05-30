@@ -177,22 +177,22 @@ public class LeftPanel extends JPanel {
             case "Completo":
             case "Creciente":
 				treeType();
-				view = new LeftPanel3(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox, type);
+				view = new PanelInfo3(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox, type);
 				break;
             case "Real":
 				realType();
-				view = new LeftPanel1(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox, type);
+				view = new PanelInfo1(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox, type);
 				break;
             case "Binary":
 				binaryType();
-				view = new LeftPanel1(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox, type);
+				view = new PanelInfo1(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox, type);
 				break;
             case "Vuelo":
 				vueloType(); 
-				view = new LeftPanel2(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox, type);
+				view = new PanelInfo2(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox, type);
 				break;
             default: break;
-        }
+        } frame.notifyViewChange(view);
 
 		seleccionComboBox.setModel(new DefaultComboBoxModel<>(selecciones.toArray(new Operation[0])));
 		mutacionComboBox.setModel(new DefaultComboBoxModel<>(mutaciones.toArray(new Operation[0])));

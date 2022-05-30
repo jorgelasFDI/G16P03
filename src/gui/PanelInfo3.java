@@ -1,20 +1,27 @@
 package gui;
-
+import java.awt.BorderLayout;import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 import org.javatuples.Pair;
 
 import algorithm.functions.*;
+import algorithm.individuos.Individuo;
 import algorithm.operations.Operation;
+import algorithm.population.Generaciones;
 import algorithm.population.Poblacion;
+import auxiliar.MyGui;
 
-public class LeftPanel3 implements View {
+public class PanelInfo3 implements View {
 
     private JComboBox<Operation> seleccionComboBox;
     private JComboBox<Operation> mutacionComboBox;
@@ -26,7 +33,7 @@ public class LeftPanel3 implements View {
 	private JTextField cruceTextField = new JTextField("70");
 	private JTextField presionTextField = new JTextField("1.5");
 
-    public LeftPanel3(JComboBox<Operation> seleccionComboBox, JComboBox<Operation> mutacionComboBox,
+    public PanelInfo3(JComboBox<Operation> seleccionComboBox, JComboBox<Operation> mutacionComboBox,
             JComboBox<Operation> cruceComboBox, JComboBox<Function> functionComboBox, String type) {
         this.seleccionComboBox = seleccionComboBox;
         this.cruceComboBox = cruceComboBox;
@@ -59,5 +66,21 @@ public class LeftPanel3 implements View {
 	@Override
 	public Poblacion getPoblacion(int size, double eliteSize) {
 		return null;
+	}
+	
+    @Override
+	public JPanel getBottomPanel(Generaciones generaciones, Individuo mejorIndividuo) {
+		// TODO Auto-generated method stub
+    	JPanel panel = new JPanel();
+    	
+    	panel.setLayout(new BorderLayout());
+    	TitledBorder border = BorderFactory.createTitledBorder(
+    			BorderFactory.createLineBorder(Color.black, 2),
+    			"Mejor individuo",
+    			TitledBorder.LEFT, TitledBorder.TOP);
+		panel.setBorder(border);
+		MyGui.addLabel("La aptitud del individuo es: ", panel);
+		
+		return panel;
 	}
 }

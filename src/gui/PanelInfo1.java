@@ -15,13 +15,15 @@ import javax.swing.SpinnerNumberModel;
 import org.javatuples.Pair;
 
 import algorithm.functions.*;
+import algorithm.individuos.Individuo;
 import auxiliar.binary.GenRange;
 import algorithm.operations.Operation;
+import algorithm.population.Generaciones;
 import algorithm.population.GeneratePoblacion;
 import algorithm.population.Poblacion;
 import auxiliar.MyGui;
 
-public class LeftPanel1 implements View {
+public class PanelInfo1 implements View {
 
     private JComboBox<Operation> seleccionComboBox;
     private JComboBox<Operation> mutacionComboBox;
@@ -39,7 +41,7 @@ public class LeftPanel1 implements View {
 	private JTextField presionTextField = new JTextField("1.5");
 	private Integer numGenes = null;
 
-    public LeftPanel1(JComboBox<Operation> seleccionComboBox, JComboBox<Operation> mutacionComboBox,
+    public PanelInfo1(JComboBox<Operation> seleccionComboBox, JComboBox<Operation> mutacionComboBox,
             JComboBox<Operation> cruceComboBox, JComboBox<Function> functionComboBox, String type) {
 		functionComboBox.addActionListener(e -> setRanges());
 		numGenesSpinner.addChangeListener(e -> updateNumGenes((int) numGenesSpinner.getValue()));
@@ -140,6 +142,16 @@ public class LeftPanel1 implements View {
 		Poblacion poblacion = new Poblacion(size, eliteSize, (Operation) cruceComboBox.getSelectedItem(), (Operation) mutacionComboBox.getSelectedItem(), (Operation) seleccionComboBox.getSelectedItem(), null);
 		poblacion.generaPoblacion((new GeneratePoblacion()).generaPoblacion(type, null, size, 0.1, ranges, null, function, poblacion), function);
 		return poblacion;
+	}
+
+	@Override
+	public JPanel getBottomPanel(Generaciones generaciones, Individuo mejorIndividuo) {
+		// TODO Auto-generated method stub
+		JPanel horizontalPanel = new JPanel();
+		
+		MyGui.addLabel("Solucion: ", horizontalPanel);
+
+		return horizontalPanel;
 	}
     
 

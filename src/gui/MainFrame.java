@@ -27,8 +27,8 @@ public class MainFrame extends JFrame {/**
         width = 1000;
 		height = 700;
 		mainPanel = new CenterPanel(this, alg);
-		leftPanel = new LeftPanel(this);
 		bottomPanel = new BottomPanel(this, alg);
+		leftPanel = new LeftPanel(this);
 		bottomPanel.setPreferredSize(new Dimension(200, 100));
     }
     
@@ -53,5 +53,8 @@ public class MainFrame extends JFrame {/**
     public void run(int numGeneraciones) {
         alg.run(numGeneraciones);
     }
-    
+
+	public void notifyViewChange(View view) {
+        alg.notifyViewChange(view);
+    }
 }

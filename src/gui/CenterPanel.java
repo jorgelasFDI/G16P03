@@ -35,7 +35,12 @@ public class CenterPanel extends JPanel implements Observers{
 		
 		add(plot);
     }
-	
+
+	@Override
+	public void actualizaView(View view) {
+
+	}
+
 	@Override
 	public void actualizaVista(Generaciones generaciones, Individuo mejorIndividuo) {
 		// TODO Auto-generated method stub
