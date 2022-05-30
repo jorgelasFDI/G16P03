@@ -41,7 +41,6 @@ public class LeftPanel1 implements View {
 
     public LeftPanel1(JComboBox<Operation> seleccionComboBox, JComboBox<Operation> mutacionComboBox,
             JComboBox<Operation> cruceComboBox, JComboBox<Function> functionComboBox, String type) {
-        functionComboBox.addActionListener(e -> numGenes = ((Function) functionComboBox.getSelectedItem()).getNumVars());
 		functionComboBox.addActionListener(e -> setRanges());
 		numGenesSpinner.addChangeListener(e -> updateNumGenes((int) numGenesSpinner.getValue()));
         this.seleccionComboBox = seleccionComboBox;
