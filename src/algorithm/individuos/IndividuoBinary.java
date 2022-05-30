@@ -5,10 +5,10 @@ import java.util.List;
 import algorithm.functions.Function;
 import algorithm.population.Poblacion;
 import auxiliar.binary.BinaryList;
-import auxiliar.binary.Gen;
+import auxiliar.binary.BinaryGen;
 import auxiliar.binary.GenRange;
 
-public class IndividuoBinary extends Individuo<Boolean, GenRange, Gen> {
+public class IndividuoBinary extends Individuo<Boolean, GenRange, BinaryGen> {
 
     private BinaryList genes;
 
@@ -28,17 +28,17 @@ public class IndividuoBinary extends Individuo<Boolean, GenRange, Gen> {
     }   
 
     @Override
-    public Iterable<Gen> copyGenes() {
+    public Iterable<BinaryGen> copyGenes() {
         return new BinaryList(genes);
     }
 
     @Override
-    public Individuo<Boolean, GenRange, Gen> copy() {
+    public Individuo<Boolean, GenRange, BinaryGen> copy() {
         return new IndividuoBinary(this);
     }
 
     @Override
-    public void swapGen(int idx, int j, Individuo<Boolean, GenRange, Gen> other) {
+    public void swapGen(int idx, int j, Individuo<Boolean, GenRange, BinaryGen> other) {
         IndividuoBinary otherBin = (IndividuoBinary) other;
         Boolean aux = otherBin.getBit(j);
 		otherBin.setBit(j, getBit(idx));
@@ -49,11 +49,11 @@ public class IndividuoBinary extends Individuo<Boolean, GenRange, Gen> {
         return genes.getSize();
     }
 
-    public void setGen(int idx, Gen value) {
+    public void setGen(int idx, BinaryGen value) {
 		genes.set(idx, value);
 	}
 
-	public Gen getGen(int idx) {
+	public BinaryGen getGen(int idx) {
 		return genes.get(idx);
 	}
 
@@ -62,12 +62,12 @@ public class IndividuoBinary extends Individuo<Boolean, GenRange, Gen> {
 	}
 
     @Override
-    public Gen get(int i) {
+    public BinaryGen get(int i) {
         return genes.get(i);
     }
 
     @Override
-    public void set(int i, Gen other) {
+    public void set(int i, BinaryGen other) {
         genes.set(i, other);
     }
 

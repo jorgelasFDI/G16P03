@@ -1,4 +1,4 @@
-package auxiliar;
+package auxiliar.binary;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package algorithm.individuos.binary;
+package auxiliar.binary;
 
 import java.util.ArrayList;
 import java.util.Iterator;

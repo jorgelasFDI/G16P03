@@ -5,8 +5,8 @@ import java.util.List;
 import algorithm.individuos.Individuo;
 import algorithm.individuos.IndividuoTree;
 import algorithm.population.Poblacion;
-import auxiliar.Binary;
 import auxiliar.MyRandom;
+import auxiliar.binary.Binary;
 import auxiliar.tree.LogicalNode;
 import auxiliar.tree.Tree;
 
