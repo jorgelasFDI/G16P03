@@ -37,8 +37,8 @@ public class PanelInfo1 implements View {
 	private JSpinner numGenesSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 10, 1));
 	private List<Pair<JSpinner, JSpinner>> rangesSpinners = new ArrayList<Pair<JSpinner,JSpinner>>();
 
-	private JTextField mutacionTextField = new JTextField("50");
-	private JTextField cruceTextField = new JTextField("70");
+	private JTextField mutacionTextField = new JTextField("5");
+	private JTextField cruceTextField = new JTextField("60");
 	private JTextField presionTextField = new JTextField("1.5");
 	private Integer numGenes = null;
 

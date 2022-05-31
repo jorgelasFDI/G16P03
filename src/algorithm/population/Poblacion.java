@@ -95,7 +95,6 @@ public class Poblacion implements Iterable<Individuo> {
 
 		// GET BEST AND WORST
 		Individuo mejorGeneracion = poblacion.get(0).copy();       //El individuo con mejor aptitud SIEMPRE se guarda en la 1a posicion
-		Individuo peorGeneracion = poblacion.get(poblacion.size() - 1).copy();
 		if(mejorIndividuo == null)
 			mejorIndividuo = mejorGeneracion;
 		else if(minimizar && mejorGeneracion.getAptitud() < mejorIndividuo.getAptitud())
