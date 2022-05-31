@@ -11,6 +11,7 @@ import algorithm.functions.Function;
 import algorithm.individuos.Individuo;
 import algorithm.operations.Operation;
 
+@SuppressWarnings("rawtypes")
 public class Poblacion implements Iterable<Individuo> {
 
 	private Operation cruce;
@@ -58,21 +59,20 @@ public class Poblacion implements Iterable<Individuo> {
 		evalua(); return null;
 	}
 
-	public void evalua() {
+	/*public void evalua() {
 		Pair<Double, Individuo> pareja = evalua(poblacion, minimizar, mejorIndividuo, presion, eliteSize);
 		mediaAptitud = pareja.getValue0();
 		mejorIndividuo = pareja.getValue1();
-	}
+	}*/
 	
-	public static Pair<Double, Individuo> evalua(List<Individuo> poblacion, boolean minimizar, Individuo mejorIndividuo, Double presion, Integer eliteSize) {
+	public void evalua() {
 
 		// REVISION
 		double fmax = Double.NEGATIVE_INFINITY;
 		double fmin = Double.POSITIVE_INFINITY;
 		double sumAptitud = 0;
-		double mediaAptitud = 0;
 		double sumAptitudRevisada = 0;
-		double mediaAptitudRevisada = 0;
+		//double mediaAptitudRevisada = 0;
 
 		// CALCULATE FITNESS
 		for (Individuo i: poblacion) {
@@ -88,7 +88,7 @@ public class Poblacion implements Iterable<Individuo> {
 			if (minimizar) i.setAptitudRevisada(fmax - i.getAptitud());
 			else i.setAptitudRevisada(Math.abs(fmin) + i.getAptitud());
 			sumAptitudRevisada += i.getAptitudRevisada();
-		} mediaAptitudRevisada = sumAptitudRevisada / (double) poblacion.size();
+		} //mediaAptitudRevisada = sumAptitudRevisada / (double) poblacion.size();
 
 		// ORDENAR
 		Poblacion.sort(poblacion);
@@ -128,7 +128,7 @@ public class Poblacion implements Iterable<Individuo> {
 			double bloating = ind.bloating();
 			ind.setAptitudRevisada(bloating);
 			sumAptitudRevisada += ind.getAptitudRevisada();
-		} mediaAptitudRevisada = sumAptitudRevisada / (double) poblacion.size();
+		} //mediaAptitudRevisada = sumAptitudRevisada / (double) poblacion.size();
 
 		// ORDENAR
 		Poblacion.sort(poblacion);
@@ -140,8 +140,7 @@ public class Poblacion implements Iterable<Individuo> {
 			puntAcum += i.getPuntuacion();
 			i.setPuntuacionAcumulada(puntAcum);
 		}
-		
-		return new Pair<>(mediaAptitud, mejorIndividuo);
+
 	}
 
 	public void generarElite() {
