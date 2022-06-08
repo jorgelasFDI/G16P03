@@ -134,7 +134,7 @@ public class PanelInfo2 implements View {
 		panel.setLayout(new BorderLayout());
 		TitledBorder border = BorderFactory.createTitledBorder(
     			BorderFactory.createLineBorder(Color.black, 2),
-    			"Mejor individuo",
+    			"Mejor individuo con aptitud: " + mejorIndividuo.getAptitud(),
     			TitledBorder.LEFT, TitledBorder.TOP);
 		panel.setBorder(border);
 		// TODO complete
