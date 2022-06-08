@@ -3,7 +3,7 @@ package algorithm.functions;
 import java.util.ArrayList;
 
 import algorithm.individuos.Individuo;
-import algorithm.individuos.IndividuoBinary;
+import auxiliar.binary.Gen;
 import auxiliar.binary.GenRange;
 import algorithm.population.Poblacion;
 
@@ -18,9 +18,8 @@ public class Fitness1 extends Function {
     @Override
     public double fitnessInstance(Individuo cromosoma, Poblacion poblacion) {
         // f(x1 , x2) = 21.5 + x1.sen(4π x1)+x2.sen(20π x2)  :
-        IndividuoBinary individuoBinary = (IndividuoBinary) cromosoma;
-        double gen1 = individuoBinary.get(0).getFenotipo();
-        double gen2 = individuoBinary.get(1).getFenotipo();
+        double gen1 = ((Gen) cromosoma.get(0)).getFenotipo();
+        double gen2 = ((Gen) cromosoma.get(1)).getFenotipo();
         return 21.5 + gen1*Math.sin(4*Math.PI*gen1) + gen2*Math.sin(20*Math.PI*gen2);
     }
 

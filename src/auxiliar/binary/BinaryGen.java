@@ -6,7 +6,7 @@ import java.util.List;
 
 import auxiliar.MyRandom;
 
-public class BinaryGen implements Iterable<Boolean> {
+public class BinaryGen extends Gen<Boolean> implements Iterable<Boolean> {
 
     // EVERYTHING ELSE
     protected List<Boolean> alelo;
@@ -36,6 +36,7 @@ public class BinaryGen implements Iterable<Boolean> {
         return start;
     }
 
+    @Override
     public GenRange getRange() {
         return new GenRange(range);
     }
@@ -62,6 +63,7 @@ public class BinaryGen implements Iterable<Boolean> {
             alelo.set(idx - start, !alelo.get(idx - start));
     }
     
+    @Override
     public double getFenotipo() {
         return range.getMin() + Binary.binToInt(alelo) * range.getDiff()/(Math.pow(2, getSize()) - 1);
     }

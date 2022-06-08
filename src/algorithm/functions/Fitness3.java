@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import algorithm.individuos.Individuo;
 import algorithm.individuos.IndividuoBinary;
+import auxiliar.binary.Gen;
 import auxiliar.binary.GenRange;
 import algorithm.population.Poblacion;
 
@@ -17,9 +18,8 @@ public class Fitness3 extends Function {
 
 	@Override
 	public double fitnessInstance(Individuo cromosoma, Poblacion poblacion) {
-		IndividuoBinary individuoBinary = (IndividuoBinary) cromosoma;
-		double gen1 = individuoBinary.get(0).getFenotipo();
-        double gen2 = individuoBinary.get(1).getFenotipo();
+		double gen1 = ((Gen) cromosoma.get(0)).getFenotipo();
+        double gen2 = ((Gen) cromosoma.get(1)).getFenotipo();
 		
 		return -(gen2 + 47)*Math.sin(Math.sqrt(Math.abs(gen2 + gen1/2 + 47)))
 				- gen1*Math.sin(Math.sqrt(Math.abs(gen1 - (gen2 + 47))));

@@ -3,6 +3,7 @@ package algorithm.operations.mutaciones;
 import algorithm.individuos.Individuo;
 import algorithm.individuos.IndividuoReal;
 import auxiliar.binary.GenRange;
+import auxiliar.binary.RealGen;
 
 public class MutacionUniforme extends Mutacion {
 
@@ -16,8 +17,8 @@ public class MutacionUniforme extends Mutacion {
     public void mutar(Individuo individuo) {
         IndividuoReal real = (IndividuoReal) individuo;
         for (int j = 0; j < real.getSize(); j++) {
-            GenRange range = real.getObject((double) j);
-            real.set(j, random.nextDouble()*(range.getMax() - range.getMin()) + range.getMin());
+            GenRange range = ((RealGen) individuo.get(j)).getRange();
+            real.set(j, new RealGen(random.nextDouble()*(range.getMax() - range.getMin()) + range.getMin(), range));
         }
     }
 
