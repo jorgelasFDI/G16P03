@@ -20,8 +20,8 @@ public class Fitness4 extends Function {
 		double total = 0.0;
 		IndividuoBinary individuoBinary = (IndividuoBinary) cromosoma;
 		for(int i = 0; i < individuoBinary.getNumGenes(); i++) {
-			total += Math.sin(individuoBinary.getGen(i).getFenotipo()) * Math.pow(Math.sin(((i + 2)
-					* Math.pow(individuoBinary.getGen(i).getFenotipo(), 2))/Math.PI), 20);
+			total += Math.sin(individuoBinary.get(i).getFenotipo()) * Math.pow(Math.sin(((i + 2)
+					* Math.pow(individuoBinary.get(i).getFenotipo(), 2))/Math.PI), 20);
 		}
 		
 		return -total;

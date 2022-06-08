@@ -117,8 +117,8 @@ public class PanelInfo2 implements View {
 		Operation cruce = (Operation) cruceComboBox.getSelectedItem();
 		Operation mutacion = (Operation) mutacionComboBox.getSelectedItem();
 		Operation seleccion = (Operation) seleccionComboBox.getSelectedItem();
-		cruce.setProb(Double.parseDouble(cruceTextField.getText()));
-		mutacion.setProb(Double.parseDouble(mutacionTextField.getText()));
+		cruce.setProb(Double.parseDouble(cruceTextField.getText())/100);
+		mutacion.setProb(Double.parseDouble(mutacionTextField.getText())/100);
 		Poblacion poblacion = new Poblacion(size, eliteSize, cruce, mutacion, seleccion, null);
 		poblacion.generaPoblacion((new GeneratePoblacion()).generaPoblacion(type, null, size, null, null, vuelos, function, poblacion), function);
 		return poblacion;

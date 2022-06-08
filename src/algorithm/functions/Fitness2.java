@@ -19,8 +19,8 @@ public class Fitness2 extends Function {
 	public double fitnessInstance(Individuo cromosoma, Poblacion poblacion) {
 		// TODO Auto-generated method stub
         IndividuoBinary individuoBinary = (IndividuoBinary) cromosoma;
-		double gen1 = individuoBinary.getGen(0).getFenotipo();
-        double gen2 = individuoBinary.getGen(1).getFenotipo();
+		double gen1 = individuoBinary.get(0).getFenotipo();
+        double gen2 = individuoBinary.get(1).getFenotipo();
         
         double total1 = 0.0;
         double total2 = 0.0;

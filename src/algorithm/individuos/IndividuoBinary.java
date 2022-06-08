@@ -49,18 +49,6 @@ public class IndividuoBinary extends Individuo<Boolean, GenRange, BinaryGen> {
         return genes.getSize();
     }
 
-    public void setGen(int idx, BinaryGen value) {
-		genes.set(idx, value);
-	}
-
-	public BinaryGen getGen(int idx) {
-		return genes.get(idx);
-	}
-
-    public void flip(int idx) {
-        genes.flip(idx);
-	}
-
     @Override
     public BinaryGen get(int i) {
         return genes.get(i);
@@ -70,6 +58,10 @@ public class IndividuoBinary extends Individuo<Boolean, GenRange, BinaryGen> {
     public void set(int i, BinaryGen other) {
         genes.set(i, other);
     }
+
+    public void flipBit(int idx) {
+        genes.flipBit(idx);
+	}
 
     public Boolean getBit(int i) {
         return genes.getBit(i);
