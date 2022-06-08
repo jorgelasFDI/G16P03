@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import algorithm.individuos.Individuo;
+import algorithm.individuos.IndividuoVuelo;
 import auxiliar.MyRandom;
 
 public class MutacionHeuristica extends Mutacion {
@@ -21,8 +22,7 @@ public class MutacionHeuristica extends Mutacion {
 	private void compareIndividuo(Individuo copied) {
 		copied.setAptitud(copied.fitness());
         if (copied.getAptitud() < individuo.getAptitud())
-			for (int i = 0; i < copied.getSize(); i++) 
-				individuo.set(i, copied.get(i));
+        	individuo = new IndividuoVuelo((IndividuoVuelo) copied);
     }
 
 	private void heapPermutation(Individuo copied, int size) {
