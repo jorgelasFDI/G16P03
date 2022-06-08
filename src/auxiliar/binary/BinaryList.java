@@ -30,7 +30,7 @@ public class BinaryList implements Iterable<BinaryGen> {
     }
 
     public int getNumBits() {
-        return size;
+        return numBits;
     }
 
     public int getSize() {
@@ -84,7 +84,7 @@ public class BinaryList implements Iterable<BinaryGen> {
         for (BinaryGen gen: genes) gen.setBit(i, other);
     }
 
-    public void flip(int idx) {
+    public void flipBit(int idx) {
         for (BinaryGen gen: genes) gen.flipBit(idx);
     }
     
