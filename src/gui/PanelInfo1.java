@@ -157,7 +157,7 @@ public class PanelInfo1 implements View {
 		
 		if(mejorIndividuo != null) {
 			MyGui.addLabel("Solucion: " + mejorIndividuo.getAptitud(), horizontalPanel);
-			MyGui.addLabel("\nMedia aptitud final:" + generaciones.getMediaFinal(), horizontalPanel);
+			MyGui.addLabel("\n    Media aptitud final:" + generaciones.getMediaFinal(), horizontalPanel);
 		}
 
 		return horizontalPanel;
