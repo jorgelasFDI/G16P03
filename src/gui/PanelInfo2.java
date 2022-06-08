@@ -114,7 +114,12 @@ public class PanelInfo2 implements View {
 		vuelos.add(new Vuelo(RandomGenerator.generateRandomString(), "G", new ArrayList<Double>(Arrays.asList(9.0, 7.0, 5.0)), matrizSEP));
 
 		Function function = (Function) functionComboBox.getSelectedItem();
-		Poblacion poblacion = new Poblacion(size, eliteSize, (Operation) cruceComboBox.getSelectedItem(), (Operation) mutacionComboBox.getSelectedItem(), (Operation) seleccionComboBox.getSelectedItem(), null);
+		Operation cruce = (Operation) cruceComboBox.getSelectedItem();
+		Operation mutacion = (Operation) mutacionComboBox.getSelectedItem();
+		Operation seleccion = (Operation) seleccionComboBox.getSelectedItem();
+		cruce.setProb(Double.parseDouble(cruceTextField.getText()));
+		mutacion.setProb(Double.parseDouble(mutacionTextField.getText()));
+		Poblacion poblacion = new Poblacion(size, eliteSize, cruce, mutacion, seleccion, null);
 		poblacion.generaPoblacion((new GeneratePoblacion()).generaPoblacion(type, null, size, null, null, vuelos, function, poblacion), function);
 		return poblacion;
 	}

@@ -140,7 +140,12 @@ public class PanelInfo1 implements View {
 			GenRange range = new GenRange((Double) rangePair.getValue0().getValue(), (Double) rangePair.getValue1().getValue());
 			ranges.add(range);
 		} Function function = (Function) functionComboBox.getSelectedItem();
-		Poblacion poblacion = new Poblacion(size, eliteSize, (Operation) cruceComboBox.getSelectedItem(), (Operation) mutacionComboBox.getSelectedItem(), (Operation) seleccionComboBox.getSelectedItem(), null);
+		Operation cruce = (Operation) cruceComboBox.getSelectedItem();
+		Operation mutacion = (Operation) mutacionComboBox.getSelectedItem();
+		Operation seleccion = (Operation) seleccionComboBox.getSelectedItem();
+		cruce.setProb(Double.parseDouble(cruceTextField.getText()));
+		mutacion.setProb(Double.parseDouble(mutacionTextField.getText()));
+		Poblacion poblacion = new Poblacion(size, eliteSize, cruce, mutacion, seleccion, null);
 		poblacion.generaPoblacion((new GeneratePoblacion()).generaPoblacion(type, null, size, 0.1, ranges, null, function, poblacion), function);
 		return poblacion;
 	}
