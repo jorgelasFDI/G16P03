@@ -78,7 +78,7 @@ public class LeftPanel extends JPanel {
     	this.frame = mainFrame;
 		typeComboBox.addActionListener(e -> selectType((String) typeComboBox.getSelectedItem()));
 		enter.addActionListener(e -> startAlg());
-		selectType("Binary");
+		selectType("Practica1-Binary");
 	}
 
 	////////////////////////////////////////////////////////////////////////////////
@@ -173,21 +173,21 @@ public class LeftPanel extends JPanel {
 		cruces = new ArrayList<>(crucesGenericos);
 		funciones = new ArrayList<>(funcionesGenericas);
 		switch (type) {
-			case "RampedAndHalf":
-            case "Completo":
-            case "Creciente":
+			case "Practica3-RampedAndHalf":
+            case "Practica3-Completo":
+            case "Practica3-Creciente":
 				treeType();
 				view = new PanelInfo3(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox, type);
 				break;
-            case "Real":
+            case "Practica1-Real":
 				realType();
 				view = new PanelInfo1(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox, type);
 				break;
-            case "Binary":
+            case "Practica1-Binary":
 				binaryType();
 				view = new PanelInfo1(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox, type);
 				break;
-            case "Vuelo":
+            case "Practica2-Vuelo":
 				vueloType(); 
 				view = new PanelInfo2(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox, type);
 				break;

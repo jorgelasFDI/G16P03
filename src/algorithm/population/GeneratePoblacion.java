@@ -14,7 +14,7 @@ public class GeneratePoblacion {
     public List<Individuo> generaPoblacion(String type, Integer depth, Integer size, Double tolerancia, List<GenRange> ranges, List<Vuelo> vuelos, Function function, Poblacion poblacion) {
         List<Individuo> poblacionList = new ArrayList<>(size);
         switch (type) {
-            case "RampedAndHalf":
+            case "Practica3-RampedAndHalf":
                 int numGrupos = (int) depth - 1;
                 int tamGrupo = size / numGrupos;
                 int profundidad = 2;        //Profundidad para el primer grupo
