@@ -25,6 +25,10 @@ public class Generaciones {
 	public double[] getMejorAbsoluto() {
 		return mejorAbsoluto;
 	}
+	
+	public double getMediaFinal() {
+		return mediaAptitud[mediaAptitud.length - 1];
+	}
 
 	public void addGeneracion(Generacion g) {
 		mejorAptitud[ind] = g.getMejorAptitud();

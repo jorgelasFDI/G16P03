@@ -29,7 +29,7 @@ public class MainFrame extends JFrame {/**
 		mainPanel = new CenterPanel(this, alg);
 		bottomPanel = new BottomPanel(this, alg);
 		leftPanel = new LeftPanel(this);
-		bottomPanel.setPreferredSize(new Dimension(200, 100));
+		bottomPanel.setPreferredSize(new Dimension(500, 100));
     }
     
     public void initGUI() {

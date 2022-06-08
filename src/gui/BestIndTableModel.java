@@ -1,6 +1,7 @@
 package gui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -19,14 +20,36 @@ public class BestIndTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
 	private IndividuoVuelo ind;
-	private int numColumnas;
 	private int numFilas = 3;
+	List<String> fileNames = Arrays.asList("Identificador", "Tiempo de llegada", "Pista");
 	List<String> columnNames = new ArrayList<>();
+	
+
+	public BestIndTableModel(Individuo mejorIndividuo) {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+		//this.setValueAt("Vuelo", 0, 0);
+		//this.setValueAt("Identificador", 1, 0);
+		//this.setValueAt("Tiempo de llegada", 2, 0);
+		//this.setValueAt("Pista", 3, 0);
+		
+		for(int i = 0; i < fileNames.size(); i++) 
+			this.setValueAt(fileNames.get(i), i, 0);
+		
+		ind = new IndividuoVuelo((IndividuoVuelo) mejorIndividuo);
+		columnNames.clear();
+		
+		columnNames.add("Vuelos");
+		for(int i = 0; i < mejorIndividuo.getSize(); i++) {
+			columnNames.add("" + mejorIndividuo.get(i));
+		}
+		fireTableStructureChanged();
+	}
 	
 	@Override
 	public int getColumnCount() {
 		// TODO Auto-generated method stub
-		return numColumnas;
+		return columnNames.size();
 	}
 
 	@Override
@@ -44,7 +67,10 @@ public class BestIndTableModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		// TODO Auto-generated method stub
 		
-		int idx = (int) ind.get(columnIndex); 
+		if(columnIndex == 0)
+			return fileNames.get(rowIndex);
+		
+		int idx = (int) ind.get(columnIndex - 1); 
 		
 		return getRealValue(rowIndex, idx);
 	}
@@ -62,18 +88,6 @@ public class BestIndTableModel extends AbstractTableModel {
 			return vuelo.getPista();
 		}
 		return null;
-	}
-
-	public BestIndTableModel(Individuo mejorIndividuo) {
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
-		ind = new IndividuoVuelo((IndividuoVuelo) mejorIndividuo);
-		numColumnas = ind.getSize();
-		columnNames.clear();
-		for(int i = 0; i < mejorIndividuo.getSize(); i++) {
-			columnNames.add("Vuelo " + mejorIndividuo.get(i));
-		}
-		fireTableStructureChanged();
 	}
 
 }

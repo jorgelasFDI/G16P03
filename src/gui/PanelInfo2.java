@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -140,7 +141,7 @@ public class PanelInfo2 implements View {
 		// TODO complete
 		BestIndTableModel bm = new BestIndTableModel(mejorIndividuo);
 		JTable bt = new JTable(bm);
-		//bt.setMinimumSize(new Dimension(200, 100));
+		//bt.setMinimumSize(new Dimension(500, 100));
 		JScrollPane scroll = new JScrollPane(bt, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 		panel.add(scroll);
