@@ -155,8 +155,10 @@ public class PanelInfo1 implements View {
 		// TODO Auto-generated method stub
 		JPanel horizontalPanel = new JPanel();
 		
-		if(mejorIndividuo != null)
+		if(mejorIndividuo != null) {
 			MyGui.addLabel("Solucion: " + mejorIndividuo.getAptitud(), horizontalPanel);
+			MyGui.addLabel("\nMedia aptitud final:" + generaciones.getMediaFinal(), horizontalPanel);
+		}
 
 		return horizontalPanel;
 	}
