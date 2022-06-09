@@ -125,7 +125,9 @@ public class Poblacion implements Iterable<Individuo> {
 		
 		// CALCULATE BLOATING
 		sumAptitudRevisada = 0;
-		for (int i = eliteSize; i < poblacion.size(); i++) {
+		for (int i = 0; i < eliteSize; i++) {
+			sumAptitudRevisada += poblacion.get(i).getAptitudRevisada();
+		} for (int i = eliteSize; i < poblacion.size(); i++) {
 			Individuo ind = poblacion.get(i);
 			double bloating = ind.bloating();
 			ind.setAptitudRevisada(bloating);
