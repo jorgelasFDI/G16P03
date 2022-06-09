@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.LayoutManager;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.javatuples.Pair;
 import algorithm.AlgoritmoGenetico;
 import algorithm.functions.*;
 import algorithm.individuos.Individuo;
+import algorithm.individuos.IndividuoBinary;
 import auxiliar.binary.GenRange;
 import algorithm.operations.Operation;
 import algorithm.population.Generaciones;
@@ -26,21 +28,21 @@ import auxiliar.MyGui;
 
 public class PanelInfo1 implements View {
 
-    private JComboBox<Operation> seleccionComboBox;
-    private JComboBox<Operation> mutacionComboBox;
-    private JComboBox<Operation> cruceComboBox;
-    private JComboBox<Function> functionComboBox;
-	private String type;
+	protected JComboBox<Operation> seleccionComboBox;
+    protected JComboBox<Operation> mutacionComboBox;
+    protected JComboBox<Operation> cruceComboBox;
+    protected JComboBox<Function> functionComboBox;
+    protected String type;
 
-    private JPanel rangesPanelWrap = new JPanel();
-	private JPanel rangesPanel = new JPanel();
-	private JSpinner numGenesSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 10, 1));
-	private List<Pair<JSpinner, JSpinner>> rangesSpinners = new ArrayList<Pair<JSpinner,JSpinner>>();
+    protected JPanel rangesPanelWrap = new JPanel();
+    protected JPanel rangesPanel = new JPanel();
+    protected JSpinner numGenesSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 10, 1));
+    protected List<Pair<JSpinner, JSpinner>> rangesSpinners = new ArrayList<Pair<JSpinner,JSpinner>>();
 
-	private JTextField mutacionTextField = new JTextField("5");
-	private JTextField cruceTextField = new JTextField("60");
-	private JTextField presionTextField = new JTextField("1.5");
-	private Integer numGenes = null;
+    protected JTextField mutacionTextField = new JTextField("5");
+	protected JTextField cruceTextField = new JTextField("60");
+	protected JTextField presionTextField = new JTextField("1.5");
+	protected Integer numGenes = null;
 
     public PanelInfo1(JComboBox<Operation> seleccionComboBox, JComboBox<Operation> mutacionComboBox,
             JComboBox<Operation> cruceComboBox, JComboBox<Function> functionComboBox, String type) {
@@ -56,7 +58,7 @@ public class PanelInfo1 implements View {
 		rangesPanel.setLayout(new BoxLayout(rangesPanel, BoxLayout.Y_AXIS));
     }
 
-	private void addRanges(int start, int end) {
+	protected void addRanges(int start, int end) {
 		JPanel horizontalPanel;
 		SpinnerNumberModel spinner1;
 		SpinnerNumberModel spinner2;
@@ -153,14 +155,22 @@ public class PanelInfo1 implements View {
 	@Override
 	public JPanel getBottomPanel(Generaciones generaciones, Individuo mejorIndividuo, AlgoritmoGenetico alg) {
 		// TODO Auto-generated method stub
-		JPanel horizontalPanel = new JPanel();
+		JPanel verticalPanel = new JPanel();
+		verticalPanel.setLayout(new BoxLayout(verticalPanel, BoxLayout.Y_AXIS));
 		
 		if(mejorIndividuo != null) {
-			MyGui.addLabel("Solucion: " + mejorIndividuo.getAptitud(), horizontalPanel);
-			MyGui.addLabel("\n    Media aptitud final:" + generaciones.getMediaFinal(), horizontalPanel);
+			MyGui.addLabel("Solucion: " + mejorIndividuo.getAptitud(), verticalPanel);
+			MyGui.addLabel("Media aptitud final: " + generaciones.getMediaFinal(), verticalPanel);
+			String variables = "Variables: ";
+			IndividuoBinary bin = (IndividuoBinary) mejorIndividuo;
+			
+			for(int i = 0; i < bin.getNumGenes(); i++)
+				variables += "Variable X" + (i + 1) + ": " + bin.get(i).getFenotipo() + "  ";
+			
+			MyGui.addLabel(variables, verticalPanel);
 		}
 
-		return horizontalPanel;
+		return verticalPanel;
 	}
     
 

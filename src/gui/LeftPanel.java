@@ -181,7 +181,7 @@ public class LeftPanel extends JPanel {
 				break;
             case "Practica1-Real":
 				realType();
-				view = new PanelInfo1(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox, type);
+				view = new PanelInfoReal(seleccionComboBox, mutacionComboBox, cruceComboBox, functionComboBox, type);
 				break;
             case "Practica1-Binary":
 				binaryType();
