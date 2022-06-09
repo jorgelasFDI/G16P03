@@ -50,7 +50,7 @@ public abstract class Individuo<TYPE, OBJ, ITER> implements Comparable<Individuo
 
 	public int getSize() {
 		return size;
-	};
+	}
 
 	public void setSize(int i) {
 		size = i;

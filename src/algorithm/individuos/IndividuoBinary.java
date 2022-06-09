@@ -32,7 +32,13 @@ public class IndividuoBinary extends Individuo<Boolean, GenRange, BinaryGen> {
         return new BinaryList(genes);
     }
 
-    @Override
+    /*@Override
+	public int getSize() {
+		// TODO Auto-generated method stub
+		return genes.getSize();
+	}*/
+
+	@Override
     public Individuo<Boolean, GenRange, BinaryGen> copy() {
         return new IndividuoBinary(this);
     }
