@@ -26,6 +26,7 @@ import algorithm.population.GeneratePoblacion;
 import algorithm.population.Poblacion;
 import auxiliar.MyGui;
 import auxiliar.binary.GenRange;
+import auxiliar.tree.LogicalNode;
 
 public class PanelInfo3 implements View {
 
@@ -39,7 +40,10 @@ public class PanelInfo3 implements View {
 
 	private JTextField mutacionTextField = new JTextField("50");
 	private JTextField cruceTextField = new JTextField("70");
-	private JTextField presionTextField = new JTextField("1.5");
+	private int num_entradas;
+	private JSpinner entradasSpinner;
+	
+	private List<String> allvalues = new ArrayList<>();
 
     public PanelInfo3(JComboBox<Operation> seleccionComboBox, JComboBox<Operation> mutacionComboBox,
             JComboBox<Operation> cruceComboBox, JComboBox<Function> functionComboBox, String type) {
@@ -49,6 +53,7 @@ public class PanelInfo3 implements View {
         this.functionComboBox = functionComboBox;
 		this.type = type;
 		this.profundidadSpinner = new JSpinner(new SpinnerNumberModel(3, 3, 7, 1));
+		this.entradasSpinner = new JSpinner(new SpinnerNumberModel(2, 1, 4, 1));
     }
 
     @Override
@@ -57,6 +62,9 @@ public class PanelInfo3 implements View {
             new Pair<>(Arrays.asList(
 				new Pair<>("Funcion", functionComboBox)
 			), null),
+            new Pair<>(Arrays.asList(
+    				new Pair<>("Numero de entradas", entradasSpinner)
+    			), null),
             new Pair<>(Arrays.asList(
     				new Pair<>("Profundidad del arbol", functionComboBox)
     			), null),
@@ -83,6 +91,10 @@ public class PanelInfo3 implements View {
 		cruce.setProb(Double.parseDouble(cruceTextField.getText())/100.0);
 		mutacion.setProb(Double.parseDouble(mutacionTextField.getText())/100.0);
 		profundidad = (int) profundidadSpinner.getValue();
+		num_entradas = (int) entradasSpinner.getModel().getValue();
+		LogicalNode.generateCombinations(num_entradas);
+		//LogicalNode.setCombinaciones(combinaciones);
+		//LogicalNode.setSolution(solution);
 		Poblacion poblacion = new Poblacion(size, eliteSize, cruce, mutacion, seleccion, null);
 		poblacion.generaPoblacion((new GeneratePoblacion()).generaPoblacion(type, profundidad, size, null, null, null, function, poblacion), function);
 		return poblacion;
