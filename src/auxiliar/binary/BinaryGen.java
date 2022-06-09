@@ -18,8 +18,9 @@ public class BinaryGen extends Gen<Boolean> implements Iterable<Boolean> {
     public BinaryGen(GenRange range, int start, double tolerancia) {
         this.range = range;
         this.start = start;
-        int size = (int) (Math.log(1 + (range.getDiff())/tolerancia)/Math.log(2));
-        this.size = size;
+        double ammount = range.getDiff()/tolerancia;
+        double siz = Math.log(1 + ammount)/Math.log(2);
+        this.size = (int) siz;
         alelo = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
             alelo.add(MyRandom.getInstance().nextBoolean());

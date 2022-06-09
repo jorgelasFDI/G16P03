@@ -42,6 +42,7 @@ public class PanelInfo1 implements View {
     protected JTextField mutacionTextField = new JTextField("5");
 	protected JTextField cruceTextField = new JTextField("60");
 	protected JTextField presionTextField = new JTextField("1.5");
+	protected JTextField toleranciaTextField = new JTextField("0.005");
 	protected Integer numGenes = null;
 
     public PanelInfo1(JComboBox<Operation> seleccionComboBox, JComboBox<Operation> mutacionComboBox,
@@ -118,6 +119,7 @@ public class PanelInfo1 implements View {
         return Arrays.asList(
             new Pair<>(Arrays.asList(
 				new Pair<>("Funcion", functionComboBox),
+				new Pair<>("Tolerancia", toleranciaTextField),
 				new Pair<>("", rangesPanelWrap)
 			), null),
             new Pair<>(Arrays.asList(
@@ -138,6 +140,7 @@ public class PanelInfo1 implements View {
 	@Override
 	public Poblacion getPoblacion(int size, double eliteSize) {
 		List<GenRange> ranges = new ArrayList<>();
+		double tolerancia = Double.parseDouble(toleranciaTextField.getText());
 		for (Pair<JSpinner, JSpinner> rangePair: rangesSpinners) {
 			GenRange range = new GenRange((Double) rangePair.getValue0().getValue(), (Double) rangePair.getValue1().getValue());
 			ranges.add(range);
@@ -148,7 +151,7 @@ public class PanelInfo1 implements View {
 		cruce.setProb(Double.parseDouble(cruceTextField.getText())/100.0);
 		mutacion.setProb(Double.parseDouble(mutacionTextField.getText())/100.0);
 		Poblacion poblacion = new Poblacion(size, eliteSize, cruce, mutacion, seleccion, null);
-		poblacion.generaPoblacion((new GeneratePoblacion()).generaPoblacion(type, null, size, 0.1, ranges, null, function, poblacion), function);
+		poblacion.generaPoblacion((new GeneratePoblacion()).generaPoblacion(type, null, size, tolerancia, ranges, null, function, poblacion), function);
 		return poblacion;
 	}
 
