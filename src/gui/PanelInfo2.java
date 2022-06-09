@@ -39,6 +39,7 @@ public class PanelInfo2 implements View {
     private JComboBox<Operation> cruceComboBox;
     private JComboBox<Function> functionComboBox;
 	private String type;
+	private Double presion;
 
 	private JTextField mutacionTextField = new JTextField("50");
 	private JTextField cruceTextField = new JTextField("70");
@@ -120,6 +121,7 @@ public class PanelInfo2 implements View {
 		Operation seleccion = (Operation) seleccionComboBox.getSelectedItem();
 		cruce.setProb(Double.parseDouble(cruceTextField.getText())/100);
 		mutacion.setProb(Double.parseDouble(mutacionTextField.getText())/100);
+		presion = Double.parseDouble(presionTextField.getText());
 		Poblacion poblacion = new Poblacion(size, eliteSize, cruce, mutacion, seleccion, null);
 		poblacion.generaPoblacion((new GeneratePoblacion()).generaPoblacion(type, null, size, null, null, vuelos, function, poblacion), function);
 		return poblacion;

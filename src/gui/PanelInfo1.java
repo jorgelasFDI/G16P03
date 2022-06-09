@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.LayoutManager;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +32,7 @@ public class PanelInfo1 implements View {
     protected JComboBox<Operation> cruceComboBox;
     protected JComboBox<Function> functionComboBox;
     protected String type;
+    protected Double presion;
 
     protected JPanel rangesPanelWrap = new JPanel();
     protected JPanel rangesPanel = new JPanel();
@@ -150,7 +150,8 @@ public class PanelInfo1 implements View {
 		Operation seleccion = (Operation) seleccionComboBox.getSelectedItem();
 		cruce.setProb(Double.parseDouble(cruceTextField.getText())/100.0);
 		mutacion.setProb(Double.parseDouble(mutacionTextField.getText())/100.0);
-		Poblacion poblacion = new Poblacion(size, eliteSize, cruce, mutacion, seleccion, null);
+		presion = Double.parseDouble(presionTextField.getText());
+		Poblacion poblacion = new Poblacion(size, eliteSize, cruce, mutacion, seleccion, presion);
 		poblacion.generaPoblacion((new GeneratePoblacion()).generaPoblacion(type, null, size, tolerancia, ranges, null, function, poblacion), function);
 		return poblacion;
 	}

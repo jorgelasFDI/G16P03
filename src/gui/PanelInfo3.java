@@ -1,6 +1,7 @@
 package gui;
 import java.awt.BorderLayout;import java.awt.BorderLayout;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,7 +10,9 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
 
 import org.javatuples.Pair;
@@ -19,8 +22,10 @@ import algorithm.functions.*;
 import algorithm.individuos.Individuo;
 import algorithm.operations.Operation;
 import algorithm.population.Generaciones;
+import algorithm.population.GeneratePoblacion;
 import algorithm.population.Poblacion;
 import auxiliar.MyGui;
+import auxiliar.binary.GenRange;
 
 public class PanelInfo3 implements View {
 
@@ -28,7 +33,9 @@ public class PanelInfo3 implements View {
     private JComboBox<Operation> mutacionComboBox;
     private JComboBox<Operation> cruceComboBox;
     private JComboBox<Function> functionComboBox;
+    private JSpinner profundidadSpinner;
 	private String type;
+	private int profundidad;
 
 	private JTextField mutacionTextField = new JTextField("50");
 	private JTextField cruceTextField = new JTextField("70");
@@ -41,6 +48,7 @@ public class PanelInfo3 implements View {
         this.mutacionComboBox = mutacionComboBox;
         this.functionComboBox = functionComboBox;
 		this.type = type;
+		this.profundidadSpinner = new JSpinner(new SpinnerNumberModel(3, 3, 7, 1));
     }
 
     @Override
@@ -50,8 +58,10 @@ public class PanelInfo3 implements View {
 				new Pair<>("Funcion", functionComboBox)
 			), null),
             new Pair<>(Arrays.asList(
-				new Pair<>("Selecciones", seleccionComboBox),
-				new Pair<>("Maxima presion selectiva", presionTextField)
+    				new Pair<>("Profundidad del arbol", functionComboBox)
+    			), null),
+            new Pair<>(Arrays.asList(
+				new Pair<>("Selecciones", seleccionComboBox)
 			), null),
             new Pair<>(Arrays.asList(
 				new Pair<>("Mutaciones", mutacionComboBox),
@@ -66,7 +76,16 @@ public class PanelInfo3 implements View {
 
 	@Override
 	public Poblacion getPoblacion(int size, double eliteSize) {
-		return null;
+		Function function = (Function) functionComboBox.getSelectedItem();
+		Operation cruce = (Operation) cruceComboBox.getSelectedItem();
+		Operation mutacion = (Operation) mutacionComboBox.getSelectedItem();
+		Operation seleccion = (Operation) seleccionComboBox.getSelectedItem();
+		cruce.setProb(Double.parseDouble(cruceTextField.getText())/100.0);
+		mutacion.setProb(Double.parseDouble(mutacionTextField.getText())/100.0);
+		profundidad = (int) profundidadSpinner.getValue();
+		Poblacion poblacion = new Poblacion(size, eliteSize, cruce, mutacion, seleccion, null);
+		poblacion.generaPoblacion((new GeneratePoblacion()).generaPoblacion(type, profundidad, size, null, null, null, function, poblacion), function);
+		return poblacion;
 	}
 	
     @Override
