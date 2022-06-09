@@ -25,7 +25,7 @@ public class SeleccionRestos extends Operation {
 		while(poblacion.get(ind).getPuntuacion() * poblacion.size() < limit)
 			nuevaPoblacion.add(poblacion.get(ind--).copy());
 
-		//Poblacion.evalua(nuevaPoblacion, nuevaPoblacion.get(0).getAptitud() >= nuevaPoblacion.get(nuevaPoblacion.size() - 1).getAptitud(), null, null, null);
+		Poblacion.evalua(nuevaPoblacion, nuevaPoblacion.get(0).getAptitud() >= nuevaPoblacion.get(nuevaPoblacion.size() - 1).getAptitud(), null, null, 0);
 		if (nuevaPoblacion.size() > 0) Operation.operate(seleccion, nuevaPoblacion);
 
 		for (int i = ind + 1, j = 0; i < poblacion.size(); i++, j++)

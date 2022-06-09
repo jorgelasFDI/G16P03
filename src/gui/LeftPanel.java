@@ -219,7 +219,7 @@ public class LeftPanel extends JPanel {
     }
 
 	public void startAlg() {
-		frame.setPoblacion(view.getPoblacion(Integer.parseInt(sizeTextField.getText()), Double.parseDouble(eliteTextField.getText())));
+		frame.setPoblacion(view.getPoblacion(Integer.parseInt(sizeTextField.getText()), Double.parseDouble(eliteTextField.getText())/100.0));
 		frame.run(Integer.parseInt(generacionesTextField.getText()));
 	}
 }

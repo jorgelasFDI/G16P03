@@ -59,20 +59,21 @@ public class Poblacion implements Iterable<Individuo> {
 		evalua(); return null;
 	}
 
-	/*public void evalua() {
-		Pair<Double, Individuo> pareja = evalua(poblacion, minimizar, mejorIndividuo, presion, eliteSize);
+	public void evalua() {
+		Pair<Double, Individuo> pareja = Poblacion.evalua(poblacion, minimizar, mejorIndividuo, presion, eliteSize);
 		mediaAptitud = pareja.getValue0();
 		mejorIndividuo = pareja.getValue1();
-	}*/
-	
-	public void evalua() {
+	}
+
+	public static Pair<Double, Individuo> evalua(List<Individuo> poblacion, boolean minimizar, Individuo mejorIndividuo, Double presion, int eliteSize) {
 
 		// REVISION
 		double fmax = Double.NEGATIVE_INFINITY;
 		double fmin = Double.POSITIVE_INFINITY;
 		double sumAptitud = 0;
+		double mediaAptitud = 0;
 		double sumAptitudRevisada = 0;
-		//double mediaAptitudRevisada = 0;
+		double mediaAptitudRevisada = 0;
 
 		// CALCULATE FITNESS
 		for (Individuo i: poblacion) {
@@ -128,7 +129,7 @@ public class Poblacion implements Iterable<Individuo> {
 			double bloating = ind.bloating();
 			ind.setAptitudRevisada(bloating);
 			sumAptitudRevisada += ind.getAptitudRevisada();
-		} //mediaAptitudRevisada = sumAptitudRevisada / (double) poblacion.size();
+		} mediaAptitudRevisada = sumAptitudRevisada / (double) poblacion.size();
 
 		// ORDENAR
 		Poblacion.sort(poblacion);
@@ -141,10 +142,10 @@ public class Poblacion implements Iterable<Individuo> {
 			i.setPuntuacionAcumulada(puntAcum);
 		}
 
+		return new Pair<>(mediaAptitud, mejorIndividuo);
 	}
 
 	public void generarElite() {
-		Poblacion.sort(poblacion);
 		elite = new ArrayList<>(eliteSize);
 		for (int i = 0; i < eliteSize; i++) {
 			elite.add(poblacion.get(i).copy());
@@ -152,7 +153,7 @@ public class Poblacion implements Iterable<Individuo> {
 	}
 
 	public void introducirElite() {
-		Poblacion.sort(poblacion);
+		evalua();
 		for (int i = 1; i <= elite.size(); i++) {
 			poblacion.set(poblacion.size() - i, elite.get(i - 1).copy());
 		}

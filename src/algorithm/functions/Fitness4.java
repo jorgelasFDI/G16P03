@@ -29,7 +29,7 @@ public class Fitness4 extends Function {
 
 		for(int i = 0; i < size; i++) {
 			total += Math.sin(((Gen)cromosoma.get(i)).getFenotipo()) * Math.pow(Math.sin(((i + 2)
-					* Math.pow(((Gen)cromosoma.get(i)).getFenotipo(), 2))/Math.PI), 20);
+				   * Math.pow(((Gen)cromosoma.get(i)).getFenotipo(), 2))/Math.PI), 20);
 		}
 		
 		return -total;
