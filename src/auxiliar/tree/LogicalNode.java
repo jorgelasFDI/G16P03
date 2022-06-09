@@ -72,11 +72,10 @@ public class LogicalNode implements TernaryOperator<Boolean> {
 
 	public static void generateCombinations(int num_entradas) {
 		// TODO Auto-generated method stub
+		List<String> allvalues = new ArrayList<>();
 		int pow = (int) Math.pow(2, num_entradas);
 		int powpow = (int) Math.pow(2, pow);
 		int entradasTotales = (int) (num_entradas + pow);
-		int num_combinations = (int) Math.pow(2, entradasTotales);
-
 		solution = new ArrayList<>(); 
 		combinaciones = new ArrayList<>();
 		allvalues = new ArrayList<>();
@@ -109,7 +108,7 @@ public class LogicalNode implements TernaryOperator<Boolean> {
 		}
 
 		for (String term: allvalues) {
-			LogicalNode.add(term);
+			add(term);
 		}
 	}
 
