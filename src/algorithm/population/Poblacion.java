@@ -89,12 +89,13 @@ public class Poblacion implements Iterable<Individuo> {
 			if (minimizar) i.setAptitudRevisada(fmax - i.getAptitud());
 			else i.setAptitudRevisada(Math.abs(fmin) + i.getAptitud());
 			sumAptitudRevisada += i.getAptitudRevisada();
-		} //mediaAptitudRevisada = sumAptitudRevisada / (double) poblacion.size();
+		} mediaAptitudRevisada = sumAptitudRevisada / (double) poblacion.size();
 
 		// ORDENAR
 		Poblacion.sort(poblacion);
 
 		// GET BEST AND WORST
+		Individuo peorGeneracion = poblacion.get(poblacion.size() - 1).copy();
 		Individuo mejorGeneracion = poblacion.get(0).copy();       //El individuo con mejor aptitud SIEMPRE se guarda en la 1a posicion
 		if(mejorIndividuo == null)
 			mejorIndividuo = mejorGeneracion;
@@ -104,9 +105,9 @@ public class Poblacion implements Iterable<Individuo> {
 			mejorIndividuo = mejorGeneracion;
 
 		// ESCALADO	
-		/*
+		
 		if (presion != null) {
-			double aMax = ((1.2 - 1)*mediaAptitudRevisada)/(mejorGeneracion.getAptitudRevisada() - mediaAptitudRevisada);
+			double aMax = ((presion - 1)*mediaAptitudRevisada)/(mejorGeneracion.getAptitudRevisada() - mediaAptitudRevisada);
 			double bMax = (1 - aMax)*mediaAptitudRevisada;
 
 			double aMin = mediaAptitudRevisada/(mediaAptitudRevisada - peorGeneracion.getAptitudRevisada());
@@ -120,7 +121,7 @@ public class Poblacion implements Iterable<Individuo> {
 				i.setAptitudRevisada(value);
 				sumAptitudRevisada += i.getAptitudRevisada();
 			}
-		}//*/
+		}
 		
 		// CALCULATE BLOATING
 		sumAptitudRevisada = 0;
