@@ -62,7 +62,6 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 
 	private double maxDepth;
 	private BiFunction<Integer, Double, Boolean> isLeaf;
-	private double mediaAptitud;
 
 	public double getMaxDepth() {
 		return maxDepth;
@@ -88,7 +87,7 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 	public static int init(Tree<String> tree, int current, double depth, BiFunction<Integer, Double, Boolean> isLeaf) throws Exception {
 	 
 		if (isLeaf.apply(current, depth)) {
-			Tree<String> child = tree.addChild(MyRandom.getRandomValueInSet(LogicalNode.terminales));
+			tree.addChild(MyRandom.getRandomValueInSet(LogicalNode.terminales));
 			return 1;
 		}
 
@@ -126,13 +125,5 @@ public class IndividuoTree extends Individuo<String, LogicalNode, Tree<String>> 
 
 	public void setMaxDepth(double depth) {
 		maxDepth = depth;
-	}
-
-	public double getMediaAptitud() {
-		return mediaAptitud;
-	}
-
-	public void setMediaAptitud(double mediaAptitud) {
-		this.mediaAptitud = mediaAptitud;
 	}
 }

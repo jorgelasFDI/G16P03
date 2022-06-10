@@ -1,9 +1,6 @@
 package algorithm.operations.cruces;
 
-import java.util.List;
-
 import algorithm.individuos.Individuo;
-import algorithm.operations.Operation;
 
 public class CruceUniforme extends Cruce {
 

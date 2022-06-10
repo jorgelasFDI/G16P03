@@ -20,19 +20,19 @@ public class CruceOrdenOX extends Cruce {
 		super.name = name; 
 	}
 
-    private void mutateInd(IndividuoVuelo individuo, Map<Integer, Integer> map, int last) {
+    private void mutateInd(IndividuoVuelo individuo, Map<Integer, Integer> map, int start) {
         IndividuoVuelo newIndividuo = (IndividuoVuelo) individuo.copy();
-        
-        for (int j = 0, k = 0; k < individuo.getSize(); ) {
-            int idxJ = (j + last + 1)%individuo.getSize();
-            int idxK = (k + last + 1)%individuo.getSize();
-            int gen = individuo.get(idxJ);
-            if (map.containsKey(idxK)) {
-                newIndividuo.set(idxK, map.get(idxK));
-                k++;
+
+        for (int j = start, k = start, counter = 0; counter < individuo.getSize(); ) {
+            j %= individuo.getSize();
+            k %= individuo.getSize();
+            int gen = individuo.get(j);
+            if (map.containsKey(k)) {
+                newIndividuo.set(k, map.get(k));
+                k++; counter++;
             } else if (!map.containsValue(gen)) {
-                newIndividuo.set(idxK, gen);
-                k++; j++;
+                newIndividuo.set(k, gen);
+                k++; j++; counter++;
             } else j++;
         }
 
@@ -50,15 +50,16 @@ public class CruceOrdenOX extends Cruce {
 		int first = range.getValue0();
 		int last = range.getValue1();
 
-		Map<Integer, Integer> map = new HashMap<>(padre2.getSize());
 		Map<Integer, Integer> mapPrev = new HashMap<>(padre1.getSize());
+		Map<Integer, Integer> map = new HashMap<>(padre2.getSize());
 		for (int j = first; j <= last; j++) {
 			map.put(j, padre1.get(j));
 			mapPrev.put(j, padre2.get(j));
 		}
 
-		mutateInd(padre2, map, last);
-		mutateInd(padre1, mapPrev, last);
+		mutateInd(padre1, mapPrev, last + 1);
+		mutateInd(padre2, map, last + 1);
+		
 	}
 
     

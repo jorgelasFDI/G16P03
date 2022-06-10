@@ -20,6 +20,10 @@ public class MyRandom {
         return random.nextInt((max + 1) - min) + min;
     }
 
+    public static double getRandomDouble(double min, double max) {
+        return random.nextDouble()*(max - min) + min;
+    }
+
     public static Pair<Integer, Integer> getRandomNoRepeat(List<Integer> selected, int ammount, int lowerbound, int upperbound) {
         int last = Integer.MIN_VALUE;
         int first = Integer.MAX_VALUE;

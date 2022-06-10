@@ -49,7 +49,7 @@ public class IndividuoReal extends Individuo<Double, GenRange, RealGen> {
     public void swapGen(int idx, int j, Individuo<Double, GenRange, RealGen> other) {
         RealGen aux = other.get(j);
 		other.set(j, get(idx));
-		other.set(idx, aux);
+		this.set(idx, aux);
     }
 
     @Override

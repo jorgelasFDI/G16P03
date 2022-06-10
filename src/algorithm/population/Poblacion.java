@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.javatuples.Pair;
+import org.javatuples.Triplet;
 
 import algorithm.functions.Function;
 import algorithm.individuos.Individuo;
@@ -27,6 +28,7 @@ public class Poblacion implements Iterable<Individuo> {
 	private double mediaAptitud;
 	
 	private Individuo mejorIndividuo;
+	private Individuo mejorGeneracion;
 	private boolean minimizar = false;
 
 	public void cruzar() {
@@ -60,12 +62,13 @@ public class Poblacion implements Iterable<Individuo> {
 	}
 
 	public void evalua() {
-		Pair<Double, Individuo> pareja = Poblacion.evalua(poblacion, minimizar, mejorIndividuo, presion, eliteSize);
-		mediaAptitud = pareja.getValue0();
-		mejorIndividuo = pareja.getValue1();
+		Triplet<Double, Individuo, Individuo> triplete = Poblacion.evalua(poblacion, minimizar, mejorIndividuo, presion, eliteSize);
+		mediaAptitud = triplete.getValue0();
+		mejorGeneracion = triplete.getValue1();
+		mejorIndividuo = triplete.getValue2();
 	}
 
-	public static Pair<Double, Individuo> evalua(List<Individuo> poblacion, boolean minimizar, Individuo mejorIndividuo, Double presion, int eliteSize) {
+	public static Triplet<Double, Individuo, Individuo> evalua(List<Individuo> poblacion, boolean minimizar, Individuo mejorIndividuo, Double presion, int eliteSize) {
 
 		// REVISION
 		double fmax = Double.NEGATIVE_INFINITY;
@@ -145,7 +148,7 @@ public class Poblacion implements Iterable<Individuo> {
 			i.setPuntuacionAcumulada(puntAcum);
 		}
 
-		return new Pair<>(mediaAptitud, mejorIndividuo);
+		return new Triplet<>(mediaAptitud, mejorGeneracion, mejorIndividuo);
 	}
 
 	public void generarElite() {
@@ -156,6 +159,7 @@ public class Poblacion implements Iterable<Individuo> {
 	}
 
 	public void introducirElite() {
+		if (elite.size() == 0) return;
 		evalua();
 		for (int i = 1; i <= elite.size(); i++) {
 			poblacion.set(poblacion.size() - i, elite.get(i - 1).copy());
@@ -164,6 +168,10 @@ public class Poblacion implements Iterable<Individuo> {
 
 	public Individuo getMejorIndividuo() {
 		return mejorIndividuo.copy();
+	}
+
+	public Individuo getMejorGeneracion() {
+		return mejorGeneracion.copy();
 	}
 
 	public Individuo get(int index) {
@@ -184,6 +192,10 @@ public class Poblacion implements Iterable<Individuo> {
 	
 	public double getMejorAbsoluto() {
 		return mejorIndividuo.getAptitud();
+	}
+
+	public void sort() {
+		Poblacion.sort(poblacion);
 	}
 
 	public static void sort(List<Individuo> poblacion) {

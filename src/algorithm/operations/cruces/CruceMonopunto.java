@@ -11,8 +11,8 @@ public class CruceMonopunto extends Cruce {
 
     @Override
     public void cruzar(Individuo individuoPrev, Individuo individuo) {
-        int indice = random.nextInt(individuo.getSize());
-        for (int j = 0; j < indice; j++) {
+        int indice = random.nextInt(individuo.getSize() - 1);
+        for (int j = 0; j <= indice; j++) {
             individuoPrev.swapGen(j, individuo);
         }
     }

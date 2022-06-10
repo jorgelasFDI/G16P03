@@ -21,19 +21,22 @@ public class CrucePMX extends Cruce {
 
     @Override
     public void cruzar(Individuo individuoPrev, Individuo individuo) {
+        
         IndividuoVuelo padre1 = (IndividuoVuelo) individuoPrev;
 		IndividuoVuelo padre2 = (IndividuoVuelo) individuo;
         List<Integer> selected = new ArrayList<>(2);
         Pair<Integer, Integer> range = MyRandom.getRandomNoRepeat(selected, 2, 0, individuo.getSize() - 1);
+        
         int first = range.getValue0();
         int last = range.getValue1();
 
         Map<Integer, Integer> prevMap = new HashMap<>();
         Map<Integer, Integer> map = new HashMap<>();
-        for (int j = first; j <= last; j++) prevMap.put(padre2.get(j), padre1.get(j));
-        for (int j = first; j <= last; j++) map.put(padre1.get(j), padre2.get(j));
-        
-        for (int j = first; j <= last; j++) padre2.swapGen(j, padre1);
+        for (int j = first; j <= last; j++) {
+            prevMap.put(padre2.get(j), padre1.get(j));
+            map.put(padre1.get(j), padre2.get(j));
+            padre2.swapGen(j, padre1);
+        }
 
         for (int j = 0; j < first; j++) {
             while (prevMap.containsKey(padre1.get(j))) padre1.set(j, prevMap.get(padre1.get(j)));

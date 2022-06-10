@@ -19,21 +19,19 @@ public class CrucePosicionPrioritaria extends Cruce {
 		super.name = name; 
 	}
 
-	private int numSelected = 3;
-
-	private void mutateInd(IndividuoVuelo individuo, Map<Integer, Integer> map, int last) {
+	private void mutateInd(IndividuoVuelo individuo, Map<Integer, Integer> map, int start) {
         IndividuoVuelo newIndividuo = (IndividuoVuelo) individuo.copy();
-        
-        for (int j = 0, k = 0; k < individuo.getSize(); ) {
-            int idxJ = (j + last + 1)%individuo.getSize();
-            int idxK = (k + last + 1)%individuo.getSize();
-            int gen = individuo.get(idxJ);
-            if (map.containsKey(idxK)) {
-                newIndividuo.set(idxK, map.get(idxK));
-                k++;
+
+        for (int j = start, k = start, counter = 0; counter < individuo.getSize(); ) {
+            j %= individuo.getSize();
+            k %= individuo.getSize();
+            int gen = individuo.get(j);
+            if (map.containsKey(k)) {
+                newIndividuo.set(k, map.get(k));
+                k++; counter++;
             } else if (!map.containsValue(gen)) {
-                newIndividuo.set(idxK, gen);
-                k++; j++;
+                newIndividuo.set(k, gen);
+                k++; j++; counter++;
             } else j++;
         }
 
@@ -42,7 +40,7 @@ public class CrucePosicionPrioritaria extends Cruce {
 
     @Override
     public void cruzar(Individuo individuoPrev, Individuo individuo) {
-        
+        int numSelected = 3;
         IndividuoVuelo padre1 = (IndividuoVuelo) individuoPrev;
 		IndividuoVuelo padre2 = (IndividuoVuelo) individuo;
 
@@ -50,15 +48,15 @@ public class CrucePosicionPrioritaria extends Cruce {
         Pair<Integer, Integer> range = MyRandom.getRandomNoRepeat(selected, numSelected, 0, individuo.getSize() - 1);
         int last = range.getValue1();
 
-        Map<Integer, Integer> map = new HashMap<>(padre2.getSize());
         Map<Integer, Integer> mapPrev = new HashMap<>(padre1.getSize());
-        for (int j = 0; j < selected.size(); j++) {
+        Map<Integer, Integer> map = new HashMap<>(padre2.getSize());
+        for (int j = 0; j < numSelected; j++) {
             map.put(selected.get(j), padre1.get(selected.get(j)));
             mapPrev.put(selected.get(j), padre2.get(selected.get(j)));
         }
 
-        mutateInd(padre2, map, last);
-        mutateInd(padre1, mapPrev, last);
+        mutateInd(padre1, mapPrev, last + 1);
+        mutateInd(padre2, map, last + 1);
     }
 
 }

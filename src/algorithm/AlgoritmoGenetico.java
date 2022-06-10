@@ -50,7 +50,7 @@ public class AlgoritmoGenetico {
             // Evaluacion;      
             poblacion.evalua();
             
-            generaciones.addGeneracion(new Generacion(poblacion.get(0).getAptitud(), poblacion.getMediaAptitud(), poblacion.getMejorAbsoluto()));
+            generaciones.addGeneracion(new Generacion(poblacion.getMejorGeneracion().getAptitud(), poblacion.getMediaAptitud(), poblacion.getMejorAbsoluto()));
             
             //System.out.println("Mejor individuo: " + poblacion.get(0).getAptitud());
             //System.out.println("Mejor absoluto: " + poblacion.getMejorAbsoluto());

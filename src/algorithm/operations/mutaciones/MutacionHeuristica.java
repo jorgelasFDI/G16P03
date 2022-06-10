@@ -15,33 +15,39 @@ public class MutacionHeuristica extends Mutacion {
 		super.name = name; 
 	}
 
-	private Individuo individuo;
+	private IndividuoVuelo individuo;
 	private List<Integer> selected;
-	int numSelected = 3;
+	private int numSelected = 3;
 
-	private void compareIndividuo(Individuo copied) {
+	private void compareIndividuo(IndividuoVuelo copied) {
 		copied.setAptitud(copied.fitness());
-        if (copied.getAptitud() < individuo.getAptitud())
-        	individuo = new IndividuoVuelo((IndividuoVuelo) copied);
+        if (copied.getAptitud() < individuo.getAptitud() && individuo.getFunction().getMinimizar()) {
+			for (int i = 0; i < selected.size(); i++)
+				individuo.set(selected.get(i), copied.get(selected.get(i)));
+		} else if (copied.getAptitud() > individuo.getAptitud() && !individuo.getFunction().getMinimizar()) {
+			for (int i = 0; i < selected.size(); i++)
+				individuo.set(selected.get(i), copied.get(selected.get(i)));
+		}	
     }
 
-	private void heapPermutation(Individuo copied, int size) {
+	private void permutation(IndividuoVuelo copied, int size) {
 
         if (size == 1) compareIndividuo(copied);
  
         for (int i = 0; i < size; i++) {
-            heapPermutation(copied, size - 1);
+            permutation(copied, size - 1);
             if (size % 2 == 1) copied.swapGen(selected.get(0), selected.get(size - 1));
             else copied.swapGen(selected.get(i), selected.get(size - 1));
         }
     }
 
 	@Override
-	public void mutar(Individuo individuo) {
-		this.individuo = individuo;
+	public void mutar(Individuo cromosoma) {
+		this.individuo = (IndividuoVuelo) cromosoma;
+		individuo.setAptitud(individuo.fitness());
 		selected = new ArrayList<>(numSelected);
 		MyRandom.getRandomNoRepeat(selected, numSelected, 0, individuo.getSize() - 1);
-		heapPermutation(individuo.copy(), numSelected);
+		permutation((IndividuoVuelo) individuo.copy(), numSelected);
 	}
 
 }

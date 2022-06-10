@@ -17,81 +17,54 @@ public class CruceCO extends Cruce {
 		super.name = name; 
 	}
 	
-	private void check(List<Integer> listaDinamica, List<Integer> ordinalPadre, IndividuoVuelo ind) {
+	private List<Integer> transform(IndividuoVuelo ind) {
+		List<Integer> ordinalPadre = new ArrayList<>();
+		List<Integer> listaDinamica = inicializaLista(ind.getSize());
 		for(int j = 0; j < ind.getSize(); j++) {
-			int vuelo = ind.get(j);
-			
-			Iterator<Integer> it = listaDinamica.iterator();
-			Boolean found = false;
-			int idx = 0;
-			while(it.hasNext() && !found) {
-				int v = it.next();
-				if(vuelo == v)
-					found = true;
-				else
-					idx++;
-			}
-			ordinalPadre.add(idx + 1);
+			int idx = 0; int vuelo = ind.get(j);
+			for (Integer i: listaDinamica) {
+				if (vuelo == i) break;
+				idx++;
+			} ordinalPadre.add(idx);
 			listaDinamica.remove(idx);
-		}
+		} return ordinalPadre;
 	}
 	
-	private void assign(List<Integer> listaDinamica, List<Integer> ordinalPadre, Individuo ind) {
+	private void assign(List<Integer> ordinalPadre, IndividuoVuelo ind) {
+		List<Integer> listaDinamica = inicializaLista(ind.getSize());
 		for(int j = 0; j < ind.getSize(); j++) {
 			int vuelo = ordinalPadre.get(j);
-			
-			Iterator<Integer> it = listaDinamica.iterator();
-			int v = 0;
-			int idx = 0;
-			while(idx < vuelo && it.hasNext()) {      //idx < listaDinamica.size()	
-				idx++;
-				v = it.next();
-			}
-			ind.set(j, v);
-			listaDinamica.remove(idx - 1);
+			ind.set(j, listaDinamica.get(vuelo));
+			listaDinamica.remove(vuelo);
 		}
 	}
 
-	private void inicializaLista(List<Integer> listaDinamica, int size) {
-		listaDinamica.clear();
+	private List<Integer> inicializaLista(int size) {
+		List<Integer> listaDinamica = new LinkedList<>();
 		for(int j = 0; j < size; j++) {
 			listaDinamica.add(j + 1);
-		}
+		} return listaDinamica;
 	}
 
 	@Override
 	public void cruzar(Individuo individuoPrev, Individuo individuo) {
 		IndividuoVuelo padre1 = (IndividuoVuelo) individuoPrev;
 		IndividuoVuelo padre2 = (IndividuoVuelo) individuo;
-
-		List<Integer> listaDinamica = new LinkedList<>();
-				
-		inicializaLista(listaDinamica, padre2.getSize());
-		
-		List<Integer> ordinalPadre1 = new ArrayList<>();
-		List<Integer> ordinalPadre2 = new ArrayList<>();
 		
 		//3� Se rellenan las listas ordinales de los progenitores
-		check(listaDinamica, ordinalPadre1, padre1);      //Saca la lista ordinal del padre1
-		inicializaLista(listaDinamica, padre2.getSize());
-		check(listaDinamica, ordinalPadre2, padre2);      //Saca la lista ordinal del padre2
+		List<Integer> ordinalPadre1 = transform(padre1);      //Saca la lista ordinal del padre1
+		List<Integer> ordinalPadre2 = transform(padre2);      //Saca la lista ordinal del padre2
 		
 		//4� Se crea el punto de corte para realizar un cruze monopunto
-		int punto = random.nextInt(padre2.getSize());
-		
-		//Cruze monopunto --> Se intercambian los genes que est�n detr�s del punto de corte
-		for(int j = punto; j < padre2.getSize(); j++) {
+		int indice = random.nextInt(padre2.getSize() - 1);
+		for (int j = 0; j <= indice; j++) {
 			int aux = ordinalPadre1.get(j);
 			ordinalPadre1.set(j, ordinalPadre2.get(j));
 			ordinalPadre2.set(j, aux);
-		}
-		inicializaLista(listaDinamica, padre2.getSize());
-		
-		//--------------------------------------------------
-		
-		assign(listaDinamica, ordinalPadre1, padre1);
-		inicializaLista(listaDinamica, padre2.getSize());
-		assign(listaDinamica, ordinalPadre2, padre2);
+        }
+
+		assign(ordinalPadre1, padre1);
+		assign(ordinalPadre2, padre2);
 		
 	}
 }

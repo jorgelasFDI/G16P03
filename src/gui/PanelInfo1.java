@@ -151,6 +151,7 @@ public class PanelInfo1 implements View {
 		cruce.setProb(Double.parseDouble(cruceTextField.getText())/100.0);
 		mutacion.setProb(Double.parseDouble(mutacionTextField.getText())/100.0);
 		presion = Double.parseDouble(presionTextField.getText());
+		if (presion < 1) presion = null;
 		Poblacion poblacion = new Poblacion(size, eliteSize, cruce, mutacion, seleccion, presion);
 		poblacion.generaPoblacion((new GeneratePoblacion()).generaPoblacion(type, null, size, tolerancia, ranges, null, function, poblacion), function);
 		return poblacion;
@@ -158,9 +159,9 @@ public class PanelInfo1 implements View {
 
 	@Override
 	public JPanel getBottomPanel(Generaciones generaciones, Individuo mejorIndividuo, AlgoritmoGenetico alg) {
-		// TODO Auto-generated method stub
 		JPanel verticalPanel = new JPanel();
 		verticalPanel.setLayout(new BoxLayout(verticalPanel, BoxLayout.Y_AXIS));
+		
 		
 		if(mejorIndividuo != null) {
 			MyGui.addLabel("Solucion: " + mejorIndividuo.getAptitud(), verticalPanel);

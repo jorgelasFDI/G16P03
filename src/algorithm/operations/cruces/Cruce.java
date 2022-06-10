@@ -19,7 +19,6 @@ public abstract class Cruce extends Operation {
                 }
 				
 				cruzar(individuoPrev, individuo);
-                individuoPrev.setAptitud(individuoPrev.fitness());
                 individuoPrev = null;
             }
         }

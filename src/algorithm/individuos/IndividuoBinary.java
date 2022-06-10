@@ -48,7 +48,7 @@ public class IndividuoBinary extends Individuo<Boolean, GenRange, BinaryGen> {
         IndividuoBinary otherBin = (IndividuoBinary) other;
         Boolean aux = otherBin.getBit(j);
 		otherBin.setBit(j, getBit(idx));
-		otherBin.setBit(idx, aux);
+		this.setBit(idx, aux);
     }
 
     public int getNumGenes() {

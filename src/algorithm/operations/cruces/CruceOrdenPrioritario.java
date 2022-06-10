@@ -1,7 +1,9 @@
 package algorithm.operations.cruces;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import algorithm.individuos.Individuo;
 import algorithm.individuos.IndividuoVuelo;
